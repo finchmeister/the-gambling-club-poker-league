@@ -36,37 +36,72 @@ class Player
     private $location;
 
     /**
-     * Get id
+     * @var bool
      *
+     * @ORM\Column(name="is_league_player", type="boolean")
+     */
+    private $leaguePlayer;
+
+    /**
      * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
 
     /**
-     * Set name
-     *
+     * @return string
+     */
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    /**
      * @param string $name
-     *
      * @return Player
      */
-    public function setName($name)
+    public function setName(string $name): Player
     {
         $this->name = $name;
-
         return $this;
     }
 
     /**
-     * Get name
-     *
      * @return string
      */
-    public function getName()
+    public function getLocation(): string
     {
-        return $this->name;
+        return $this->location;
+    }
+
+    /**
+     * @param string $location
+     * @return Player
+     */
+    public function setLocation(string $location): Player
+    {
+        $this->location = $location;
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isLeaguePlayer(): bool
+    {
+        return $this->leaguePlayer;
+    }
+
+    /**
+     * @param bool $leaguePlayer
+     * @return Player
+     */
+    public function setLeaguePlayer(bool $leaguePlayer): Player
+    {
+        $this->leaguePlayer = $leaguePlayer;
+        return $this;
     }
 }
 
