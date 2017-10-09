@@ -40,7 +40,7 @@ class Player
      *
      * @ORM\Column(name="is_league_player", type="boolean")
      */
-    private $leaguePlayer;
+    private $leaguePlayer = false;
 
     /**
      * @return int
