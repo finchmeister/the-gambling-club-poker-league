@@ -26,14 +26,14 @@ class Player
      *
      * @ORM\Column(name="name", type="string", length=255)
      */
-    private $name;
+    private $name = "";
 
     /**
      * @var string
      *
      * @ORM\Column(name="location", type="string", length=255)
      */
-    private $location;
+    private $location = "";
 
     /**
      * @var bool
