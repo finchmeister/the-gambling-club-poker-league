@@ -68,3 +68,10 @@ swiftmailer:
     username: '%mailer_user%'
     password: '%mailer_password%'
     spool: { type: memory }
+
+easy_admin:
+    entities:
+        - AppBundle\Entity\Game
+        - AppBundle\Entity\Player
+        - AppBundle\Entity\Result
+    site_name: 'The Gambling Club'

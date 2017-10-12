@@ -73,7 +73,7 @@ class Game
     /**
      * @return \DateTime
      */
-    public function getDate(): \DateTime
+    public function getDate(): ?\DateTime
     {
         return $this->date;
     }
@@ -91,7 +91,7 @@ class Game
     /**
      * @return Player
      */
-    public function getHost(): Player
+    public function getHost(): ?Player
     {
         return $this->host;
     }
@@ -109,7 +109,7 @@ class Game
     /**
      * @return float
      */
-    public function getBuyIn(): float
+    public function getBuyIn(): ?float
     {
         return $this->buyIn;
     }
@@ -127,7 +127,7 @@ class Game
     /**
      * @return int
      */
-    public function getNoOfPlayers(): int
+    public function getNoOfPlayers(): ?int
     {
         return $this->noOfPlayers;
     }
@@ -139,6 +139,24 @@ class Game
     public function setNoOfPlayers(int $noOfPlayers): Game
     {
         $this->noOfPlayers = $noOfPlayers;
+        return $this;
+    }
+
+    /**
+     * @return Result[]|ArrayCollection
+     */
+    public function getResults(): ?ArrayCollection
+    {
+        return $this->results;
+    }
+
+    /**
+     * @param Result[] $results
+     * @return Game
+     */
+    public function setResults(array $results): Game
+    {
+        $this->results = $results;
         return $this;
     }
 

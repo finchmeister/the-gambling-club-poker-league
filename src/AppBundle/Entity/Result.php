@@ -90,5 +90,79 @@ class Result
     {
         return $this->position;
     }
+
+    /**
+     * @return Game
+     */
+    public function getGame(): ?Game
+    {
+        return $this->game;
+    }
+
+    /**
+     * @param Game $game
+     * @return Result
+     */
+    public function setGame(Game $game): Result
+    {
+        $this->game = $game;
+        return $this;
+    }
+
+    /**
+     * @return Player
+     */
+    public function getPlayer(): ?Player
+    {
+        return $this->player;
+    }
+
+    /**
+     * @param Player $player
+     * @return Result
+     */
+    public function setPlayer(Player $player): Result
+    {
+        $this->player = $player;
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getWinnings(): ?int
+    {
+        return $this->winnings;
+    }
+
+    /**
+     * @param int $winnings
+     * @return Result
+     */
+    public function setWinnings(int $winnings): Result
+    {
+        $this->winnings = $winnings;
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getNoOfRebuys(): ?int
+    {
+        return $this->noOfRebuys;
+    }
+
+    /**
+     * @param int $noOfRebuys
+     * @return Result
+     */
+    public function setNoOfRebuys(int $noOfRebuys): Result
+    {
+        $this->noOfRebuys = $noOfRebuys;
+        return $this;
+    }
+
+
 }
 

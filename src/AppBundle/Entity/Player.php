@@ -42,10 +42,15 @@ class Player
      */
     private $leaguePlayer = false;
 
+    public function __toString()
+    {
+        return $this->getName();
+    }
+
     /**
      * @return int
      */
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -53,7 +58,7 @@ class Player
     /**
      * @return string
      */
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }
@@ -71,7 +76,7 @@ class Player
     /**
      * @return string
      */
-    public function getLocation(): string
+    public function getLocation(): ?string
     {
         return $this->location;
     }
