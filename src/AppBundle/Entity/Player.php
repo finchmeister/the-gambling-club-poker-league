@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Player
@@ -25,15 +26,17 @@ class Player
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255)
+     * @Assert\NotBlank()
      */
-    private $name = "";
+    private $name;
 
     /**
      * @var string
      *
      * @ORM\Column(name="location", type="string", length=255)
+     * @Assert\NotBlank()
      */
-    private $location = "";
+    private $location;
 
     /**
      * @var bool
@@ -42,10 +45,15 @@ class Player
      */
     private $leaguePlayer = false;
 
+    public function __toString()
+    {
+        return $this->name;
+    }
+
     /**
      * @return int
      */
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -53,7 +61,7 @@ class Player
     /**
      * @return string
      */
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }
@@ -71,7 +79,7 @@ class Player
     /**
      * @return string
      */
-    public function getLocation(): string
+    public function getLocation(): ?string
     {
         return $this->location;
     }

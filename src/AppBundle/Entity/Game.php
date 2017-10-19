@@ -4,6 +4,7 @@ namespace AppBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Game
@@ -13,6 +14,9 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Game
 {
+    const DEFAULT_BUY_IN = 10;
+    const DEFAULT_NO_OF_PLAYERS = 6;
+
     /**
      * @var int
      *
@@ -33,6 +37,7 @@ class Game
      * @var Player
      *
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Player")
+     * @Assert\NotBlank()
      */
     private $host;
 
@@ -41,14 +46,15 @@ class Game
      *
      * @ORM\Column(name="buy_in", type="float")
      */
-    private $buyIn = 0;
+    private $buyIn = self::DEFAULT_BUY_IN;
 
     /**
      * @var int
      *
      * @ORM\Column(name="no_of_players", type="integer")
+     * @Assert\GreaterThan(0)
      */
-    private $noOfPlayers;
+    private $noOfPlayers = self::DEFAULT_NO_OF_PLAYERS;
 
     /**
      * @var Result[]
@@ -60,12 +66,13 @@ class Game
     public function __construct()
     {
         $this->results = new ArrayCollection();
+        $this->date = new \DateTime();
     }
 
     /**
      * @return int
      */
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -73,7 +80,7 @@ class Game
     /**
      * @return \DateTime
      */
-    public function getDate(): \DateTime
+    public function getDate(): ?\DateTime
     {
         return $this->date;
     }
@@ -91,7 +98,7 @@ class Game
     /**
      * @return Player
      */
-    public function getHost(): Player
+    public function getHost(): ?Player
     {
         return $this->host;
     }
@@ -127,7 +134,7 @@ class Game
     /**
      * @return int
      */
-    public function getNoOfPlayers(): int
+    public function getNoOfPlayers(): ?int
     {
         return $this->noOfPlayers;
     }
