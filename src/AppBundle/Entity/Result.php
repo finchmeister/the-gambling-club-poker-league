@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Result
@@ -46,49 +47,125 @@ class Result
      * @var int
      *
      * @ORM\Column(name="winnings", type="float")
+     * @Assert\GreaterThanOrEqual(0)
      */
-    private $winnings;
+    private $winnings = 0;
 
     /**
      * @var int
      *
      * @ORM\Column(name="no_of_rebuys", type="integer")
+     * @Assert\GreaterThanOrEqual(0)
      */
-    private $noOfRebuys;
-
+    private $noOfRebuys = 0;
 
     /**
-     * Get id
-     *
      * @return int
      */
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
 
     /**
-     * Set position
-     *
-     * @param integer $position
-     *
+     * @param int $id
      * @return Result
      */
-    public function setPosition($position)
+    public function setId(int $id): Result
     {
-        $this->position = $position;
-
+        $this->id = $id;
         return $this;
     }
 
     /**
-     * Get position
-     *
+     * @return Game
+     */
+    public function getGame(): ?Game
+    {
+        return $this->game;
+    }
+
+    /**
+     * @param Game $game
+     * @return Result
+     */
+    public function setGame(Game $game): Result
+    {
+        $this->game = $game;
+        return $this;
+    }
+
+    /**
+     * @return Player
+     */
+    public function getPlayer(): ?Player
+    {
+        return $this->player;
+    }
+
+    /**
+     * @param Player $player
+     * @return Result
+     */
+    public function setPlayer(Player $player): Result
+    {
+        $this->player = $player;
+        return $this;
+    }
+
+    /**
      * @return int
      */
-    public function getPosition()
+    public function getPosition(): ?int
     {
         return $this->position;
     }
+
+    /**
+     * @param int $position
+     * @return Result
+     */
+    public function setPosition(int $position): Result
+    {
+        $this->position = $position;
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getWinnings(): ?int
+    {
+        return $this->winnings;
+    }
+
+    /**
+     * @param int $winnings
+     * @return Result
+     */
+    public function setWinnings(int $winnings): Result
+    {
+        $this->winnings = $winnings;
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getNoOfRebuys(): ?int
+    {
+        return $this->noOfRebuys;
+    }
+
+    /**
+     * @param int $noOfRebuys
+     * @return Result
+     */
+    public function setNoOfRebuys(int $noOfRebuys): Result
+    {
+        $this->noOfRebuys = $noOfRebuys;
+        return $this;
+    }
+
 }
 

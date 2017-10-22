@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Result</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ result.id }}</td>
+            </tr>
+            <tr>
+                <th>Position</th>
+                <td>{{ result.position }}</td>
+            </tr>
+            <tr>
+                <th>Winnings</th>
+                <td>{{ result.winnings }}</td>
+            </tr>
+            <tr>
+                <th>Noofrebuys</th>
+                <td>{{ result.noOfRebuys }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('result_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('result_edit', { 'id': result.id }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}
