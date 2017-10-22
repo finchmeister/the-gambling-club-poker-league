@@ -8,18 +8,23 @@ use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class GameType extends AbstractType
+/**
+ * Class GameResultsType
+ * @package AppBundle\Form
+ */
+class GameResultsType extends AbstractType
 {
     /**
      * {@inheritdoc}
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder
-            ->add('date')
-            ->add('buyIn')
-            ->add('noOfPlayers')
-            ->add('host');
+
+        $builder->add('results', CollectionType::class, [
+            'entry_type' => ResultType::class,
+            'entry_options' => ['label' => false],
+            'allow_add' => true,
+        ]);
     }
     
     /**
@@ -37,7 +42,7 @@ class GameType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'appbundle_game';
+        return 'appbundle_result';
     }
 
 

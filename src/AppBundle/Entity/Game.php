@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -58,7 +59,11 @@ class Game
     /**
      * @var Result[]
      *
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Result", mappedBy="game")
+     * @ORM\OneToMany(
+     *     targetEntity="AppBundle\Entity\Result",
+     *     mappedBy="game",
+     *     cascade={"persist"}
+     * )
      */
     private $results;
 
@@ -147,6 +152,34 @@ class Game
         $this->noOfPlayers = $noOfPlayers;
         return $this;
     }
+
+    /**
+     * @return Result[]|Collection
+     */
+    public function getResults(): ?Collection
+    {
+        return $this->results;
+    }
+
+    /**
+     * @param Result[] $results
+     * @return Game
+     */
+    public function setResults(array $results): Game
+    {
+        $this->results = $results;
+        return $this;
+    }
+
+    public function addResult(Result $result): Game
+    {
+        if (!$this->results->contains($result)) {
+            $this->results->add($result);
+        }
+        $result->setGame($this);
+        return $this;
+    }
+
 
 }
 

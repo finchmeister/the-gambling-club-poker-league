@@ -26,6 +26,7 @@ class Result
      * @var Game
      *
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Game")
+     * @Assert\NotNull()
      */
     private $game;
 
@@ -33,6 +34,7 @@ class Result
      * @var Player
      *
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Player")
+     * @Assert\NotNull()
      */
     private $player;
 
@@ -40,6 +42,7 @@ class Result
      * @var int
      *
      * @ORM\Column(name="position", type="integer")
+     * @Assert\GreaterThan(0)
      */
     private $position;
 

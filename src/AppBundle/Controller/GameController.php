@@ -4,6 +4,8 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Game;
 use AppBundle\Entity\Result;
+use AppBundle\Form\GameResultsType;
+use AppBundle\Form\GameType;
 use AppBundle\Form\ResultType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -42,10 +44,19 @@ class GameController extends Controller
     public function newAction(Request $request)
     {
         $game = new Game();
-        $form = $this->createForm('AppBundle\Form\GameType', $game);
+        $form = $this->createForm(GameType::class, $game);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            if ($game->getNoOfPlayers() > 0) {
+                $game->setResults(
+                    array_fill(
+                        1,
+                        $game->getNoOfPlayers(),
+                        new Result()
+                    )
+                );
+            }
             $em = $this->getDoctrine()->getManager();
             $em->persist($game);
             $em->flush();
@@ -84,10 +95,20 @@ class GameController extends Controller
     public function editAction(Request $request, Game $game)
     {
         $deleteForm = $this->createDeleteForm($game);
-        $editForm = $this->createForm('AppBundle\Form\GameType', $game);
+        $editForm = $this->createForm(GameType::class, $game);
+        $previousNoOfPlayers = $game->getNoOfPlayers();
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
+            $currentNoOfPlayers = $game->getNoOfPlayers();
+
+            if ($previousNoOfPlayers < $currentNoOfPlayers) {
+                // Players added
+            } elseif ($previousNoOfPlayers > $currentNoOfPlayers) {
+                // Players taken away
+                //
+            }
+
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('game_edit', array('id' => $game->getId()));
@@ -139,26 +160,24 @@ class GameController extends Controller
     /**
      * Creates a new result entity.
      *
-     * @Route("{id}/new", name="result_new")
+     * @Route("/{id}/results/edit", name="game_result_edit")
      * @Method({"GET", "POST"})
      */
-    public function newResultAction(Game $game, Request $request)
+    public function newResultsAction(Game $game, Request $request)
     {
-        $result = new Result();
-        $result->setGame($game);
-        $form = $this->createForm(ResultType::class, $result);
+        $form = $this->createForm(GameResultsType::class, $game);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $em->persist($result);
+            $em->persist($game);
             $em->flush();
 
-            return $this->redirectToRoute('result_show', array('id' => $result->getId()));
+            return $this->redirectToRoute('game_edit', array('id' => $game->getId()));
         }
 
         return $this->render('result/new.html.twig', array(
-            'result' => $result,
+            'game' => $game,
             'form' => $form->createView(),
         ));
     }
