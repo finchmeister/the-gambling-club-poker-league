@@ -51,8 +51,7 @@ class Game
     /**
      * @var int
      *
-     * @ORM\Column(name="no_of_players", type="integer")
-     * @Assert\GreaterThan(0)
+     * @ORM\Column(name="no_of_players", type="integer", nullable=TRUE)
      */
     private $noOfPlayers = self::DEFAULT_NO_OF_PLAYERS;
 

@@ -2,6 +2,7 @@
 
 namespace AppBundle\Form;
 
+use AppBundle\Entity\Result;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -13,7 +14,11 @@ class ResultType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('position')->add('winnings')->add('noOfRebuys')->add('game')->add('player');
+        $builder
+            ->add('position')
+            ->add('winnings')
+            ->add('noOfRebuys')
+            ->add('player');
     }
     
     /**
@@ -22,7 +27,7 @@ class ResultType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\Result'
+            'data_class' => Result::class
         ));
     }
 

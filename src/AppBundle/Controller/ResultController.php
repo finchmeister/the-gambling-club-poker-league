@@ -10,7 +10,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component
 /**
  * Result controller.
  *
- * @Route("admin/result")
+ * @Route("admin/")
  */
 class ResultController extends Controller
 {

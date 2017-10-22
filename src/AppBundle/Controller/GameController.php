@@ -3,6 +3,8 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Game;
+use AppBundle\Entity\Result;
+use AppBundle\Form\ResultType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
@@ -133,4 +135,32 @@ class GameController extends Controller
             ->getForm()
         ;
     }
+
+    /**
+     * Creates a new result entity.
+     *
+     * @Route("{id}/new", name="result_new")
+     * @Method({"GET", "POST"})
+     */
+    public function newResultAction(Game $game, Request $request)
+    {
+        $result = new Result();
+        $result->setGame($game);
+        $form = $this->createForm(ResultType::class, $result);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($result);
+            $em->flush();
+
+            return $this->redirectToRoute('result_show', array('id' => $result->getId()));
+        }
+
+        return $this->render('result/new.html.twig', array(
+            'result' => $result,
+            'form' => $form->createView(),
+        ));
+    }
+
 }
