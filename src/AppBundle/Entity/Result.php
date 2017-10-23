@@ -25,7 +25,7 @@ class Result
     /**
      * @var Game
      *
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Game")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Game", inversedBy="results")
      * @Assert\NotNull()
      */
     private $game;
@@ -92,7 +92,7 @@ class Result
      * @param Game $game
      * @return Result
      */
-    public function setGame(Game $game): Result
+    public function setGame(Game $game = null): Result
     {
         $this->game = $game;
         return $this;

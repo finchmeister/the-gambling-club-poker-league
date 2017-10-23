@@ -3,10 +3,9 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Game;
-use AppBundle\Entity\Result;
 use AppBundle\Form\GameResultsType;
 use AppBundle\Form\GameType;
-use AppBundle\Form\ResultType;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
@@ -48,15 +47,6 @@ class GameController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            if ($game->getNoOfPlayers() > 0) {
-                $game->setResults(
-                    array_fill(
-                        1,
-                        $game->getNoOfPlayers(),
-                        new Result()
-                    )
-                );
-            }
             $em = $this->getDoctrine()->getManager();
             $em->persist($game);
             $em->flush();
@@ -96,19 +86,9 @@ class GameController extends Controller
     {
         $deleteForm = $this->createDeleteForm($game);
         $editForm = $this->createForm(GameType::class, $game);
-        $previousNoOfPlayers = $game->getNoOfPlayers();
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
-            $currentNoOfPlayers = $game->getNoOfPlayers();
-
-            if ($previousNoOfPlayers < $currentNoOfPlayers) {
-                // Players added
-            } elseif ($previousNoOfPlayers > $currentNoOfPlayers) {
-                // Players taken away
-                //
-            }
-
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('game_edit', array('id' => $game->getId()));
@@ -165,12 +145,26 @@ class GameController extends Controller
      */
     public function newResultsAction(Game $game, Request $request)
     {
+
+        $originalResults = new ArrayCollection();
+
+        foreach ($game->getResults() as $result) {
+            $originalResults->add($result);
+        }
+
         $form = $this->createForm(GameResultsType::class, $game);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $em->persist($game);
+            // Tidy up results
+            foreach ($originalResults as $result) {
+                if ($game->getResults()->contains($result) === false) {
+                    $result->setGame(null);
+                    $em->remove($result);
+                }
+            }
+
             $em->flush();
 
             return $this->redirectToRoute('game_edit', array('id' => $game->getId()));

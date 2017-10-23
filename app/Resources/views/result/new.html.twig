@@ -4,8 +4,15 @@
     <h1>Result creation</h1>
 
     {{ form_start(form) }}
-        {{ form_widget(form) }}
-        <input type="submit" value="Create" />
+
+
+    <ul class="results" data-prototype="{{ form_widget(form.results.vars.prototype)|e('html_attr') }}">
+        {% for result in form.results %}
+            <li>{{ form_widget(result) }}</li>
+        {% endfor %}
+    </ul>
+
+        <input type="submit" value="Update" />
     {{ form_end(form) }}
 
     <ul>
@@ -14,3 +21,86 @@
         </li>
     </ul>
 {% endblock %}
+
+ {% block javascripts %}
+     <script
+             src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+             integrity="sha256-k2WSCIexGzOj3Euiig+TlR8gA0EmPjuc79OEeY5L45g="
+             crossorigin="anonymous">
+     </script>
+
+     <script>
+
+         var $collectionHolder;
+
+         // setup an "add a result" link
+         var $addResultLink = $('<a href="#" class="add_result_link">Add a result</a>');
+         var $newLinkLi = $('<li></li>').append($addResultLink);
+
+         jQuery(document).ready(function() {
+             // Get the ul that holds the collection of results
+             $collectionHolder = $('ul.results');
+
+             $collectionHolder.find('li').each(function() {
+                 addResultFormDeleteLink($(this));
+             });
+
+             // add the "add a result" anchor and li to the results ul
+             $collectionHolder.append($newLinkLi);
+
+             // count the current form inputs we have (e.g. 2), use that as the new
+             // index when inserting a new item (e.g. 2)
+             $collectionHolder.data('index', $collectionHolder.find(':input').length);
+
+             $addResultLink.on('click', function(e) {
+                 // prevent the link from creating a "#" on the URL
+                 e.preventDefault();
+
+                 // add a new result form (see next code block)
+                 addResultForm($collectionHolder, $newLinkLi);
+             });
+         });
+
+
+         function addResultForm($collectionHolder, $newLinkLi) {
+             // Get the data-prototype explained earlier
+             var prototype = $collectionHolder.data('prototype');
+
+             // get the new index
+             var index = $collectionHolder.data('index');
+
+             var newForm = prototype;
+             // You need this only if you didn't set 'label' => false in your results field in TaskType
+             // Replace '__name__label__' in the prototype's HTML to
+             // instead be a number based on how many items we have
+             // newForm = newForm.replace(/__name__label__/g, index);
+
+             // Replace '__name__' in the prototype's HTML to
+             // instead be a number based on how many items we have
+             newForm = newForm.replace(/__name__/g, index);
+
+             // increase the index with one for the next item
+             $collectionHolder.data('index', index + 1);
+
+             // Display the form in the page in an li, before the "Add a result" link li
+             var $newFormLi = $('<li></li>').append(newForm);
+
+             $newLinkLi.before($newFormLi);
+
+             addResultFormDeleteLink($newFormLi);
+         }
+
+         function addResultFormDeleteLink($resultFormLi) {
+             var $removeFormA = $('<a href="#">delete this result</a>');
+             $resultFormLi.append($removeFormA);
+
+             $removeFormA.on('click', function(e) {
+                 // prevent the link from creating a "#" on the URL
+                 e.preventDefault();
+
+                 // remove the li for the result form
+                 $resultFormLi.remove();
+             });
+         }
+     </script>
+ {% endblock %}

@@ -16,7 +16,6 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Game
 {
     const DEFAULT_BUY_IN = 10;
-    const DEFAULT_NO_OF_PLAYERS = 6;
 
     /**
      * @var int
@@ -50,13 +49,6 @@ class Game
     private $buyIn = self::DEFAULT_BUY_IN;
 
     /**
-     * @var int
-     *
-     * @ORM\Column(name="no_of_players", type="integer", nullable=TRUE)
-     */
-    private $noOfPlayers = self::DEFAULT_NO_OF_PLAYERS;
-
-    /**
      * @var Result[]
      *
      * @ORM\OneToMany(
@@ -64,8 +56,15 @@ class Game
      *     mappedBy="game",
      *     cascade={"persist"}
      * )
+     * @Assert\Valid()
      */
     private $results;
+
+    /**
+     * @var bool
+     * @ORM\Column(name="is_league", type="boolean")
+     */
+    private $isLeague = true;
 
     public function __construct()
     {
@@ -136,24 +135,6 @@ class Game
     }
 
     /**
-     * @return int
-     */
-    public function getNoOfPlayers(): ?int
-    {
-        return $this->noOfPlayers;
-    }
-
-    /**
-     * @param int $noOfPlayers
-     * @return Game
-     */
-    public function setNoOfPlayers(int $noOfPlayers): Game
-    {
-        $this->noOfPlayers = $noOfPlayers;
-        return $this;
-    }
-
-    /**
      * @return Result[]|Collection
      */
     public function getResults(): ?Collection
@@ -171,15 +152,54 @@ class Game
         return $this;
     }
 
+    /**
+     * @param Result $result
+     * @return Game
+     */
     public function addResult(Result $result): Game
     {
-        if (!$this->results->contains($result)) {
-            $this->results->add($result);
-        }
+        $this->results->add($result);
         $result->setGame($this);
         return $this;
     }
 
+    /**
+     * @param Result $result
+     * @return Game
+     */
+    public function removeResult(Result $result): Game
+    {
+        $this->results->removeElement($result);
+        $result->setGame(null);
+        return $this;
+    }
 
+    /**
+     * @return bool
+     */
+    public function isLeague(): bool
+    {
+        return $this->isLeague;
+    }
+
+    /**
+     * @param bool $isLeague
+     * @return Game
+     */
+    public function setIsLeague(bool $isLeague): Game
+    {
+        $this->isLeague = $isLeague;
+        return $this;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getNoOfPlayers(): ?int
+    {
+        return $this->getResults()
+            ? $this->getResults()->count()
+            : null;
+    }
 }
 

@@ -24,6 +24,8 @@ class GameResultsType extends AbstractType
             'entry_type' => ResultType::class,
             'entry_options' => ['label' => false],
             'allow_add' => true,
+            'by_reference' => false,
+            'allow_delete' => true,
         ]);
     }
     
@@ -35,14 +37,6 @@ class GameResultsType extends AbstractType
         $resolver->setDefaults(array(
             'data_class' => Game::class
         ));
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getBlockPrefix()
-    {
-        return 'appbundle_result';
     }
 
 
