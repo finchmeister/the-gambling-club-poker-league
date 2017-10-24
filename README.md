@@ -1,5 +1,16 @@
 # the-gambling-club-poker-league
 
+## Setup
+> TODO: automate with a make file
+
+```
+git clone https://github.com/finchmeister/the-gambling-club-poker-league.git
+composer install
+bin/console doctrine:schema:update --force
+bin/console doctrine:fixtures:load
+bin/console server:run 
+```
+
 
 ## Home (/)
 - [ ] Show league table
