@@ -11,64 +11,14 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 
 class Fixtures extends Fixture
 {
-    const PLAYER_DATA = [
-        1 => ['Steve', 'Readng', true,],
-        2 => ['Mike', 'Tadley', false,],
-        3 => ['Bob', 'Basingstoke', true,],
-        4 => ['Shaun', 'London', true,],
-        5 => ['Bruce', 'Basingstoke', false,],
-        6 => ['Nigel', 'Tadley', true,],
-        7 => ['Gary', 'Reading', true,],
-        8 => ['George', 'Ascot', false,],
-        9 => ['Dean', 'Basingstoke', true,],
-    ];
 
-    const GAME_DATA = [
-        [
-            'host' => 1,
-            'buyIn' => 10,
-            'isLeague' => true,
-            'results' => [
-                1 => [
-                    'player' => 1,
-                    'winnings' => 70,
-                    'noOfRebuys' => 1,
-                ],
-                2 => [
-                    'player' => 3,
-                    'winnings' => 40,
-                    'noOfRebuys' => 0,
-                ],
-                3 => [
-                    'player' => 7,
-                    'winnings' => 0,
-                    'noOfRebuys' => 2,
-                ],
-                4 => [
-                    'player' => 4,
-                    'winnings' => 0,
-                    'noOfRebuys' => 0,
-                ],
-                5 => [
-                    'player' => 9,
-                    'winnings' => 0,
-                    'noOfRebuys' => 0,
-                ],
-                6 => [
-                    'player' => 6,
-                    'winnings' => 0,
-                    'noOfRebuys' => 2,
-                ],
-            ]
-        ],
-    ];
 
 
     public function load(ObjectManager $manager)
     {
         // Create Players
         $players = $games = $results = [];
-        foreach (self::PLAYER_DATA as $id => $playerDatum) {
+        foreach ($this->getPlayerData() as $id => $playerDatum) {
             $player = new Player();
             $player
                 ->setName($playerDatum[0])
@@ -78,9 +28,11 @@ class Fixtures extends Fixture
             $manager->persist($player);
         }
 
+        $validator = $this->container->get('validator');
+
         // Create Games
         $date = new \DateTime("-4 months");
-        foreach (self::GAME_DATA as $gameDatum) {
+        foreach ($this->getGameData() as $gameDatum) {
             $this->isWinningsValid($gameDatum);
 
             $game = new Game();
@@ -100,7 +52,15 @@ class Fixtures extends Fixture
                     ->setPosition($position)
                     ->setWinnings($resultDatum['winnings'])
                     ->setNoOfRebuys($resultDatum['noOfRebuys']);
+
                 $manager->persist($result);
+                $errors = $validator->validate($result);
+
+                // TODO not working
+                if (count($errors) > 0) {
+                    throw new \Exception((string) $errors);
+                }
+
             }
 
             $date = clone $date->add(new \DateInterval("P6W"));
@@ -115,7 +75,7 @@ class Fixtures extends Fixture
      * @param array $game
      * @throws \Exception
      */
-    private function isWinningsValid(array $game): void
+    protected function isWinningsValid(array $game): void
     {
         // buy in * no. players + Sum of noOfRebys * buy in = sum winnings
         $initalBuyIn = $game['buyIn'] * count($game['results']);
@@ -124,11 +84,340 @@ class Fixtures extends Fixture
         $won = array_sum(array_column($game['results'], 'winnings'));
         if ($putIn !== $won) {
             throw new \Exception(sprintf(
-                "Winnings %s does not match input %s",
+                "Winnings %s does not match input %s (Host %s)",
                 $won,
-                $putIn
+                $putIn,
+                $game['host']
             ));
         }
+    }
+
+    protected function getPlayerData(): array
+    {
+        return [
+            1 => ['Steve', 'Readng', true,],
+            2 => ['Mike', 'Tadley', false,],
+            3 => ['Bob', 'Basingstoke', true,],
+            4 => ['Shaun', 'London', true,],
+            5 => ['Bruce', 'Basingstoke', false,],
+            6 => ['Nigel', 'Tadley', true,],
+            7 => ['Gary', 'Reading', true,],
+            8 => ['George', 'Ascot', false,],
+            9 => ['Dean', 'Basingstoke', true,],
+        ];
+    }
+
+    protected function getGameData(): array
+    {
+        return [
+            [
+                'host' => 1,
+                'buyIn' => 10,
+                'isLeague' => true,
+                'results' => [
+                    1 => [
+                        'player' => 1,
+                        'winnings' => 70,
+                        'noOfRebuys' => 1,
+                    ],
+                    2 => [
+                        'player' => 3,
+                        'winnings' => 40,
+                        'noOfRebuys' => 0,
+                    ],
+                    3 => [
+                        'player' => 7,
+                        'winnings' => 0,
+                        'noOfRebuys' => 2,
+                    ],
+                    4 => [
+                        'player' => 4,
+                        'winnings' => 0,
+                        'noOfRebuys' => 0,
+                    ],
+                    5 => [
+                        'player' => 9,
+                        'winnings' => 0,
+                        'noOfRebuys' => 0,
+                    ],
+                    6 => [
+                        'player' => 6,
+                        'winnings' => 0,
+                        'noOfRebuys' => 2,
+                    ],
+                ],
+            ],
+            [
+                'host' => 2,
+                'buyIn' => 10,
+                'isLeague' => true,
+                'results' => [
+                    1 => [
+                        'player' => 2,
+                        'winnings' => 90,
+                        'noOfRebuys' => 0,
+                    ],
+                    2 => [
+                        'player' => 3,
+                        'winnings' => 40,
+                        'noOfRebuys' => 0,
+                    ],
+                    3 => [
+                        'player' => 8,
+                        'winnings' => 10,
+                        'noOfRebuys' => 0,
+                    ],
+                    4 => [
+                        'player' => 4,
+                        'winnings' => 0,
+                        'noOfRebuys' => 0,
+                    ],
+                    5 => [
+                        'player' => 9,
+                        'winnings' => 0,
+                        'noOfRebuys' => 2,
+                    ],
+                    6 => [
+                        'player' => 1,
+                        'winnings' => 0,
+                        'noOfRebuys' => 1,
+                    ],
+                    7 => [
+                        'player' => 7,
+                        'winnings' => 0,
+                        'noOfRebuys' => 2,
+                    ],
+                    8 => [
+                        'player' => 5,
+                        'winnings' => 0,
+                        'noOfRebuys' => 1,
+                    ],
+                ],
+            ],
+            [
+                'host' => 3,
+                'buyIn' => 10,
+                'isLeague' => true,
+                'results' => [
+                    1 => [
+                        'player' => 1,
+                        'winnings' => 70,
+                        'noOfRebuys' => 1,
+                    ],
+                    2 => [
+                        'player' => 1,
+                        'winnings' => 40,
+                        'noOfRebuys' => 0,
+                    ],
+                    3 => [
+                        'player' => 7,
+                        'winnings' => 0,
+                        'noOfRebuys' => 2,
+                    ],
+                    4 => [
+                        'player' => 4,
+                        'winnings' => 0,
+                        'noOfRebuys' => 0,
+                    ],
+                    5 => [
+                        'player' => 9,
+                        'winnings' => 0,
+                        'noOfRebuys' => 0,
+                    ],
+                    6 => [
+                        'player' => 6,
+                        'winnings' => 0,
+                        'noOfRebuys' => 2,
+                    ],
+                ],
+            ],
+            [
+                'host' => 4,
+                'buyIn' => 10,
+                'isLeague' => true,
+                'results' => [
+                    1 => [
+                        'player' => 1,
+                        'winnings' => 70,
+                        'noOfRebuys' => 1,
+                    ],
+                    2 => [
+                        'player' => 3,
+                        'winnings' => 40,
+                        'noOfRebuys' => 0,
+                    ],
+                    3 => [
+                        'player' => 7,
+                        'winnings' => 0,
+                        'noOfRebuys' => 2,
+                    ],
+                    4 => [
+                        'player' => 4,
+                        'winnings' => 0,
+                        'noOfRebuys' => 0,
+                    ],
+                    5 => [
+                        'player' => 9,
+                        'winnings' => 0,
+                        'noOfRebuys' => 0,
+                    ],
+                    6 => [
+                        'player' => 6,
+                        'winnings' => 0,
+                        'noOfRebuys' => 2,
+                    ],
+                ],
+            ],
+            [
+                'host' => 5,
+                'buyIn' => 10,
+                'isLeague' => true,
+                'results' => [
+                    1 => [
+                        'player' => 1,
+                        'winnings' => 70,
+                        'noOfRebuys' => 1,
+                    ],
+                    2 => [
+                        'player' => 3,
+                        'winnings' => 40,
+                        'noOfRebuys' => 0,
+                    ],
+                    3 => [
+                        'player' => 7,
+                        'winnings' => 0,
+                        'noOfRebuys' => 2,
+                    ],
+                    4 => [
+                        'player' => 4,
+                        'winnings' => 0,
+                        'noOfRebuys' => 0,
+                    ],
+                    5 => [
+                        'player' => 9,
+                        'winnings' => 0,
+                        'noOfRebuys' => 0,
+                    ],
+                    6 => [
+                        'player' => 6,
+                        'winnings' => 0,
+                        'noOfRebuys' => 2,
+                    ],
+                ],
+            ],
+            [
+                'host' => 6,
+                'buyIn' => 10,
+                'isLeague' => true,
+                'results' => [
+                    1 => [
+                        'player' => 1,
+                        'winnings' => 70,
+                        'noOfRebuys' => 1,
+                    ],
+                    2 => [
+                        'player' => 3,
+                        'winnings' => 40,
+                        'noOfRebuys' => 0,
+                    ],
+                    3 => [
+                        'player' => 7,
+                        'winnings' => 0,
+                        'noOfRebuys' => 2,
+                    ],
+                    4 => [
+                        'player' => 4,
+                        'winnings' => 0,
+                        'noOfRebuys' => 0,
+                    ],
+                    5 => [
+                        'player' => 9,
+                        'winnings' => 0,
+                        'noOfRebuys' => 0,
+                    ],
+                    6 => [
+                        'player' => 6,
+                        'winnings' => 0,
+                        'noOfRebuys' => 2,
+                    ],
+                ],
+            ],
+            [
+                'host' => 7,
+                'buyIn' => 10,
+                'isLeague' => true,
+                'results' => [
+                    1 => [
+                        'player' => 1,
+                        'winnings' => 70,
+                        'noOfRebuys' => 1,
+                    ],
+                    2 => [
+                        'player' => 3,
+                        'winnings' => 40,
+                        'noOfRebuys' => 0,
+                    ],
+                    3 => [
+                        'player' => 7,
+                        'winnings' => 0,
+                        'noOfRebuys' => 2,
+                    ],
+                    4 => [
+                        'player' => 4,
+                        'winnings' => 0,
+                        'noOfRebuys' => 0,
+                    ],
+                    5 => [
+                        'player' => 9,
+                        'winnings' => 0,
+                        'noOfRebuys' => 0,
+                    ],
+                    6 => [
+                        'player' => 6,
+                        'winnings' => 0,
+                        'noOfRebuys' => 2,
+                    ],
+                ],
+            ],
+            [
+                'host' => 8,
+                'buyIn' => 10,
+                'isLeague' => true,
+                'results' => [
+                    1 => [
+                        'player' => 1,
+                        'winnings' => 70,
+                        'noOfRebuys' => 1,
+                    ],
+                    2 => [
+                        'player' => 3,
+                        'winnings' => 40,
+                        'noOfRebuys' => 0,
+                    ],
+                    3 => [
+                        'player' => 7,
+                        'winnings' => 0,
+                        'noOfRebuys' => 2,
+                    ],
+                    4 => [
+                        'player' => 4,
+                        'winnings' => 0,
+                        'noOfRebuys' => 0,
+                    ],
+                    5 => [
+                        'player' => 9,
+                        'winnings' => 0,
+                        'noOfRebuys' => 0,
+                    ],
+                    6 => [
+                        'player' => 6,
+                        'winnings' => 0,
+                        'noOfRebuys' => 2,
+                    ],
+                ],
+            ],
+        ];
+
     }
 
 }
