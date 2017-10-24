@@ -117,7 +117,7 @@ class Fixtures extends Fixture
      */
     private function isWinningsValid(array $game): void
     {
-        // buy in x no. players + Sum of noOfRebys * buy in = sum winnings
+        // buy in * no. players + Sum of noOfRebys * buy in = sum winnings
         $initalBuyIn = $game['buyIn'] * count($game['results']);
         $rebuys = array_sum(array_column($game['results'], 'noOfRebuys')) * $game['buyIn'];
         $putIn = $initalBuyIn + $rebuys;
