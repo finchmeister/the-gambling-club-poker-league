@@ -6,12 +6,14 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use AppBundle\Validator\Constraints as TGCPLAssert;
 
 /**
  * Game
  *
  * @ORM\Table(name="game")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\GameRepository")
+ * @TGCPLAssert\WinningsMatchPot()
  */
 class Game
 {
@@ -57,6 +59,8 @@ class Game
      *     cascade={"persist"}
      * )
      * @Assert\Valid()
+     * @TGCPLAssert\UniquePlayer()
+     * @TGCPLAssert\UniquePosition()
      */
     private $results;
 
@@ -200,6 +204,22 @@ class Game
         return $this->getResults()
             ? $this->getResults()->count()
             : null;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getPot(): ?int
+    {
+        if ($results = $this->getResults()) {
+            $pot = $results->count() * $this->getBuyIn();
+            foreach ($results as $result) {
+                $pot += $result->getNoOfRebuys() * $this->getBuyIn();
+            }
+            return $pot;
+        } else {
+            return null;
+        }
     }
 }
 

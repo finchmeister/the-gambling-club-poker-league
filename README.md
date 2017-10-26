@@ -20,23 +20,13 @@ bin/console server:run
 
 ## Admin (/admin)
 CRUD stuff
-### Player (/admin/player)
+- [ ] Player (/admin/player)
+- [ ] Game (/admin/game)
+- [ ] Result (/admin/game/{game_id}/result/)
 
-- [ ] List player (/)
-- [ ] Edit player (/{id}/edit)
-- [ ] Create player (/new)
-
-### Game (/admin/game)
-
-Properties: Host, Date, Buyin, Noofplayers
-- [ ] List game
-    - [ ] Edit results link
-- [ ] Edit game
-    - [ ] Edit results link
-- [ ] Create game
-
-### Result (/admin/game/{game_id}/result/)
-
-- ~~List result~~
-- [ ] Create game (/new)
-- [ ] Edit result (/{id}/edit)
+## Dev
+- [x] Codesniffer
+- [ ] Fixtures
+- [ ] Phpunit
+- [ ] Docker
+- [ ] Travis?

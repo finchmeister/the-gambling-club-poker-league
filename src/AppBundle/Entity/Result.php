@@ -11,14 +11,6 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @ORM\Table(name="result")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\ResultRepository")
- * @UniqueEntity(
- *     fields={"game", "player"},
- *     message="A player cannot have more than 1 result per game"
- * )
- * @UniqueEntity(
- *     fields={"game", "position"},
- *     message="Position must be unique per game"
- * )
  */
 class Result
 {
