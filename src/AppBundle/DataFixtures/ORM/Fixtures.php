@@ -20,7 +20,7 @@ class Fixtures extends Fixture
 
     public function load(ObjectManager $manager)
     {
-        $this->faker = Factory::create('en_UK');
+        $this->faker = Factory::create('en_GB');
 
         // Create Players
         $players = $games = $results = [];
