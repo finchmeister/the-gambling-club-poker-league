@@ -70,6 +70,49 @@
     </table>
 
 
+    <h2>Games</h2>
+
+    {% for game in games %}
+
+        <ul>
+            <li>Host: {{ game.host.name }}</li>
+            <li>Date: {{ game.date|date("d/m/Y") }}</li>
+            <li>Buy in: £{{ game.buyIn }}</li>
+            <li>Snacks: TODO</li>
+        </ul>
+
+        <table>
+            <tr>
+                <th>Position</th>
+                <th>Player</th>
+                <th>Points</th>
+                <th>Winnnigs</th>
+                <th>Rebuys</th>
+                <th>Net</th>
+                <th>League Player</th>
+            </tr>
+
+            {# @var result \AppBundle\Entity\Result #}
+            {% for result in game.results %}
+            <tr>
+                <td>{{ result.position }}</td>
+                <td>{{ result.player }}</td>
+                <td>{{ result.position }}</td>
+                <td>£{{ result.winnings }}</td>
+                <td>{{ result.noOfRebuys }}</td>
+                <td>£50</td>
+                <td>Yes</td>
+            </tr>
+            {% endfor %}
+
+        </table>
+
+        <hr>
+
+
+    {% endfor %}
+
+
 {% endblock %}
 
 {% block stylesheets %}
