@@ -8,14 +8,20 @@ use AppBundle\Entity\Player;
 use AppBundle\Entity\Result;
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Faker\Factory;
+use Faker\Generator;
 
 class Fixtures extends Fixture
 {
-
-
+    /**
+     * @var Generator
+     */
+    protected $faker;
 
     public function load(ObjectManager $manager)
     {
+        $this->faker = Factory::create('en_UK');
+
         // Create Players
         $players = $games = $results = [];
         foreach ($this->getPlayerData() as $id => $playerDatum) {
@@ -41,36 +47,34 @@ class Fixtures extends Fixture
                 ->setDate($date)
                 ->setBuyIn($gameDatum['buyIn'])
                 ->setIsLeague($gameDatum['isLeague']);
-            $manager->persist($game);
             $games[] = $game;
 
             foreach ($gameDatum['results'] as $position => $resultDatum) {
                 $result = new Result();
                 $result
-                    ->setGame($game)
                     ->setPlayer($players[$resultDatum['player']])
                     ->setPosition($position)
                     ->setWinnings($resultDatum['winnings'])
                     ->setNoOfRebuys($resultDatum['noOfRebuys']);
-
-                $manager->persist($result);
-                $errors = $validator->validate($result);
-
-                // TODO not working
-                if (count($errors) > 0) {
-                    throw new \Exception((string) $errors);
-                }
-
+                $game->addResult($result);
             }
+
+            $errors = $validator->validate($game);
+
+            // TODO not working
+            if (count($errors) > 0) {
+                throw new \Exception((string) $errors);
+            }
+            $manager->persist($game);
 
             $date = clone $date->add(new \DateInterval("P6W"));
         }
-
 
         $manager->flush();
     }
 
     /**
+     * @todo: move to validation class on game
      * Verifies no money goes a stray
      * @param array $game
      * @throws \Exception
@@ -94,7 +98,7 @@ class Fixtures extends Fixture
 
     protected function getPlayerData(): array
     {
-        return [
+        $playerData = [
             1 => ['Steve', 'Readng', true,],
             2 => ['Mike', 'Tadley', false,],
             3 => ['Bob', 'Basingstoke', true,],
@@ -105,6 +109,13 @@ class Fixtures extends Fixture
             8 => ['George', 'Ascot', false,],
             9 => ['Dean', 'Basingstoke', true,],
         ];
+        // TODO refactor
+        foreach ($playerData as &$playerDatum) {
+            $playerDatum[0] = $this->faker->firstNameMale;
+            $playerDatum[1] = $this->faker->city;
+
+        }
+        return $playerData;
     }
 
     protected function getGameData(): array
@@ -205,7 +216,7 @@ class Fixtures extends Fixture
                         'noOfRebuys' => 1,
                     ],
                     2 => [
-                        'player' => 1,
+                        'player' => 1, // TODO, make validation work
                         'winnings' => 40,
                         'noOfRebuys' => 0,
                     ],
@@ -234,16 +245,16 @@ class Fixtures extends Fixture
             [
                 'host' => 4,
                 'buyIn' => 10,
-                'isLeague' => true,
+                'isLeague' => false,
                 'results' => [
                     1 => [
                         'player' => 1,
                         'winnings' => 70,
-                        'noOfRebuys' => 1,
+                        'noOfRebuys' => 0,
                     ],
                     2 => [
                         'player' => 3,
-                        'winnings' => 40,
+                        'winnings' => 30,
                         'noOfRebuys' => 0,
                     ],
                     3 => [
@@ -259,12 +270,7 @@ class Fixtures extends Fixture
                     5 => [
                         'player' => 9,
                         'winnings' => 0,
-                        'noOfRebuys' => 0,
-                    ],
-                    6 => [
-                        'player' => 6,
-                        'winnings' => 0,
-                        'noOfRebuys' => 2,
+                        'noOfRebuys' => 3,
                     ],
                 ],
             ],
