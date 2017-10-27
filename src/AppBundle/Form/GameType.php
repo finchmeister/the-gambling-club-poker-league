@@ -18,8 +18,14 @@ class GameType extends AbstractType
         $builder
             ->add('date')
             ->add('buyIn')
-            ->add('noOfPlayers')
-            ->add('host');
+            ->add('host')
+            ->add('results', CollectionType::class, [
+                'entry_type' => ResultType::class,
+                'entry_options' => ['label' => false],
+                'allow_add' => true,
+                'by_reference' => false,
+                'allow_delete' => true,
+            ]);
     }
     
     /**

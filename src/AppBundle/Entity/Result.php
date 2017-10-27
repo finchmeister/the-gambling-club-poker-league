@@ -64,6 +64,17 @@ class Result
     private $noOfRebuys = 0;
 
     /**
+     * @var \DateTime
+     * @ORM\Column(type="datetime")
+     */
+    private $createdAt;
+
+    public function __construct()
+    {
+        $this->createdAt = new \DateTime();
+    }
+
+    /**
      * @return int
      */
     public function getId(): ?int
@@ -169,6 +180,22 @@ class Result
     {
         $this->noOfRebuys = $noOfRebuys;
         return $this;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getCreatedAt(): \DateTime
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * @return int
+     */
+    public function getNet(): int
+    {
+        return $this->winnings - ($this->getNoOfRebuys() + 1) * $this->getGame()->getBuyIn();
     }
 
 }

@@ -70,10 +70,35 @@ class Game
      */
     private $isLeague = true;
 
+    /**
+     * @var string|null
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $spotifyPlaylistUri;
+
+    /**
+     * @var string|null
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $snacks;
+
+    /**
+     * @var Player
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Player")
+     */
+    private $snacksProvider;
+
+    /**
+     * @var \DateTime
+     * @ORM\Column(type="datetime")
+     */
+    private $createdAt;
+
     public function __construct()
     {
         $this->results = new ArrayCollection();
         $this->date = new \DateTime();
+        $this->createdAt = new \DateTime();
     }
 
     /**
@@ -197,6 +222,60 @@ class Game
     }
 
     /**
+     * @return null|string
+     */
+    public function getSpotifyPlaylistUri(): ?string
+    {
+        return $this->spotifyPlaylistUri;
+    }
+
+    /**
+     * @param null|string $spotifyPlaylistUri
+     * @return Game
+     */
+    public function setSpotifyPlaylistUri($spotifyPlaylistUri)
+    {
+        $this->spotifyPlaylistUri = $spotifyPlaylistUri;
+        return $this;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getSnacks(): ?string
+    {
+        return $this->snacks;
+    }
+
+    /**
+     * @param null|string $snacks
+     * @return Game
+     */
+    public function setSnacks(string $snacks = null)
+    {
+        $this->snacks = $snacks;
+        return $this;
+    }
+
+    /**
+     * @return Player
+     */
+    public function getSnacksProvider(): ?Player
+    {
+        return $this->snacksProvider;
+    }
+
+    /**
+     * @param Player $snacksProvider
+     * @return Game
+     */
+    public function setSnacksProvider(Player $snacksProvider = null): Game
+    {
+        $this->snacksProvider = $snacksProvider;
+        return $this;
+    }
+
+    /**
      * @return int|null
      */
     public function getNoOfPlayers(): ?int
@@ -221,5 +300,14 @@ class Game
             return null;
         }
     }
+
+    /**
+     * @return \DateTime
+     */
+    public function getCreatedAt(): \DateTime
+    {
+        return $this->createdAt;
+    }
+
 }
 

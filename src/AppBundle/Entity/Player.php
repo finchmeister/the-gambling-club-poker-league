@@ -45,6 +45,17 @@ class Player
      */
     private $leaguePlayer = false;
 
+    /**
+     * @var \DateTime
+     * @ORM\Column(type="datetime")
+     */
+    private $createdAt;
+
+    public function __construct()
+    {
+        $this->createdAt = new \DateTime();
+    }
+
     public function __toString()
     {
         return $this->name;
@@ -110,6 +121,14 @@ class Player
     {
         $this->leaguePlayer = $leaguePlayer;
         return $this;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getCreatedAt(): \DateTime
+    {
+        return $this->createdAt;
     }
 }
 

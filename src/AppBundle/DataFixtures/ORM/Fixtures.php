@@ -45,7 +45,15 @@ class Fixtures extends Fixture
                 ->setHost($players[$gameDatum['host']])
                 ->setDate($date)
                 ->setBuyIn($gameDatum['buyIn'])
-                ->setIsLeague($gameDatum['isLeague']);
+                ->setSpotifyPlaylistUri($gameDatum['spotifyPlaylist'] ?? null)
+                ->setIsLeague($gameDatum['isLeague'])
+                ->setSnacks($gameDatum['snacks'] ?? null)
+                ->setSnacksProvider(
+                    isset($gameDatum['snacksProvider'])
+                        ? $players[$gameDatum['snacksProvider']]
+                        : null
+                )
+            ;
             $games[] = $game;
 
             foreach ($gameDatum['results'] as $position => $resultDatum) {
@@ -100,6 +108,7 @@ class Fixtures extends Fixture
                 'host' => 1,
                 'buyIn' => 10,
                 'isLeague' => true,
+                'spotifyPlaylist' => 'spotify:user:jaybeattie92:playlist:0yi5B3TPFokw02DdXrIJLW',
                 'results' => [
                     1 => [
                         'player' => 1,
@@ -142,6 +151,8 @@ class Fixtures extends Fixture
                 'host' => 2,
                 'buyIn' => 10,
                 'isLeague' => true,
+                'snacks' => 'Homemade cookies',
+                'snacksProvider' => 2,
                 'results' => [
                     1 => [
                         'player' => 2,
@@ -189,6 +200,7 @@ class Fixtures extends Fixture
                 'host' => 8,
                 'buyIn' => 10,
                 'isLeague' => false,
+                'spotifyPlaylist' => 'spotify:user:jaybeattie92:playlist:0v1jakgHVEsdIDpVmKsyBB',
                 'results' => [
                     1 => [
                         'player' => 9,
@@ -221,6 +233,8 @@ class Fixtures extends Fixture
                 'host' => 3,
                 'buyIn' => 10,
                 'isLeague' => true,
+                'snacks' => 'Crisps',
+                'snacksProvider' => 1,
                 'results' => [
                     1 => [
                         'player' => 3,
@@ -258,6 +272,9 @@ class Fixtures extends Fixture
                 'host' => 4,
                 'buyIn' => 10,
                 'isLeague' => true,
+                'spotifyPlaylist' => 'spotify:user:jaybeattie92:playlist:5J6kZw3HkJZj80zVZrg852',
+                'snacks' => 'Ice cream',
+                'snacksProvider' => 2,
                 'results' => [
                     1 => [
                         'player' => 3,
@@ -294,6 +311,9 @@ class Fixtures extends Fixture
                 'host' => 5,
                 'buyIn' => 10,
                 'isLeague' => true,
+                'spotifyPlaylist' => 'spotify:user:jaybeattie92:playlist:0XCfukhc7boJoOOtaS3WOm',
+                'snacks' => 'Cheese and biscuits',
+                'snacksProvider' => 4,
                 'results' => [
                     1 => [
                         'player' => 1,
@@ -373,6 +393,8 @@ class Fixtures extends Fixture
                 'host' => 6,
                 'buyIn' => 20,
                 'isLeague' => true,
+                'snacks' => 'Nuts',
+                'snacksProvider' => 3,
                 'results' => [
                     1 => [
                         'player' => 4,
@@ -410,6 +432,7 @@ class Fixtures extends Fixture
                 'host' => 7,
                 'buyIn' => 10,
                 'isLeague' => false,
+                'spotifyPlaylist' => 'spotify:user:jaybeattie92:playlist:21TMF11wv7Ap0ZMcUXtVch',
                 'results' => [
                     1 => [
                         'player' => 9,
