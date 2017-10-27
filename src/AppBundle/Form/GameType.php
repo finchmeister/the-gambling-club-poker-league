@@ -5,6 +5,7 @@ namespace AppBundle\Form;
 use AppBundle\Entity\Game;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -16,9 +17,15 @@ class GameType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('date')
+            ->add('date', DateType::class, [
+                'widget' => 'single_text',
+            ])
             ->add('buyIn')
             ->add('host')
+            ->add('spotifyPlaylistUri')
+            ->add('isLeague')
+            ->add('snacks')
+            ->add('snacksProvider')
             ->add('results', CollectionType::class, [
                 'entry_type' => ResultType::class,
                 'entry_options' => ['label' => false],

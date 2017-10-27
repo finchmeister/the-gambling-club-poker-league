@@ -3,7 +3,6 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -68,6 +67,12 @@ class Result
      * @ORM\Column(type="datetime")
      */
     private $createdAt;
+
+    /**
+     * @var float|null
+     * @ORM\Column(type="float", nullable=true)
+     */
+    private $leaguePoints;
 
     public function __construct()
     {
@@ -198,5 +203,22 @@ class Result
         return $this->winnings - ($this->getNoOfRebuys() + 1) * $this->getGame()->getBuyIn();
     }
 
+    /**
+     * @return float|null
+     */
+    public function getLeaguePoints(): ?float
+    {
+        return $this->leaguePoints;
+    }
+
+    /**
+     * @param float|null $leaguePoints
+     * @return Result
+     */
+    public function setLeaguePoints(float $leaguePoints = null): Result
+    {
+        $this->leaguePoints = $leaguePoints;
+        return $this;
+    }
 }
 

@@ -1,0 +1,25 @@
+<h2>League Table</h2>
+<table>
+    <tr>
+        <th>Position</th>
+        <th>Player</th>
+        <th>Points</th>
+        <th>Winnings</th>
+        <th>Bought In</th>
+        <th>Net</th>
+        <th>Rebuys</th>
+    </tr>
+
+    {% for row in leagueTable %}
+        <tr>
+            <td>{{ loop.index }}</td>
+            <td>{{ row.name }}</td>
+            <td>{{ row.leaguePoints }}</td>
+            <td>{{ row.winnings }}</td>
+            <td>{{ row.boughtIn }}</td>
+            <td>{{ row.net }}</td>
+            <td>{{ row.noOfRebuys }}</td>
+
+        </tr>
+    {% endfor %}
+</table>

@@ -73,6 +73,10 @@ class Game
     /**
      * @var string|null
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\Regex(
+     *     pattern="/spotify:user:\w+:playlist:\w{22}/",
+     *     message="Must be spotify uri"
+     * )
      */
     private $spotifyPlaylistUri;
 

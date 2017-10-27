@@ -84,12 +84,28 @@ class GameController extends Controller
      */
     public function editAction(Request $request, Game $game)
     {
+        $originalResults = new ArrayCollection();
+
+        foreach ($game->getResults() as $result) {
+            $originalResults->add($result);
+        }
+
         $deleteForm = $this->createDeleteForm($game);
         $editForm = $this->createForm(GameType::class, $game);
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+            $em = $this->getDoctrine()->getManager();
+            // Tidy up results
+            foreach ($originalResults as $result) {
+                if ($game->getResults()->contains($result) === false) {
+                    $result->setGame(null);
+                    $em->remove($result);
+                }
+            }
+
+            $em->flush();
+            $this->addFlash('success', 'Game updated successfully');
 
             return $this->redirectToRoute('game_edit', array('id' => $game->getId()));
         }
@@ -135,45 +151,6 @@ class GameController extends Controller
             ->setMethod('DELETE')
             ->getForm()
         ;
-    }
-
-    /**
-     * Creates a new result entity.
-     *
-     * @Route("/{id}/results/edit", name="game_result_edit")
-     * @Method({"GET", "POST"})
-     */
-    public function newResultsAction(Game $game, Request $request)
-    {
-
-        $originalResults = new ArrayCollection();
-
-        foreach ($game->getResults() as $result) {
-            $originalResults->add($result);
-        }
-
-        $form = $this->createForm(GameResultsType::class, $game);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            // Tidy up results
-            foreach ($originalResults as $result) {
-                if ($game->getResults()->contains($result) === false) {
-                    $result->setGame(null);
-                    $em->remove($result);
-                }
-            }
-
-            $em->flush();
-
-            return $this->redirectToRoute('game_edit', array('id' => $game->getId()));
-        }
-
-        return $this->render('result/new.html.twig', array(
-            'game' => $game,
-            'form' => $form->createView(),
-        ));
     }
 
 }

@@ -4,34 +4,7 @@
     <h1>The Gambling Club Poker League</h1>
     <a href="{{ path('admin') }}">Admin</a>
 
-    <h2>League Table</h2>
-    <table>
-        <tr>
-            <th>Position</th>
-            <th>Player</th>
-            <th>Points</th>
-            <th>Net</th>
-        </tr>
-        <tr>
-            <td>1</td>
-            <td>Jo</td>
-            <td>35</td>
-            <td>£200</td>
-        </tr>
-        <tr>
-            <td>2</td>
-            <td>Steve</td>
-            <td>30</td>
-        </tr>
-        <tr>
-            <td>3</td>
-            <td>Mike</td>
-            <td>20</td>
-        </tr>
-    </table>
-
-
-
+    {% include "partial/LeagueTable.html.twig" %}
 
     <h2>Games</h2>
 
@@ -63,7 +36,7 @@
             <tr>
                 <td>{{ result.position }}</td>
                 <td>{{ result.player }}</td>
-                <td>{{ result.position }}</td>
+                <td>{{ result.leaguePoints }}</td>
                 <td>£{{ result.winnings }}</td>
                 <td>{{ result.noOfRebuys }}</td>
                 <td>£{{ result.net }}</td>
