@@ -29,6 +29,12 @@ services:
         public: true
         tags: ['controller.service_arguments']
 
+    AppBundle\League\LeagueGame:
+        public: true
+
+    # Configure which points system to use
+    AppBundle\League\LeaguePointsInterface: '@AppBundle\League\SimpleOnePointPerPosition'
+
     # add more services, or override services that need manual wiring
     # AppBundle\Service\ExampleService:
     #     arguments:

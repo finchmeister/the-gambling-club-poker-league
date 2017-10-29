@@ -5,14 +5,14 @@ namespace AppBundle\League;
 
 
 use AppBundle\Entity\Game;
-use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 
 class LeagueTableService
 {
     protected $em;
 
     public function __construct(
-        EntityManager $em
+        EntityManagerInterface $em
     ) {
         $this->em = $em;
     }

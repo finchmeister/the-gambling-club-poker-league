@@ -29,7 +29,8 @@ class UpdateLeaguePointsCommand extends ContainerAwareCommand
         $io->title('Updating The League Points');
 
         $em = $this->getContainer()->get('doctrine.orm.default_entity_manager');
-        $leaguePoints = new LeagueGame(new SimpleOnePointPerPosition()); // TODO dependency inject
+
+        $leaguePoints =$this->getContainer()->get(LeagueGame::class);
 
         $leagueGames = $em->getRepository(Game::class)
             ->findBy(['isLeague' => true]);
