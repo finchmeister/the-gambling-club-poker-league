@@ -2,9 +2,8 @@
 
 {% block body %}
     <h1>The Gambling Club Poker League</h1>
-    <a href="{{ path('admin') }}">Admin</a>
 
-    {% include "partial/LeagueTable.html.twig" %}
+    {% include "partial/_league_table.html.twig" %}
 
     <h2>Games</h2>
 
@@ -20,7 +19,7 @@
             {% endif %}
         </ul>
 
-        <table>
+        <table class="table">
             <tr>
                 <th>Position</th>
                 <th>Player</th>
@@ -58,6 +57,4 @@
 
 {% endblock %}
 
-{% block stylesheets %}
 
-{% endblock %}

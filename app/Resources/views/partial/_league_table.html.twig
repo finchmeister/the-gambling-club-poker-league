@@ -1,0 +1,28 @@
+<h2>League Table</h2>
+<table class="table table-striped">
+    <thead class="">
+    <tr>
+        <th class="text-center">#</th>
+        <th>Player</th>
+        <th class="text-center">Points</th>
+        <th class="text-center">Winnings</th>
+        <th class="text-center">Bought In</th>
+        <th class="text-center">Net</th>
+        <th class="text-center">Rebuys</th>
+    </tr>
+    </thead>
+
+
+    {% for row in leagueTable %}
+        <tr>
+            <th scope="row" class="text-center">{{ loop.index }}</th>
+            <td>{{ row.name }}</td>
+            <td class="text-center">{{ row.leaguePoints }}</td>
+            <td class="text-center">{{ row.winnings }}</td>
+            <td class="text-center">{{ row.boughtIn }}</td>
+            <td class="text-center">{{ row.net }}</td>
+            <td class="text-center">{{ row.noOfRebuys }}</td>
+
+        </tr>
+    {% endfor %}
+</table>

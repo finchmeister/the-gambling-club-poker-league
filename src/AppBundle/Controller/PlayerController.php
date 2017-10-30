@@ -24,9 +24,9 @@ class PlayerController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $players = $em->getRepository('AppBundle:Player')->findAll();
+        $players = $em->getRepository(Player::class)->findAll();
 
-        return $this->render('player/index.html.twig', array(
+        return $this->render('admin/player/index.html.twig', array(
             'players' => $players,
         ));
     }
@@ -51,7 +51,7 @@ class PlayerController extends Controller
             return $this->redirectToRoute('player_show', array('id' => $player->getId()));
         }
 
-        return $this->render('player/new.html.twig', array(
+        return $this->render('admin/player/new.html.twig', array(
             'player' => $player,
             'form' => $form->createView(),
         ));
@@ -67,7 +67,7 @@ class PlayerController extends Controller
     {
         $deleteForm = $this->createDeleteForm($player);
 
-        return $this->render('player/show.html.twig', array(
+        return $this->render('admin/player/show.html.twig', array(
             'player' => $player,
             'delete_form' => $deleteForm->createView(),
         ));
@@ -91,7 +91,7 @@ class PlayerController extends Controller
             return $this->redirectToRoute('player_edit', array('id' => $player->getId()));
         }
 
-        return $this->render('player/edit.html.twig', array(
+        return $this->render('admin/player/edit.html.twig', array(
             'player' => $player,
             'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),

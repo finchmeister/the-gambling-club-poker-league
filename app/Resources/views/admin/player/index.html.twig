@@ -3,7 +3,7 @@
 {% block body %}
     <h1>Players list</h1>
 
-    <table>
+    <table class="table table-striped">
         <thead>
             <tr>
                 <th>Id</th>
@@ -21,14 +21,9 @@
                 <td>{{ player.location }}</td>
                 <td>{% if player.leaguePlayer %}Yes{% else %}No{% endif %}</td>
                 <td>
-                    <ul>
-                        <li>
-                            <a href="{{ path('player_show', { 'id': player.id }) }}">show</a>
-                        </li>
-                        <li>
-                            <a href="{{ path('player_edit', { 'id': player.id }) }}">edit</a>
-                        </li>
-                    </ul>
+                    <a class="btn btn-primary" href="{{ path('player_show', { 'id': player.id }) }}" role="button">Show</a>
+                    <a class="btn btn-primary" href="{{ path('player_edit', { 'id': player.id }) }}" role="button">Edit</a>
+
                 </td>
             </tr>
         {% endfor %}

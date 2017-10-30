@@ -13,6 +13,8 @@ class SecurityController extends Controller
 
     /**
      * @Route("/login", name="login")
+     * @param AuthenticationUtils $authUtils
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function loginAction(
         AuthenticationUtils $authUtils
@@ -35,6 +37,5 @@ class SecurityController extends Controller
     public function logoutAction()
     {
     }
-
 
 }
