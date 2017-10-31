@@ -15,7 +15,6 @@ bin/console app:update-league-points
 bin/console server:run 
 ```
 
-
 ## Home (/)
 - [ ] Show league table
 - [ ] List upcoming game
@@ -25,12 +24,11 @@ bin/console server:run
 ## Admin (/admin)
 CRUD stuff
 - [ ] Player (/admin/player)
-- [ ] Game (/admin/game)
-- [ ] Result (/admin/game/{game_id}/result/)
+- [ ] Game & results (/admin/game)
 
 ## Dev
 - [x] Codesniffer
-- [ ] Fixtures
+- [x] Fixtures
 - [ ] Phpunit
 - [ ] Docker
 - [ ] Travis?
@@ -40,4 +38,5 @@ CRUD stuff
 ```
 bin/console doctrine:schema:update --force
 bin/console doctrine:fixtures:load -n
+bin/console app:update-league-points
 ```
