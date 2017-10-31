@@ -23,9 +23,8 @@
                     <td>{{ player.location }}</td>
                     <td>{% if player.leaguePlayer %}Yes{% else %}No{% endif %}</td>
                     <td>
-                        <a class="btn btn-primary" href="{{ path('player_show', { 'id': player.id }) }}" role="button">Show</a>
+                        <a class="btn btn-secondary" href="{{ path('player_show', { 'id': player.id }) }}" role="button">Show</a>
                         <a class="btn btn-primary" href="{{ path('player_edit', { 'id': player.id }) }}" role="button">Edit</a>
-
                     </td>
                 </tr>
             {% endfor %}

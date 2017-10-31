@@ -1,21 +1,43 @@
-{% extends 'base.html.twig' %}
+{% extends 'admin/index_base.html.twig' %}
 
-{% block body %}
-    <h1>Player edit</h1>
+{% block adminTitle %}Edit Player{% endblock %}
 
-    {{ form_start(edit_form) }}
-        {{ form_widget(edit_form) }}
-        <input type="submit" value="Edit" />
-    {{ form_end(edit_form) }}
 
-    <ul>
-        <li>
-            <a href="{{ path('player_index') }}">Back to the list</a>
-        </li>
-        <li>
-            {{ form_start(delete_form) }}
-                <input type="submit" value="Delete">
-            {{ form_end(delete_form) }}
-        </li>
-    </ul>
+ {% block main %}
+
+     {{ form_start(edit_form) }}
+
+     <div class="form-group">
+         {{ form_label(edit_form.name) }}
+         {{ form_widget(edit_form.name, {'attr': {'class': 'form-control'}}) }}
+     </div>
+
+     <div class="form-group">
+         {{ form_label(edit_form.location) }}
+         {{ form_widget(edit_form.location, {'attr': {'class': 'form-control'}}) }}
+     </div>
+
+     <div class="form-group">
+
+         {{ form_label(edit_form.leaguePlayer) }}
+         {{ form_widget(edit_form.leaguePlayer, {'attr': {'class': 'form-control'}}) }}
+
+     </div>
+
+
+
+
+     <input  class="btn btn-primary" type="submit" value="Save" />
+     {{ form_end(edit_form) }}
+
+     <a href="{{ path('player_index') }}">Back to the list</a>
+
+ {% endblock %}
+
+
+
+{% block sidebar %}
+    {{ form_start(delete_form) }}
+    <input class="btn btn-danger"  type="submit" value="Delete">
+    {{ form_end(delete_form) }}
 {% endblock %}
