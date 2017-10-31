@@ -1,10 +1,12 @@
-{% extends 'base.html.twig' %}
+{% extends 'admin/index_base.html.twig' %}
 
-{% block body %}
-    <h1>Players list</h1>
 
-    <table class="table table-striped">
-        <thead>
+    {% block adminTitle %}Players list{% endblock %}
+
+
+    {% block main %}
+        <table class="table table-striped">
+            <thead>
             <tr>
                 <th>Id</th>
                 <th>Name</th>
@@ -12,27 +14,26 @@
                 <th>Leagueplayer</th>
                 <th>Actions</th>
             </tr>
-        </thead>
-        <tbody>
-        {% for player in players %}
-            <tr>
-                <td><a href="{{ path('player_show', { 'id': player.id }) }}">{{ player.id }}</a></td>
-                <td>{{ player.name }}</td>
-                <td>{{ player.location }}</td>
-                <td>{% if player.leaguePlayer %}Yes{% else %}No{% endif %}</td>
-                <td>
-                    <a class="btn btn-primary" href="{{ path('player_show', { 'id': player.id }) }}" role="button">Show</a>
-                    <a class="btn btn-primary" href="{{ path('player_edit', { 'id': player.id }) }}" role="button">Edit</a>
+            </thead>
+            <tbody>
+            {% for player in players %}
+                <tr>
+                    <td><a href="{{ path('player_show', { 'id': player.id }) }}">{{ player.id }}</a></td>
+                    <td>{{ player.name }}</td>
+                    <td>{{ player.location }}</td>
+                    <td>{% if player.leaguePlayer %}Yes{% else %}No{% endif %}</td>
+                    <td>
+                        <a class="btn btn-primary" href="{{ path('player_show', { 'id': player.id }) }}" role="button">Show</a>
+                        <a class="btn btn-primary" href="{{ path('player_edit', { 'id': player.id }) }}" role="button">Edit</a>
 
-                </td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% endblock %}
 
-    <ul>
-        <li>
-            <a href="{{ path('player_new') }}">Create a new player</a>
-        </li>
-    </ul>
-{% endblock %}
+    {% block sidebar %}
+        <a class="btn btn-primary" href="{{ path('player_new') }}">Create a new player</a>
+    {% endblock %}
+

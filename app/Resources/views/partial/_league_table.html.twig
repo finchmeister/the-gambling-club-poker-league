@@ -1,27 +1,27 @@
 <h2>League Table</h2>
-<table class="table table-striped">
+<table class="table table-striped text-center">
     <thead class="">
     <tr>
-        <th class="text-center">#</th>
-        <th>Player</th>
-        <th class="text-center">Points</th>
-        <th class="text-center">Winnings</th>
-        <th class="text-center">Bought In</th>
-        <th class="text-center">Net</th>
-        <th class="text-center">Rebuys</th>
+        <th>#</th>
+        <th class="text-left">Player</th>
+        <th>Points</th>
+        <th>Winnings</th>
+        <th>Bought In</th>
+        <th>Net</th>
+        <th>Rebuys</th>
     </tr>
     </thead>
 
 
     {% for row in leagueTable %}
         <tr>
-            <th scope="row" class="text-center">{{ loop.index }}</th>
-            <td>{{ row.name }}</td>
-            <td class="text-center">{{ row.leaguePoints }}</td>
-            <td class="text-center">{{ row.winnings }}</td>
-            <td class="text-center">{{ row.boughtIn }}</td>
-            <td class="text-center">{{ row.net }}</td>
-            <td class="text-center">{{ row.noOfRebuys }}</td>
+            <th scope="row">{{ loop.index }}</th>
+            <td class="text-left">{{ row.name }}</td>
+            <td>{{ row.leaguePoints }}</td>
+            <td>{{ row.winnings }}</td>
+            <td>{{ row.boughtIn }}</td>
+            <td>{{ row.net }}</td>
+            <td>{{ row.noOfRebuys }}</td>
 
         </tr>
     {% endfor %}

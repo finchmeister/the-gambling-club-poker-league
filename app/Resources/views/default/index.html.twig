@@ -19,22 +19,24 @@
             {% endif %}
         </ul>
 
-        <table class="table">
+        <table class="table text-center table-striped">
+            <thead class="">
             <tr>
-                <th>Position</th>
-                <th>Player</th>
+                <th>#</th>
+                <th class="text-left">Player</th>
                 <th>Points</th>
                 <th>Winnnigs</th>
                 <th>Rebuys</th>
                 <th>Net</th>
                 <th>League Player</th>
             </tr>
+            </thead>
 
             {# @var result \AppBundle\Entity\Result #}
             {% for result in game.results %}
             <tr>
                 <td>{{ result.position }}</td>
-                <td>{{ result.player }}</td>
+                <td class="text-left">{{ result.player }}</td>
                 <td>{{ result.leaguePoints }}</td>
                 <td>£{{ result.winnings }}</td>
                 <td>{{ result.noOfRebuys }}</td>
