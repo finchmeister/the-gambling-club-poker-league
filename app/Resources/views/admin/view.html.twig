@@ -1,16 +1,11 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Admin creation</h1>
+    <h1>Admin</h1>
 
-    <ul>
-        <li>
-            <a href="{{ path('admin_player_index') }}">View Players</a>
-        </li>
-        <li>
-            <a href="{{ path('game_index') }}">View Games</a>
-        </li>
-    </ul>
+    <a class="btn btn-primary" href="{{ path('admin_player_index') }}">Manage Players</a>
 
-    <a href="{{ path('logout') }}">Log out</a>
+    <a class="btn btn-primary" href="{{ path('game_index') }}">Manage Games</a>
+
+
 {% endblock %}

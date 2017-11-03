@@ -33,6 +33,11 @@
     {% endblock %}
 
     {% block sidebar %}
-        <a class="btn btn-primary" href="{{ path('player_new') }}">Create a new player</a>
+        <div>
+            <a class="btn btn-success" href="{{ path('player_new') }}">Create a new player</a>
+        </div>
+        <div>
+            <a class="btn btn-primary" href="{{ path('admin') }}">Back to admin</a>
+        </div>
     {% endblock %}
 
