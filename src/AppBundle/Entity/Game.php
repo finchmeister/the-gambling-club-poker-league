@@ -14,6 +14,7 @@ use AppBundle\Validator\Constraints as TGCPLAssert;
  * @ORM\Table(name="game")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\GameRepository")
  * @TGCPLAssert\WinningsMatchPot()
+ * @ORM\HasLifecycleCallbacks()
  */
 class Game
 {
@@ -98,11 +99,17 @@ class Game
      */
     private $createdAt;
 
+    /**
+     * @var \DateTime
+     * @ORM\Column(type="datetime")
+     */
+    private $updatedAt;
+
     public function __construct()
     {
         $this->results = new ArrayCollection();
         $this->date = new \DateTime();
-        $this->createdAt = new \DateTime();
+        $this->createdAt = $this->updatedAt = new \DateTime();
     }
 
     /**
@@ -311,6 +318,22 @@ class Game
     public function getCreatedAt(): \DateTime
     {
         return $this->createdAt;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getUpdatedAt(): \DateTime
+    {
+        return $this->updatedAt;
+    }
+
+    /**
+     * @ORM\PreUpdate
+     */
+    public function setUpdatedAt()
+    {
+        $this->updatedAt = new \DateTime('now');
     }
 
 }

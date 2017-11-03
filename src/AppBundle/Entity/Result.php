@@ -10,6 +10,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @ORM\Table(name="result")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\ResultRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 class Result
 {
@@ -69,6 +70,12 @@ class Result
     private $createdAt;
 
     /**
+     * @var \DateTime
+     * @ORM\Column(type="datetime")
+     */
+    private $updatedAt;
+
+    /**
      * @var float|null
      * @ORM\Column(type="float", nullable=true)
      */
@@ -76,7 +83,7 @@ class Result
 
     public function __construct()
     {
-        $this->createdAt = new \DateTime();
+        $this->createdAt = $this->updatedAt = new \DateTime();
     }
 
     /**
@@ -219,6 +226,22 @@ class Result
     {
         $this->leaguePoints = $leaguePoints;
         return $this;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getUpdatedAt(): \DateTime
+    {
+        return $this->updatedAt;
+    }
+
+    /**
+     * @ORM\PreUpdate
+     */
+    public function setUpdatedAt()
+    {
+        $this->updatedAt = new \DateTime('now');
     }
 }
 

@@ -18,12 +18,12 @@
             <tbody>
             {% for player in players %}
                 <tr>
-                    <td><a href="{{ path('player_show', { 'id': player.id }) }}">{{ player.id }}</a></td>
+                    <td><a href="{{ path('admin_player_show', { 'id': player.id }) }}">{{ player.id }}</a></td>
                     <td>{{ player.name }}</td>
                     <td>{{ player.location }}</td>
                     <td>{% if player.leaguePlayer %}Yes{% else %}No{% endif %}</td>
                     <td>
-                        <a class="btn btn-secondary" href="{{ path('player_show', { 'id': player.id }) }}" role="button">Show</a>
+                        <a class="btn btn-secondary" href="{{ path('admin_player_show', { 'id': player.id }) }}" role="button">Show</a>
                         <a class="btn btn-primary" href="{{ path('player_edit', { 'id': player.id }) }}" role="button">Edit</a>
                     </td>
                 </tr>

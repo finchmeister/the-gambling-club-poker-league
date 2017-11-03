@@ -5,6 +5,7 @@ namespace AppBundle\League;
 
 
 use AppBundle\Entity\Game;
+use AppBundle\Entity\Result;
 use Doctrine\ORM\EntityManagerInterface;
 
 class LeagueTableService
@@ -31,6 +32,13 @@ class LeagueTableService
 
 
         return $leagueTableResults;
+    }
+
+    public function getLastUpdated()
+    {
+        $result = $this->em->getRepository(Result::class)
+            ->getLastUpdated();
+        return $result['updatedAt'];
     }
 
 }

@@ -34,4 +34,19 @@ class PlayerController extends Controller
         ));
     }
 
+    /**
+     * Lists all player entities.
+     *
+     * @Route("/{id}", name="player_show")
+     * @Method("GET")
+     * @param Player $player
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function showAction(Player $player)
+    {
+        return $this->render('player/show.html.twig', array(
+            'player' => $player,
+        ));
+    }
+
 }

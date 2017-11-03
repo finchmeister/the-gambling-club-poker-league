@@ -49,7 +49,7 @@ class AdminPlayerController extends Controller
             $em->persist($player);
             $em->flush();
 
-            return $this->redirectToRoute('player_show', array('id' => $player->getId()));
+            return $this->redirectToRoute('admin_player_show', array('id' => $player->getId()));
         }
 
         return $this->render('admin/player/new.html.twig', array(
@@ -61,7 +61,7 @@ class AdminPlayerController extends Controller
     /**
      * Finds and displays a player entity.
      *
-     * @Route("/{id}", name="player_show")
+     * @Route("/{id}", name="admin_player_show")
      * @Method("GET")
      */
     public function showAction(Player $player)

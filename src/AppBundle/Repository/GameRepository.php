@@ -15,7 +15,7 @@ class GameRepository extends EntityRepository
     public function getLeagueTable()
     {
         return $this->createQueryBuilder('game')
-            ->select('player.name')
+            ->select('player.name, player.id AS player_id')
             ->addSelect('SUM(results.winnings) AS winnings')
             ->addSelect('SUM(results.leaguePoints) AS leaguePoints')
             ->addSelect('SUM(results.noOfRebuys) AS noOfRebuys')

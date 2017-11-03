@@ -25,15 +25,29 @@
 
     {% for game in games %}
 
-        <ul>
-            <li>Host: {{ game.host }}</li>
-            <li>League: {{ game.isLeague }}</li>
-            <li>Date: {{ game.date|date("d/m/Y") }}</li>
-            <li>Buy in: £{{ game.buyIn }}</li>
-            {% if game.snacksProvider %}
-                <li>Snacks: {{ game.snacks }} by {{ game.snacksProvider }}</li>
-            {% endif %}
-        </ul>
+        <h3>{{ game.date|date("D jS, M Y") }}</h3>
+        <h4>{{ game.host }} <small class="text-muted">{{ game.host.location }}</small></h4>
+
+        <div class="row">
+            <div class="col-sm-6">
+                <ul>
+                    <li>Host: {{ game.host }}</li>
+                    <li>League: {{ game.isLeague }}</li>
+                    <li>Buy in: £{{ game.buyIn }}</li>
+                    {% if game.snacksProvider %}
+                        <li>Snacks: {{ game.snacks }} by {{ game.snacksProvider }}</li>
+                    {% endif %}
+                </ul>
+            </div>
+            <div class="col-sm-6">
+                {% if game.spotifyPlaylistUri %}
+                    <iframe src="https://open.spotify.com/embed?uri={{ game.spotifyPlaylistUri }}" width="300" height="80" frameborder="0" allowtransparency="true"></iframe>
+                {% endif %}
+            </div>
+        </div>
+
+
+
 
         <table class="table text-center table-striped">
             <thead class="">
@@ -57,17 +71,17 @@
                 <td>£{{ result.winnings|number_format(0) }}</td>
                 <td>{{ result.noOfRebuys|number_format(0) }}</td>
                 <td>£{{ result.net|number_format(0) }}</td>
-                <td>{{ result.player.leaguePlayer }}</td>
+                <td>
+                    <i class="fa fa-{{ result.player.leaguePlayer ? 'check' : 'times' }}" aria-hidden="true"></i>
+                </td>
             </tr>
             {% endfor %}
 
         </table>
 
-        {% if game.spotifyPlaylistUri %}
-            <iframe src="https://open.spotify.com/embed?uri={{ game.spotifyPlaylistUri }}" width="300" height="380" frameborder="0" allowtransparency="true"></iframe>
-        {% endif %}
 
-        <hr>
+
+        <hr class="my-5">
 
 
     {% endfor %}

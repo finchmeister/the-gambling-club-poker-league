@@ -5,7 +5,7 @@
 
     <h1>The Gambling Club</h1>
     <hr class="my-4">
-{% for player in players %}
+
 
     <div class="row">
         <div class="col">
@@ -23,8 +23,6 @@
                 <li>Games Won / Games Played: 3/15 : 20%</li>
                 <li>Won / Bought In / Net: £300 / £50 / £250</li>
             </ul>
-
-            <a class="btn btn-primary" href="{{ path('player_show', { 'id': player.id }) }}">Stats</a>
         </div>
         <div class="col-sm-3">
             <img src="http://via.placeholder.com/350x350" class="img-fluid rounded">
@@ -39,9 +37,14 @@
     </div>
 
 
+    TODO: charts in grid
+    <ul>
+        <li>Line: Position over time</li>
+        <li>Bar: Win / Bought / Lost</li>
+        <li>Pie: Win</li>
+    </ul>
 
 
-{% endfor %}
 
 {% endblock %}
 

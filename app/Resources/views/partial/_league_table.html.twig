@@ -1,5 +1,6 @@
 <h2>League Table</h2>
 <table class="table table-striped text-center">
+    <caption>Last Updated: {{ lastUpdated|date }}</caption>
     <thead class="">
     <tr>
         <th>#</th>
@@ -16,7 +17,7 @@
     {% for row in leagueTable %}
         <tr>
             <th scope="row">{{ loop.index }}</th>
-            <td class="text-left">{{ row.name }}</td>
+            <td class="text-left"><a href="{{ path('player_show', { 'id': row.player_id }) }}">{{ row.name }}</a></td>
             <td>{{ row.leaguePoints|number_format(league_points_decimal_places) }}</td>
             <td>£{{ row.winnings|number_format(0) }}</td>
             <td>£{{ row.boughtIn|number_format(0) }}</td>
