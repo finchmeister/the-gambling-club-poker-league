@@ -46,6 +46,12 @@ class Player
     private $leaguePlayer = false;
 
     /**
+     * @var string
+     * @ORM\Column(type="text")
+     */
+    private $bio = '';
+
+    /**
      * @var \DateTime
      * @ORM\Column(type="datetime")
      */
@@ -120,6 +126,24 @@ class Player
     public function setLeaguePlayer(bool $leaguePlayer): Player
     {
         $this->leaguePlayer = $leaguePlayer;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getBio(): string
+    {
+        return $this->bio;
+    }
+
+    /**
+     * @param string $bio
+     * @return Player
+     */
+    public function setBio(string $bio): Player
+    {
+        $this->bio = $bio;
         return $this;
     }
 

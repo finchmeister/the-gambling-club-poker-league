@@ -29,7 +29,9 @@ class Fixtures extends Fixture
             $player
                 ->setName($playerDatum['name'])
                 ->setLocation($playerDatum['location'])
-                ->setLeaguePlayer($playerDatum['isLeague']);
+                ->setLeaguePlayer($playerDatum['isLeague'])
+                ->setBio($this->faker->paragraph(4))
+            ;
             $players[$id] = $player;
             $manager->persist($player);
         }

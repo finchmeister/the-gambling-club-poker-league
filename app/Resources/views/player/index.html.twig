@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+
+{% block body %}
+
+{% for player in players %}
+
+    <h2>{{ player.name }}</h2>
+    <p>{{ player.bio }}</p>
+
+
+
+{% endfor %}
+
+{% endblock %}
+
+

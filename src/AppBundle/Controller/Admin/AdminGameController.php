@@ -1,21 +1,21 @@
 <?php
 
-namespace AppBundle\Controller;
+namespace AppBundle\Controller\Admin;
 
 use AppBundle\Entity\Game;
-use AppBundle\Form\GameResultsType;
 use AppBundle\Form\GameType;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Game controller.
  *
  * @Route("/admin/game")
  */
-class GameController extends Controller
+class AdminGameController extends Controller
 {
     /**
      * Lists all game entities.

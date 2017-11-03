@@ -1,9 +1,25 @@
 {% extends 'base.html.twig' %}
 
+{% block jumbotron %}
+    <div class="jumbotron jumbotron-fluid">
+        <div class="container">
+            <h1 class="display-4">The Gambling Club Poker League</h1>
+        </div>
+    </div>
+
+{% endblock %}
+
+
 {% block body %}
-    <h1>The Gambling Club Poker League</h1>
+
+
+
+
+
 
     {% include "partial/_league_table.html.twig" %}
+
+    <hr class="my-4">
 
     <h2>Games</h2>
 
@@ -37,10 +53,10 @@
             <tr>
                 <td>{{ result.position }}</td>
                 <td class="text-left">{{ result.player }}</td>
-                <td>{{ result.leaguePoints }}</td>
-                <td>£{{ result.winnings }}</td>
-                <td>{{ result.noOfRebuys }}</td>
-                <td>£{{ result.net }}</td>
+                <td>{{ result.leaguePoints|number_format(league_points_decimal_places) }}</td>
+                <td>£{{ result.winnings|number_format(0) }}</td>
+                <td>{{ result.noOfRebuys|number_format(0) }}</td>
+                <td>£{{ result.net|number_format(0) }}</td>
                 <td>{{ result.player.leaguePlayer }}</td>
             </tr>
             {% endfor %}

@@ -17,11 +17,11 @@
         <tr>
             <th scope="row">{{ loop.index }}</th>
             <td class="text-left">{{ row.name }}</td>
-            <td>{{ row.leaguePoints }}</td>
-            <td>{{ row.winnings }}</td>
-            <td>{{ row.boughtIn }}</td>
-            <td>{{ row.net }}</td>
-            <td>{{ row.noOfRebuys }}</td>
+            <td>{{ row.leaguePoints|number_format(league_points_decimal_places) }}</td>
+            <td>£{{ row.winnings|number_format(0) }}</td>
+            <td>£{{ row.boughtIn|number_format(0) }}</td>
+            <td>£{{ row.net|number_format(0) }}</td>
+            <td>{{ row.noOfRebuys|number_format(0) }}</td>
 
         </tr>
     {% endfor %}
