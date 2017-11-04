@@ -3,9 +3,30 @@
 {% block body %}
     <h1>Admin</h1>
 
-    <a class="btn btn-primary" href="{{ path('admin_player_index') }}">Manage Players</a>
 
-    <a class="btn btn-primary" href="{{ path('game_index') }}">Manage Games</a>
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Manage Players</h4>
+                    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                    <a class="btn btn-primary btn-lg" href="{{ path('admin_player_index') }}">Manage Players</a>
+
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Manage Games</h4>
+                    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                    <a class="btn btn-primary btn-lg" href="{{ path('game_index') }}">Manage Games</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
 
 
 {% endblock %}

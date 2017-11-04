@@ -38,10 +38,7 @@
 
     {% block sidebar %}
 
-        <div>
-            <a class="btn btn-success" href="{{ path('game_new') }}">Create a new game</a>
-        </div>
-        <div>
-            <a class="btn btn-primary" href="{{ path('admin') }}">Back to admin</a>
-        </div>
+            <a class="p-2 btn btn-success btn-lg btn-block" role="button" href="{{ path('game_new') }}">Create a new game</a>
+
+            <a class="p-2 btn btn-primary btn-lg btn-block" role="button" href="{{ path('admin') }}">Back to admin</a>
     {% endblock %}

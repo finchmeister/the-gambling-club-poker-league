@@ -18,12 +18,12 @@
             <tbody>
             {% for player in players %}
                 <tr>
-                    <td><a href="{{ path('admin_player_show', { 'id': player.id }) }}">{{ player.id }}</a></td>
+                    <td><a href="{{ path('player_show', { 'id': player.id }) }}">{{ player.id }}</a></td>
                     <td>{{ player.name }}</td>
                     <td>{{ player.location }}</td>
                     <td>{% if player.leaguePlayer %}Yes{% else %}No{% endif %}</td>
                     <td>
-                        <a class="btn btn-secondary" href="{{ path('admin_player_show', { 'id': player.id }) }}" role="button">Show</a>
+                        <a class="btn btn-secondary" href="{{ path('player_show', { 'id': player.id }) }}" role="button">Show</a>
                         <a class="btn btn-primary" href="{{ path('player_edit', { 'id': player.id }) }}" role="button">Edit</a>
                     </td>
                 </tr>
@@ -33,11 +33,9 @@
     {% endblock %}
 
     {% block sidebar %}
-        <div>
-            <a class="btn btn-success" href="{{ path('player_new') }}">Create a new player</a>
-        </div>
-        <div>
-            <a class="btn btn-primary" href="{{ path('admin') }}">Back to admin</a>
-        </div>
+        <a class="p-2 btn btn-success btn-lg btn-block" role="button" href="{{ path('player_new') }}">Create a new player</a>
+
+        <a class="p-2 btn btn-primary btn-lg btn-block" role="button" href="{{ path('admin') }}">Back to admin</a>
+
     {% endblock %}
 

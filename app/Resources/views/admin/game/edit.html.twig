@@ -55,22 +55,21 @@
     </ul>
 
         {{ form_widget(edit_form) }}
-        <input class="btn btn-primary" type="submit" value="Save" />
+        <input class="btn btn-primary btn-block" type="submit" value="Save" />
     {{ form_end(edit_form) }}
 
-
-    <ul>
-        <li>
-            <a href="{{ path('game_index') }}">Back to the list</a>
-        </li>
 
 {% endblock %}
 
 
 {% block sidebar %}
     {{ form_start(delete_form) }}
-    <input class="btn btn-danger"  type="submit" value="Delete">
+    <input class="p-2 btn btn-danger btn-lg btn-block"  type="submit" value="Delete">
     {{ form_end(delete_form) }}
+
+    <a class="p-2 btn btn-primary btn-lg btn-block"  href="{{ path('game_index') }}">Back to the list</a>
+
+
 {% endblock %}
 
  {% block javascripts %}

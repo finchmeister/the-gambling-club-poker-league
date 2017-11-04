@@ -34,17 +34,21 @@
 
 
 
-     <input  class="btn btn-primary" type="submit" value="Save" />
+     <input class="btn btn-primary btn-block" type="submit" value="Save" />
      {{ form_end(edit_form) }}
-
-     <a href="{{ path('admin_player_index') }}">Back to the list</a>
 
  {% endblock %}
 
 
 
 {% block sidebar %}
+    <a class="p-2 btn btn-primary btn-lg btn-block" href="{{ path('player_show', { 'id': player.id }) }}">View Profile</a>
+
+
     {{ form_start(delete_form) }}
-    <input class="btn btn-danger"  type="submit" value="Delete">
+    <input class="p-2 btn btn-danger btn-lg btn-block"  type="submit" value="Delete">
     {{ form_end(delete_form) }}
+
+    <a class="p-2 btn btn-primary btn-lg btn-block" href="{{ path('admin_player_index') }}">Back to the list</a>
+
 {% endblock %}

@@ -89,6 +89,11 @@ class AdminPlayerController extends Controller
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
+            $this->addFlash('success', sprintf(
+                "%s updated successfully",
+                $player->getName()
+            ));
+
             return $this->redirectToRoute('player_edit', array('id' => $player->getId()));
         }
 
@@ -114,6 +119,11 @@ class AdminPlayerController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->remove($player);
             $em->flush();
+
+            $this->addFlash('danger', sprintf(
+                "%s has been deleted",
+                $player->getName()
+            ));
         }
 
         return $this->redirectToRoute('admin_player_index');

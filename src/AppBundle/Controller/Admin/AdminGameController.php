@@ -132,6 +132,11 @@ class AdminGameController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->remove($game);
             $em->flush();
+
+            $this->addFlash('danger', sprintf(
+                "Game id: %s has been deleted",
+                $game->getId()
+            ));
         }
 
         return $this->redirectToRoute('game_index');

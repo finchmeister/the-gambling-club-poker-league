@@ -15,16 +15,33 @@ bin/console app:update-league-points
 bin/console server:run 
 ```
 
-## Home (/)
+## TODO
 - [x] Show league table
-- [x] List upcoming game
+- [ ] List upcoming game
 - [ ] List all played games
     - [ ] List results
 
-## Admin (/admin)
-CRUD stuff
-- [ ] Player (/admin/player)
-- [ ] Game & results (/admin/game)
+### Forms
+- [ ] Make form theme
+- [ ] Ensure all forms use theme
+- [ ] Tidy buttons
+    - [ ] Large sidebar buttons
+
+### Admin Listings
+- [ ] Consider show button
+
+
+## Edit Game
+- [ ] JS form collection tidy
+- [ ] Form errors in alerts
+- [ ] General tidy
+- [ ] Do not allow a player with a game to be deleted
+
+## Edit Player
+- [ ] Add image
+
+## Player
+- [ ] Hook in real stats
 
 ## Dev
 - [x] Codesniffer
