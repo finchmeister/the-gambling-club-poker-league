@@ -44,8 +44,112 @@
         <li>Pie: Win</li>
     </ul>
 
+    <div class="row">
+        <div class="col-sm-6">
+            <canvas id="winLoseNetBarChart" width="400" height="400"></canvas>
+
+        </div>
+        <div class="col-sm-6">
+            <canvas id="winLosePieChart" width="400" height="400"></canvas>
+
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-6">
+            <canvas id="scoreAgainstTimeLineChart" width="400" height="400"></canvas>
+
+        </div>
+        <div class="col-sm-6">
+            <canvas id="TODOCHART" width="400" height="400"></canvas>
+
+        </div>
+    </div>
+
 
 
 {% endblock %}
 
 
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('assets/js/vendor/chartjs/Chart.bundle.min.js') }}"></script>
+
+
+    <script>
+        new Chart(document.getElementById("winLoseNetBarChart"), {
+            type: 'bar',
+            data: {
+                labels: ["Winnings", "Bought In", "Net"],
+                datasets: [{
+                    label: '£',
+                    data: [200, -100, 100],
+                    backgroundColor: [
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(255,99,132,1)',
+                        'rgba(54, 162, 235, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero:true
+                        }
+                    }]
+                }
+            }
+        });
+
+        new Chart(document.getElementById("winLosePieChart"), {
+            type: 'pie',
+            data: {
+                labels: ["Won", "Not Won"],
+                datasets: [{
+                    data: [2, 8],
+                    backgroundColor: [
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(255, 99, 132, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(255,99,132,1)'
+                    ],
+                    borderWidth: 1
+                }]
+            }
+        });
+
+        new Chart(document.getElementById("scoreAgainstTimeLineChart"), {
+            type: 'line',
+            data: {
+                labels: ["1", "2", "3", "4", "5", "6"],
+                datasets: [{
+                    label: "Score",
+                    data: [8, 4, 0, 3, 5, 2],
+                    fill: false,
+                    backgroundColor: [
+                        'rgba(75, 192, 192, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(75, 192, 192, 1)'
+                    ],
+                    borderWidth: 1,
+                    lineTension: 0
+                }],
+                options: {}
+
+            }
+        });
+
+
+    </script>
+
+{% endblock %}

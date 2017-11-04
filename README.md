@@ -16,8 +16,8 @@ bin/console server:run
 ```
 
 ## Home (/)
-- [ ] Show league table
-- [ ] List upcoming game
+- [x] Show league table
+- [x] List upcoming game
 - [ ] List all played games
     - [ ] List results
 
@@ -40,6 +40,6 @@ bin/console doctrine:schema:update --force
 bin/console doctrine:fixtures:load -n
 bin/console app:update-league-points
 
-
+# Refresh database
 bin/console doctrine:schema:drop --force; bin/console doctrine:schema:update --force; bin/console doctrine:fixtures:load -n; bin/console app:update-league-points
 ```
