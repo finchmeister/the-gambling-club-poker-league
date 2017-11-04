@@ -5,10 +5,10 @@ namespace AppBundle\Controller;
 
 
 use AppBundle\Entity\Player;
+use AppBundle\League\PlayerService;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Player controller.
@@ -22,12 +22,17 @@ class PlayerController extends Controller
      *
      * @Route("/", name="player_index")
      * @Method("GET")
+     * @param PlayerService $playerService
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function indexAction()
+    public function indexAction(PlayerService $playerService)
     {
         $em = $this->getDoctrine()->getManager();
 
         $players = $em->getRepository(Player::class)->findAll();
+
+
+        dump($playerService->getAllPlayersWinLoseStats());
 
         return $this->render('player/index.html.twig', array(
             'players' => $players,

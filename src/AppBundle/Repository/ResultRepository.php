@@ -2,7 +2,7 @@
 
 namespace AppBundle\Repository;
 
-
+use AppBundle\Entity\Player;
 use Doctrine\ORM\EntityRepository;
 
 /**
@@ -22,5 +22,25 @@ class ResultRepository extends EntityRepository
             ->setMaxResults(1)
             ->getQuery()
             ->getSingleResult();
+    }
+
+    public function getPlayersWinLoseStats(Player $player = null)
+    {
+        $qb = $this->createQueryBuilder('result')
+            ->select('player.name, player.id AS player_id')
+            ->join('result.player', 'player')
+            ->addSelect('COUNT(result.id) as gamesPlayed')
+            ->addSelect('SUM(CASE WHEN result.position = 1 THEN 1 ELSE 0 END) as gamesWon')
+            ->groupBy('player.id');
+
+        if ($player) {
+            $qb
+                ->andWhere('player = :player')
+                ->setParameter('player', $player);
+        }
+
+        return $qb->getQuery()
+            ->getResult();
+
     }
 }

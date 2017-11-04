@@ -57,6 +57,9 @@ bin/console doctrine:schema:update --force
 bin/console doctrine:fixtures:load -n
 bin/console app:update-league-points
 
+# Make server available on local network
+bin/console server:start 0.0.0.0:8000
+
 # Refresh database
 bin/console doctrine:schema:drop --force; bin/console doctrine:schema:update --force; bin/console doctrine:fixtures:load -n; bin/console app:update-league-points
 ```
