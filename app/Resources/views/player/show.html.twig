@@ -1,4 +1,4 @@
-{% extends 'admin/index_base.html.twig' %}
+{% extends 'base.html.twig' %}
 
 
 {% block main %}
@@ -70,6 +70,14 @@
 
 {% endblock %}
 
+{% block sidebar %}
+
+    {% if is_granted('ROLE_ADMIN') %}
+        <a class="btn btn-primary btn-lg btn-block" href="{{ path('player_edit', { 'id': player.id }) }}" role="button">Edit</a>
+    {% endif %}
+
+
+{% endblock %}
 
 {% block javascripts %}
     {{ parent() }}

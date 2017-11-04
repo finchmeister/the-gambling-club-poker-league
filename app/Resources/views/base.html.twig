@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>{% block title %}The Gambling Club Poker League{% endblock %}</title>
+        <title>{% block pageTitle %}The Gambling Club Poker League{% endblock %}</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -71,7 +71,32 @@
     {% endblock %}
 
     <div class="container">
-        {% block body %}{% endblock %}
+
+
+        {% block body %}
+
+
+            <div class="row">
+                <div class="col-12">
+                    <h1 class="my-4">{% block title %}{% endblock %}</h1>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-9">
+                    {{ include('default/_flash_messages.html.twig') }}
+                    {% block main %}
+
+                    {% endblock %}
+                </div>
+
+                <div class="col-md-3">
+                    {% block sidebar %}
+                    {% endblock %}
+                </div>
+            </div>
+
+        {% endblock %}
 
     </div>
 

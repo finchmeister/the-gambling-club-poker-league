@@ -10,7 +10,7 @@
 {% endblock %}
 
 
-{% block body %}
+{% block main %}
 
 
 
@@ -41,43 +41,48 @@
             </div>
             <div class="col-sm-6">
                 {% if game.spotifyPlaylistUri %}
-                    <iframe src="https://open.spotify.com/embed?uri={{ game.spotifyPlaylistUri }}" width="300" height="80" frameborder="0" allowtransparency="true"></iframe>
+                    <iframe src="https://open.spotify.com/embed?uri={{ game.spotifyPlaylistUri }}" width="100%" height="80" frameborder="0" allowtransparency="true"></iframe>
                 {% endif %}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <table class="table text-center table-striped table-responsive-md">
+                    <thead class="">
+                    <tr>
+                        <th>#</th>
+                        <th class="text-left">Player</th>
+                        <th>Points</th>
+                        <th>Winnnigs</th>
+                        <th>Rebuys</th>
+                        <th>Net</th>
+                        <th>League Player</th>
+                    </tr>
+                    </thead>
+
+                    {# @var result \AppBundle\Entity\Result #}
+                    {% for result in game.results %}
+                        <tr>
+                            <td>{{ result.position }}</td>
+                            <td class="text-left">{{ result.player }}</td>
+                            <td>{{ result.leaguePoints|number_format(league_points_decimal_places) }}</td>
+                            <td>£{{ result.winnings|number_format(0) }}</td>
+                            <td>{{ result.noOfRebuys|number_format(0) }}</td>
+                            <td>£{{ result.net|number_format(0) }}</td>
+                            <td>
+                                <i class="fa fa-{{ result.player.leaguePlayer ? 'check' : 'times' }}" aria-hidden="true"></i>
+                            </td>
+                        </tr>
+                    {% endfor %}
+
+                </table>
+
             </div>
         </div>
 
 
 
 
-        <table class="table text-center table-striped">
-            <thead class="">
-            <tr>
-                <th>#</th>
-                <th class="text-left">Player</th>
-                <th>Points</th>
-                <th>Winnnigs</th>
-                <th>Rebuys</th>
-                <th>Net</th>
-                <th>League Player</th>
-            </tr>
-            </thead>
-
-            {# @var result \AppBundle\Entity\Result #}
-            {% for result in game.results %}
-            <tr>
-                <td>{{ result.position }}</td>
-                <td class="text-left">{{ result.player }}</td>
-                <td>{{ result.leaguePoints|number_format(league_points_decimal_places) }}</td>
-                <td>£{{ result.winnings|number_format(0) }}</td>
-                <td>{{ result.noOfRebuys|number_format(0) }}</td>
-                <td>£{{ result.net|number_format(0) }}</td>
-                <td>
-                    <i class="fa fa-{{ result.player.leaguePlayer ? 'check' : 'times' }}" aria-hidden="true"></i>
-                </td>
-            </tr>
-            {% endfor %}
-
-        </table>
 
 
 
