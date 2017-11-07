@@ -3,6 +3,7 @@
 
 namespace AppBundle\League;
 
+use AppBundle\Entity\Player;
 use AppBundle\Entity\Result;
 use Doctrine\ORM\EntityManagerInterface;
 
@@ -22,11 +23,21 @@ class PlayerService
 
     public function getAllPlayersWinLoseStats()
     {
+        return $this->getPlayersWinLoseStats();
+    }
+
+    public function getPlayerWinLoseStats(Player $player)
+    {
+        return $this->getPlayersWinLoseStats($player)[0];
+    }
+
+    public function getPlayersWinLoseStats(Player $player = null)
+    {
         $playerStats = $this->em->getRepository(Result::class)
-            ->getPlayersWinLoseStats();
+            ->getPlayersWinLoseStats($player);
 
         foreach ($playerStats as &$playerStat) {
-            $playerStat['ration'] = $playerStat['gamesWon']/$playerStat['gamesPlayed'];
+            $playerStat['ratio'] = $playerStat['gamesWon']/$playerStat['gamesPlayed'];
         }
 
         return $playerStats;

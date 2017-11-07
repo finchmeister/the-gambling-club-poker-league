@@ -32,7 +32,6 @@ class PlayerController extends Controller
         $players = $em->getRepository(Player::class)->findAll();
 
 
-        dump($playerService->getAllPlayersWinLoseStats());
 
         return $this->render('player/index.html.twig', array(
             'players' => $players,
@@ -40,15 +39,21 @@ class PlayerController extends Controller
     }
 
     /**
-     * Lists all player entities.
-     *
      * @Route("/{id}", name="player_show")
      * @Method("GET")
      * @param Player $player
+     * @param PlayerService $playerService
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function showAction(Player $player)
+    public function showAction(Player $player, PlayerService $playerService)
     {
+        // Get stats.
+
+        dump($playerService->getPlayerWinLoseStats($player));
+
+        //playerStats->getPlayerStats($player);
+
+
         return $this->render('player/show.html.twig', array(
             'player' => $player,
         ));

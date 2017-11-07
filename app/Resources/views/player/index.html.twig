@@ -1,10 +1,9 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}The Gambling Club{% endblock %}
 
 {% block main %}
 
-    <h1>The Gambling Club</h1>
-    <hr class="my-4">
 {% for player in players %}
 
     <div class="row">
@@ -22,6 +21,7 @@
                 <li>League Position:</li>
                 <li>Games Won / Games Played: 3/15 : 20%</li>
                 <li>Won / Bought In / Net: £300 / £50 / £250</li>
+                <li>Av profit: </li>
             </ul>
 
             <a class="btn btn-primary" href="{{ path('player_show', { 'id': player.id }) }}">Stats</a>
