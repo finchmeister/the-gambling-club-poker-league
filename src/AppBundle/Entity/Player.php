@@ -2,6 +2,8 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -46,6 +48,12 @@ class Player
     private $leaguePlayer = false;
 
     /**
+     * @var Result[]|Collection
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Result", mappedBy="player")
+     */
+    private $results;
+
+    /**
      * @var string
      * @ORM\Column(type="text")
      */
@@ -60,6 +68,7 @@ class Player
     public function __construct()
     {
         $this->createdAt = new \DateTime();
+        $this->results = new ArrayCollection();
     }
 
     public function __toString()
@@ -126,6 +135,51 @@ class Player
     public function setLeaguePlayer(bool $leaguePlayer): Player
     {
         $this->leaguePlayer = $leaguePlayer;
+        return $this;
+    }
+
+    /**
+     * @return Result[]|Collection
+     */
+    public function getResults(): Collection
+    {
+        return $this->results;
+    }
+
+    /**
+     * @param Result $result
+     * @return Player
+     */
+    public function addResult(Result $result): Player
+    {
+        if (!$this->results->contains($result)) {
+            $this->results->add($result);
+            $result->setPlayer($this);
+        }
+        return $this;
+    }
+
+    /**
+     * @param Result $result
+     * @return Player
+     */
+    public function removeResult(Result $result): Player
+    {
+        if ($this->results->contains($result)) {
+            $this->results->removeElement($result);
+            $result->setPlayer(null);
+        }
+        return $this;
+    }
+
+
+    /**
+     * @param Result[]|Collection $results
+     * @return Player
+     */
+    public function setResults(Collection $results): Player
+    {
+        $this->results = $results;
         return $this;
     }
 

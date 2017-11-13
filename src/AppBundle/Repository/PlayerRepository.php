@@ -2,6 +2,7 @@
 
 namespace AppBundle\Repository;
 
+use AppBundle\Entity\Player;
 use Doctrine\ORM\EntityRepository;
 
 /**
@@ -12,4 +13,9 @@ use Doctrine\ORM\EntityRepository;
  */
 class PlayerRepository extends EntityRepository
 {
+    public function getGamesPlayed(Player $player)
+    {
+        return $this->createQueryBuilder('player')
+            ->leftJoin('player', 'result');
+    }
 }

@@ -34,7 +34,10 @@ class Result
     /**
      * @var Player
      *
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Player")
+     * @ORM\ManyToOne(
+     *     targetEntity="AppBundle\Entity\Player",
+     *     inversedBy="results"
+     * )
      * @Assert\NotNull()
      */
     private $player;
@@ -134,9 +137,10 @@ class Result
      * @param Player $player
      * @return Result
      */
-    public function setPlayer(Player $player): Result
+    public function setPlayer(Player $player = null): Result
     {
         $this->player = $player;
+        $player->addResult($this);
         return $this;
     }
 
@@ -207,7 +211,15 @@ class Result
      */
     public function getNet(): int
     {
-        return $this->winnings - ($this->getNoOfRebuys() + 1) * $this->getGame()->getBuyIn();
+        return $this->winnings - $this->getBoughtIn();
+    }
+
+    /**
+     * @return int
+     */
+    public function getBoughtIn(): int
+    {
+        return ($this->getNoOfRebuys() + 1) * $this->getGame()->getBuyIn();
     }
 
     /**

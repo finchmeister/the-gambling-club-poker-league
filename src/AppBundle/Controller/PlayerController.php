@@ -6,6 +6,7 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Player;
 use AppBundle\League\PlayerService;
+use AppBundle\PlayerStats\ComputePlayerStats;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -45,9 +46,15 @@ class PlayerController extends Controller
      * @param PlayerService $playerService
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function showAction(Player $player, PlayerService $playerService)
-    {
+    public function showAction(
+        Player $player,
+        PlayerService $playerService,
+        ComputePlayerStats $computePlayerStats
+    ) {
+        dump($player->getResults()->count());
         // Get stats.
+
+        //  getPlayerStats($player)
 
         dump($playerService->getPlayerWinLoseStats($player));
 
