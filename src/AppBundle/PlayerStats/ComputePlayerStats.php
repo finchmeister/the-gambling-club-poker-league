@@ -182,6 +182,6 @@ class ComputePlayerStats
 
     public function getMiddlePosition(): ?float
     {
-        return ArrayHelper::findArrayMedian($this->getForm()->toArray());
+        return ArrayHelper::getArrayMedian($this->getForm()->toArray());
     }
 }

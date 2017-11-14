@@ -6,7 +6,11 @@ namespace AppBundle\Helper;
 
 class ArrayHelper
 {
-    public static function findArrayMedian(array $array): ?float
+    /**
+     * @param array $array
+     * @return float|null
+     */
+    public static function getArrayMedian(array $array): ?float
     {
         if (count($array) === 0) {
             return null;
@@ -22,5 +26,18 @@ class ArrayHelper
             $median = $array[$middleIndex];
         }
         return $median;
+    }
+
+    public static function getArrayMode(array $array)
+    {
+        if (count($array) === 0) {
+            return null;
+        }
+        $c = array_count_values($array);
+        $commonValues = array_keys($c, max($c));
+        if (count($commonValues) > 1) {
+            return null;
+        }
+        return $commonValues[0];
     }
 }
