@@ -5,6 +5,7 @@ namespace AppBundle\PlayerStats;
 
 use AppBundle\Entity\Player;
 use AppBundle\Entity\Result;
+use AppBundle\Helper\ArrayHelper;
 use AppBundle\PlayerStats\Model\PlayerStats;
 use Doctrine\Common\Collections\Collection;
 
@@ -175,11 +176,12 @@ class ComputePlayerStats
 
     public function getMostCommonPosition(): ?float
     {
-
+        $c = array_count_values($this->getForm()->toArray());
+        return array_search(max($c), $c);
     }
 
     public function getMiddlePosition(): ?float
     {
-
+        return ArrayHelper::findArrayMedian($this->getForm()->toArray());
     }
 }
