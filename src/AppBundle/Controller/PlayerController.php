@@ -43,22 +43,16 @@ class PlayerController extends Controller
      * @Route("/{id}", name="player_show")
      * @Method("GET")
      * @param Player $player
-     * @param PlayerService $playerService
+     * @param ComputePlayerStats $computePlayerStats
      * @return \Symfony\Component\HttpFoundation\Response
+     * @internal param PlayerService $playerService
      */
     public function showAction(
         Player $player,
-        PlayerService $playerService,
         ComputePlayerStats $computePlayerStats
     ) {
-        dump($player->getResults()->count());
-        // Get stats.
 
-        //  getPlayerStats($player)
-
-        dump($playerService->getPlayerWinLoseStats($player));
-
-        //playerStats->getPlayerStats($player);
+        $playerStats = $computePlayerStats->getPlayerStats($player);
 
 
         return $this->render('player/show.html.twig', array(
