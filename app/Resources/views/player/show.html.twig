@@ -19,9 +19,22 @@
 
             <p>{{ player.bio }}</p>
             <ul>
-                <li>League Position:</li>
-                <li>Games Won / Games Played: 3/15 : 20%</li>
-                <li>Won / Bought In / Net: £300 / £50 / £250</li>
+                <li>League Position: //TODO</li>
+                <li>Games Won / Games Played: {{ allPlayerStats.gamesWon }}/{{ allPlayerStats.gamesPlayed }} : {{ (allPlayerStats.winRatio*100)|number_format(2) }}%</li>
+                <li>Won / Bought In / Net: £{{ allPlayerStats.cashWon }} / £{{ allPlayerStats.boughtIn }} / £{{ allPlayerStats.net }}</li>
+                <li>No of Rebuys: {{ allPlayerStats.noOfRebuys }}</li>
+                <li>Games Paid / Games Played: {{ allPlayerStats.gamesPaid }}/{{ allPlayerStats.gamesPlayed }} : {{ (allPlayerStats.paidRatio*100)|number_format(2) }}%</li>
+                <li>Average Win: £{{ allPlayerStats.averageWin|number_format(2) }}</li>
+                <li>Average Spend: £{{ allPlayerStats.averageLoss|number_format(2) }}</li>
+                <li>Average Profit: £{{ allPlayerStats.averageProfit|number_format(2) }}</li>
+                <li>Average Position: {{ allPlayerStats.averagePosition|number_format(2) }}</li>
+                <li>Most Common Position: {{ allPlayerStats.mostCommonPosition }}</li>
+                <li>Middle Position: {{ allPlayerStats.middlePosition }}</li>
+                <li>Average Position: {{ allPlayerStats.averagePosition|number_format(2) }}</li>
+                <li>Form: {{ allPlayerStats.form|join(', ') }}</li>
+                <li>Highest Position: {{ allPlayerStats.highestPosition }}</li>
+                <li>Biggest Win: {{ allPlayerStats.biggestWin }}</li>
+                <li>Biggest Spend: {{ allPlayerStats.biggestLoss }}</li>
             </ul>
         </div>
         <div class="col-sm-3">
@@ -61,7 +74,7 @@
 
         </div>
         <div class="col-sm-6">
-            <canvas id="TODOCHART" width="400" height="400"></canvas>
+            <canvas id="paidPieChart" width="400" height="400"></canvas>
 
         </div>
     </div>
@@ -91,7 +104,7 @@
                 labels: ["Winnings", "Bought In", "Net"],
                 datasets: [{
                     label: '£',
-                    data: [200, -100, 100],
+                    data: [{{ allPlayerStats.cashWon }}, {{ allPlayerStats.boughtIn }}, {{ allPlayerStats.net }}],
                     backgroundColor: [
                         'rgba(75, 192, 192, 0.2)',
                         'rgba(255, 99, 132, 0.2)',
@@ -121,7 +134,25 @@
             data: {
                 labels: ["Won", "Not Won"],
                 datasets: [{
-                    data: [2, 8],
+                    data: [{{ allPlayerStats.gamesWon }}, {{ allPlayerStats.gamesNotWon }}],
+                    backgroundColor: [
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(255, 99, 132, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(255,99,132,1)'
+                    ],
+                    borderWidth: 1
+                }]
+            }
+        });
+        new Chart(document.getElementById("paidPieChart"), {
+            type: 'pie',
+            data: {
+                labels: ["Paid", "Not Paid"],
+                datasets: [{
+                    data: [{{ allPlayerStats.gamesPaid }}, {{ allPlayerStats.gamesNotPaid }}],
                     backgroundColor: [
                         'rgba(75, 192, 192, 0.2)',
                         'rgba(255, 99, 132, 0.2)'
@@ -139,9 +170,10 @@
             type: 'line',
             data: {
                 labels: ["1", "2", "3", "4", "5", "6"],
+                labels: [{% for e in allPlayerStats.form %}"{{ loop.index }}", {% endfor %}],
                 datasets: [{
                     label: "Score",
-                    data: [8, 4, 0, 3, 5, 2],
+                    data: [{{ allPlayerStats.form|join(', ') }}],
                     fill: false,
                     backgroundColor: [
                         'rgba(75, 192, 192, 0.2)'

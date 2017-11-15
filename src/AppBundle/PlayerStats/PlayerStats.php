@@ -6,6 +6,7 @@ namespace AppBundle\PlayerStats;
 use AppBundle\Entity\Player;
 use AppBundle\Entity\Result;
 use AppBundle\Helper\ArrayHelper;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 
 /**
@@ -22,16 +23,32 @@ class PlayerStats
     private $player;
 
     /**
+     * @var Result[]|Collection
+     */
+    private $results;
+
+    public function __construct()
+    {
+        $this->results = new ArrayCollection();
+    }
+
+    /**
      * @return Result[]|Collection
      */
     public function getResults(): Collection
     {
-        return $this->player->getResults();
+        return $this->results;
     }
 
     public function setPlayer(Player $player): PlayerStats
     {
         $this->player = $player;
+        return $this;
+    }
+
+    public function setResults(Collection $results): PlayerStats
+    {
+        $this->results = $results;
         return $this;
     }
 
@@ -49,10 +66,36 @@ class PlayerStats
         )->count();
     }
 
+    public function getGamesNotWon(): ?int
+    {
+        return $this->getGamesPlayed() - $this->getGamesWon();
+    }
+
+    public function getGamesPaid(): ?int
+    {
+        return $this->getResults()->filter(
+            function (Result $result) {
+                return $result->getWinnings() > 0;
+            }
+        )->count();
+    }
+
+    public function getGamesNotPaid(): ?int
+    {
+        return $this->getGamesPlayed() - $this->getGamesPaid();
+    }
+
     public function getWinRatio()
     {
         return $this->getGamesPlayed() > 0
             ? $this->getGamesWon()/$this->getGamesPlayed()
+            : null;
+    }
+
+    public function getPaidRatio()
+    {
+        return $this->getGamesPlayed() > 0
+            ? $this->getGamesPaid()/$this->getGamesPlayed()
             : null;
     }
 
@@ -91,7 +134,7 @@ class PlayerStats
 
     public function getNet(): float
     {
-        return $this->getBoughtIn() - $this->getBoughtIn();
+        return $this->getCashWon() - $this->getBoughtIn();
     }
 
     public function getNoOfRebuys(): int

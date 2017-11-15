@@ -5,6 +5,7 @@ namespace AppBundle\PlayerStats;
 
 
 use AppBundle\Entity\Player;
+use AppBundle\Entity\Result;
 
 class ComputePlayerStats
 {
@@ -20,8 +21,28 @@ class ComputePlayerStats
         $this->playerStats = $playerStats;
     }
 
-    public function getPlayerStats(Player $player): PlayerStats
+    public function getAllPlayerStats(Player $player): PlayerStats
     {
-        return $this->playerStats->setPlayer($player);
+        return $this->playerStats->setResults($player->getResults());
+    }
+
+    public function getLeaguePlayerStats(Player $player): PlayerStats
+    {
+        $results = $player->getResults()->filter(
+            function (Result $result) {
+                return $result->getGame()->isLeague();
+            }
+        );
+        return $this->playerStats->setResults($results);
+    }
+
+    public function getNonLeaguePlayerStats(Player $player): PlayerStats
+    {
+        $results = $player->getResults()->filter(
+            function (Result $result) {
+                return !$result->getGame()->isLeague();
+            }
+        );
+        return $this->playerStats->setResults($results);
     }
 }
