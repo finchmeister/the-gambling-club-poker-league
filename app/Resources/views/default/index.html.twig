@@ -70,7 +70,9 @@
                             <td>{{ result.noOfRebuys|number_format(0) }}</td>
                             <td>£{{ result.net|number_format(0) }}</td>
                             <td>
-                                <i class="fa fa-{{ result.player.leaguePlayer ? 'check' : 'times' }}" aria-hidden="true"></i>
+                                {% if result.player.leaguePlayer %}
+                                    <i class="material-icons">done</i>
+                                {% endif %}
                             </td>
                         </tr>
                     {% endfor %}
