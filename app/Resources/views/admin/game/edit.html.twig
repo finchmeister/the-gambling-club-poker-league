@@ -7,8 +7,8 @@
     {% form_theme edit_form 'bootstrap_3_layout.html.twig' %}
 
     {{ form_start(edit_form) }}
+    {{ form_errors(edit_form) }}
     {{ form_row(edit_form.date) }}
-
     {{ form_row(edit_form.host) }}
     {{ form_row(edit_form.buyIn) }}
     {{ form_row(edit_form.spotifyPlaylistUri) }}
@@ -16,15 +16,29 @@
     {{ form_row(edit_form.snacks) }}
     {{ form_row(edit_form.snacksProvider) }}
     {{ form_row(edit_form.snacks) }}
+    {% do edit_form.results.setRendered %}
 
-    <ul class="results" data-prototype="{{ form_widget(edit_form.results.vars.prototype)|e('html_attr') }}">
+    <h2 class="">Results</h2>
+    
+    <div id="results-container" class="results" data-prototype="{{ form_widget(edit_form.results.vars.prototype)|e('html_attr') }}">
         {% for result in edit_form.results %}
-            <li>{{ form_widget(result) }}</li>
-        {% endfor %}
-    </ul>
 
-        {{ form_widget(edit_form) }}
-        <input class="btn btn-primary btn-block" type="submit" value="Save" />
+            <div class="card my-3">
+                <div class="card-header">
+                    {#<button type="button" class="close" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>#}
+                </div>
+                <div class="card-body">
+                    {{ form_widget(result) }}
+                </div>
+            </div>
+
+        {% endfor %}
+    </div>
+
+    
+        <input class="btn my-3 btn-primary btn-block" type="submit" value="Save" />
     {{ form_end(edit_form) }}
 
 
@@ -32,40 +46,38 @@
 
 
 {% block sidebar %}
-    {{ form_start(delete_form) }}
-    <input class="p-2 btn btn-danger btn-lg btn-block"  type="submit" value="Delete">
-    {{ form_end(delete_form) }}
 
-    <a class="p-2 btn btn-primary btn-lg btn-block"  href="{{ path('game_index') }}">Back to the list</a>
+
+    {% include 'admin/_delete_modal.html.twig' with {'entity' : 'game', 'form' : delete_form } %}
+
+    <div class="my-2">
+        <a class="btn btn-primary btn-lg btn-block"  href="{{ path('game_index') }}">Back to the list</a>
+    </div>
 
 
 {% endblock %}
 
  {% block javascripts %}
-     <script
-             src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-             integrity="sha256-k2WSCIexGzOj3Euiig+TlR8gA0EmPjuc79OEeY5L45g="
-             crossorigin="anonymous">
-     </script>
+     {{ parent() }}
+
 
      <script>
 
          var $collectionHolder;
 
          // setup an "add a result" link
-         var $addResultLink = $('<a href="#" class="add_result_link">Add a result</a>');
-         var $newLinkLi = $('<li></li>').append($addResultLink);
+         var $addResultLink = $('<a href="#" class="btn btn-block btn-success">Add a result</a>');
 
          jQuery(document).ready(function() {
-             // Get the ul that holds the collection of results
-             $collectionHolder = $('ul.results');
+             // Get the div that holds the collection of results
+             $collectionHolder = $('#results-container');
 
-             $collectionHolder.find('li').each(function() {
+             $collectionHolder.find('.card').each(function() {
                  addResultFormDeleteLink($(this));
              });
 
              // add the "add a result" anchor and li to the results ul
-             $collectionHolder.append($newLinkLi);
+             $collectionHolder.append($addResultLink);
 
              // count the current form inputs we have (e.g. 2), use that as the new
              // index when inserting a new item (e.g. 2)
@@ -76,7 +88,7 @@
                  e.preventDefault();
 
                  // add a new result form (see next code block)
-                 addResultForm($collectionHolder, $newLinkLi);
+                 addResultForm($collectionHolder, $addResultLink);
              });
          });
 
@@ -102,23 +114,23 @@
              $collectionHolder.data('index', index + 1);
 
              // Display the form in the page in an li, before the "Add a result" link li
-             var $newFormLi = $('<li></li>').append(newForm);
+             var $newFormLi = $('<div class="card-body"></div>').append(newForm);
+             var $newCardForm = $('<div class="card my-3"></div>').append($newFormLi);
 
-             $newLinkLi.before($newFormLi);
+             $newLinkLi.before($newCardForm);
 
-             addResultFormDeleteLink($newFormLi);
+             addResultFormDeleteLink($newCardForm);
          }
 
-         function addResultFormDeleteLink($resultFormLi) {
-             var $removeFormA = $('<a href="#">delete this result</a>');
-             $resultFormLi.append($removeFormA);
 
+         function addResultFormDeleteLink($resultForm) {
+             var $removeFormA = $('<button type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>');
+             $resultForm.find('.card-header').html($removeFormA);
              $removeFormA.on('click', function(e) {
                  // prevent the link from creating a "#" on the URL
                  e.preventDefault();
-
                  // remove the li for the result form
-                 $resultFormLi.remove();
+                 $resultForm.remove();
              });
          }
      </script>

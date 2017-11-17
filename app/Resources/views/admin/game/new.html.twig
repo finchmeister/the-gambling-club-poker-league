@@ -1,16 +1,32 @@
 {% extends 'base.html.twig' %}
 
-{% block body %}
-    <h1>Game creation</h1>
+{% block title %}New Game{% endblock %}
+
+{% block main %}
+
+    {% form_theme form 'bootstrap_3_layout.html.twig' %}
 
     {{ form_start(form) }}
-        {{ form_widget(form) }}
-        <input type="submit" value="Create" />
+    {{ form_errors(form) }}
+    {{ form_row(form.date) }}
+    {{ form_row(form.host) }}
+    {{ form_row(form.buyIn) }}
+    {{ form_row(form.spotifyPlaylistUri) }}
+    {{ form_row(form.isLeague) }}
+    {% do form.snacks.setRendered %}
+    {% do form.snacksProvider.setRendered %}
+    {% do form.results.setRendered %}
+
+    <input class="btn btn-primary btn-block" type="submit" value="Save" />
+
+
     {{ form_end(form) }}
 
-    <ul>
-        <li>
-            <a href="{{ path('game_index') }}">Back to the list</a>
-        </li>
-    </ul>
+{% endblock %}
+
+{% block sidebar %}
+
+    <a class="p-2 btn btn-primary btn-lg btn-block"  href="{{ path('game_index') }}">Back to the list</a>
+
+
 {% endblock %}

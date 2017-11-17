@@ -51,7 +51,7 @@ class AdminGameController extends Controller
             $em->persist($game);
             $em->flush();
 
-            return $this->redirectToRoute('game_show', array('id' => $game->getId()));
+            return $this->redirectToRoute('game_index');
         }
 
         return $this->render('admin/game/new.html.twig', array(
@@ -60,21 +60,6 @@ class AdminGameController extends Controller
         ));
     }
 
-    /**
-     * Finds and displays a game entity.
-     *
-     * @Route("/{id}", name="game_show")
-     * @Method("GET")
-     */
-    public function showAction(Game $game)
-    {
-        $deleteForm = $this->createDeleteForm($game);
-
-        return $this->render('admin/game/show.html.twig', array(
-            'game' => $game,
-            'delete_form' => $deleteForm->createView(),
-        ));
-    }
 
     /**
      * Displays a form to edit an existing game entity.
@@ -130,12 +115,13 @@ class AdminGameController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+            $gameId = $game->getId();
             $em->remove($game);
             $em->flush();
 
             $this->addFlash('danger', sprintf(
                 "Game id: %s has been deleted",
-                $game->getId()
+                $gameId
             ));
         }
 

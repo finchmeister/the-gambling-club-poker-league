@@ -19,13 +19,12 @@
         <tbody>
         {% for game in games %}
             <tr>
-                <td><a href="{{ path('game_show', { 'id': game.id }) }}">{{ game.id }}</a></td>
+                <td><a href="{{ path('game_edit', { 'id': game.id }) }}">{{ game.id }}</a></td>
                 <td>{% if game.date %}{{ game.date|date('Y-m-d') }}{% endif %}</td>
                 <td>{{ game.buyIn }}</td>
                 <td>{{ game.noOfPlayers }}</td>
                 <td>{{ game.host }}</td>
                 <td>
-                    <a class="btn btn-primary" href="{{ path('game_show', { 'id': game.id }) }}">show</a>
                     <a class="btn btn-primary" href="{{ path('game_edit', { 'id': game.id }) }}">edit</a>
                 </td>
 

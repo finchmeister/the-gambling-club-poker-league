@@ -3,6 +3,7 @@
 namespace AppBundle\Controller\Admin;
 
 use AppBundle\Entity\Player;
+use AppBundle\Form\PlayerType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -41,7 +42,7 @@ class AdminPlayerController extends Controller
     public function newAction(Request $request)
     {
         $player = new Player();
-        $form = $this->createForm('AppBundle\Form\PlayerType', $player);
+        $form = $this->createForm(PlayerType::class, $player);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -83,7 +84,7 @@ class AdminPlayerController extends Controller
     public function editAction(Request $request, Player $player)
     {
         $deleteForm = $this->createDeleteForm($player);
-        $editForm = $this->createForm('AppBundle\Form\PlayerType', $player);
+        $editForm = $this->createForm(PlayerType::class, $player);
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {

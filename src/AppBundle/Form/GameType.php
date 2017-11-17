@@ -45,13 +45,4 @@ class GameType extends AbstractType
         ));
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getBlockPrefix()
-    {
-        return 'appbundle_game';
-    }
-
-
 }
