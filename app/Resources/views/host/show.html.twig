@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ host.name }} - Host Stats{% endblock %}
+
+{% block main %}
+
+    <ul>
+        <li>Games played:</li>
+        <li>Amount won:</li>
+        <li>No of rebuys:</li>
+        <li>Most wins:</li>
+        <li>Biggest winner:</li>
+        <li>Fortress: host won/played</li>
+    </ul>
+
+// TODO: Display games played here
+
+
+
+{% endblock %}
+
+{% block sidebar %}
+
+    <a class="btn btn-primary btn-lg btn-block" href="{{ path('player_show', { 'id': host.id }) }}" role="button">Go to Player Stats</a>
+
+
+{% endblock %}

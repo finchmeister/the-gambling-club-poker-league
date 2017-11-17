@@ -3,50 +3,19 @@
 {% block title %}Edit Game{% endblock %}
 
 {% block main %}
+
+    {% form_theme edit_form 'bootstrap_3_layout.html.twig' %}
+
     {{ form_start(edit_form) }}
+    {{ form_row(edit_form.date) }}
 
-<div class="form-group">
-     {{ form_label(edit_form.date) }}
-     {{ form_widget(edit_form.date, {'attr': {'class': 'form-control'}}) }}
-
-</div>
-
-<div class="form-group">
-    {{ form_label(edit_form.host) }}
-    {{ form_widget(edit_form.host, {'attr': {'class': 'form-control'}}) }}
-</div>
-
-<div class="form-group">
-{{ form_label(edit_form.buyIn) }}
-    {{ form_widget(edit_form.buyIn, {'attr': {'class': 'form-control'}}) }}
-
-</div>
-
-<div class="form-group">
-{{ form_label(edit_form.spotifyPlaylistUri) }}
-    {{ form_widget(edit_form.spotifyPlaylistUri, {'attr': {'class': 'form-control'}}) }}
-
-</div>
-
-<div class="form-group">
-{{ form_label(edit_form.isLeague) }}
-
-    {{ form_widget(edit_form.isLeague, {'attr': {'class': 'form-control'}}) }}
-
-</div>
-
-<div class="form-group">
-    {{ form_label(edit_form.snacks) }}
-    {{ form_widget(edit_form.snacks, {'attr': {'class': 'form-control'}}) }}
-
-</div>
-
-<div class="form-group">
-
-    {{ form_label(edit_form.snacksProvider) }}
-    {{ form_widget(edit_form.snacksProvider, {'attr': {'class': 'form-control'}}) }}
-</div>
-
+    {{ form_row(edit_form.host) }}
+    {{ form_row(edit_form.buyIn) }}
+    {{ form_row(edit_form.spotifyPlaylistUri) }}
+    {{ form_row(edit_form.isLeague) }}
+    {{ form_row(edit_form.snacks) }}
+    {{ form_row(edit_form.snacksProvider) }}
+    {{ form_row(edit_form.snacks) }}
 
     <ul class="results" data-prototype="{{ form_widget(edit_form.results.vars.prototype)|e('html_attr') }}">
         {% for result in edit_form.results %}

@@ -26,7 +26,7 @@
     {% for game in games %}
 
         <h3>{{ game.date|date("D jS, M Y") }}</h3>
-        <h4>{{ game.host }} <small class="text-muted">{{ game.host.location }}</small></h4>
+        <h4><a href="{{ path('host_show', { 'id': game.host.id }) }}">{{ game.host }}</a> <small class="text-muted">{{ game.host.location }}</small></h4>
 
         <div class="row">
             <div class="col-sm-6">
@@ -64,7 +64,7 @@
                     {% for result in game.results %}
                         <tr>
                             <td>{{ result.position }}</td>
-                            <td class="text-left">{{ result.player }}</td>
+                            <td class="text-left"><a href="{{ path('player_show', { 'id': result.player.id }) }}">{{ result.player }}</a></td>
                             <td>{{ result.leaguePoints|number_format(league_points_decimal_places) }}</td>
                             <td>£{{ result.winnings|number_format(0) }}</td>
                             <td>{{ result.noOfRebuys|number_format(0) }}</td>

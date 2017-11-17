@@ -1,18 +1,10 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}{{ player.name }}{% endblock %}
 
 {% block main %}
 
-    <h1>The Gambling Club</h1>
-    <hr class="my-4">
 
-
-    <div class="row">
-        <div class="col">
-            <h2>{{ player.name }}</h2>
-        </div>
-
-    </div>
 
     <div class="row">
         <div class="col-sm-9">
@@ -84,6 +76,9 @@
 {% endblock %}
 
 {% block sidebar %}
+
+    <a class="btn btn-primary btn-lg btn-block" href="{{ path('host_show', { 'id': player.id }) }}" role="button">Go to Host Stats</a>
+
 
     {% if is_granted('ROLE_ADMIN') %}
         <a class="btn btn-primary btn-lg btn-block" href="{{ path('player_edit', { 'id': player.id }) }}" role="button">Edit</a>
