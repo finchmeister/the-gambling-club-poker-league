@@ -10,6 +10,8 @@
             <link rel="stylesheet" href="{{ asset('assets/css/app.css') }}">
             <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
                   rel="stylesheet">
+
+            <link href="{{ asset('assets/font/css/open-iconic-bootstrap.min.css') }}" rel="stylesheet">
         {% endblock %}
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
@@ -38,7 +40,7 @@
                             </li>
                             <li class="nav-item {% if app.request.attributes.get('_route') == 'game_index' %}active{% endif %}">
                                 <a class="nav-link" href="{{ path('game_index') }}">
-                                    Edit Game
+                                    Edit Games
                                 </a>
                             </li>
 
