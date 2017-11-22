@@ -15,6 +15,12 @@ bin/console app:update-league-points
 bin/console server:run 
 ```
 
+## Docker
+```
+docker-compose up -d
+
+```
+
 ## TODO
 - [x] Show league table
 - [ ] List upcoming game
@@ -41,12 +47,14 @@ bin/console server:run
 - [ ] Add image
 
 ## Player
-- [ ] Hook in real stats
+- [x] Hook in real stats
+## Host
+- [] Hook in real stats
 
 ## Dev
 - [x] Codesniffer
 - [x] Fixtures
-- [ ] Phpunit
+- [x] Phpunit
 - [ ] Docker
 - [ ] Travis?
 
