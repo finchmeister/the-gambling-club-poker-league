@@ -4,9 +4,9 @@ services:
   - docker
 
 before install:
-- docker-compose build
-- docker-compose up -d
-- docker ps -a
 
 script:
-- docker-compose exec php ./vendor/phpunit/phpunit/phpunit
+- docker-compose up -d
+- docker ps -a
+- docker exec thegamblingclubpokerleague_php_1 ls
+- docker exec thegamblingclubpokerleague_php ./vendor/phpunit/phpunit/phpunit
