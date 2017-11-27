@@ -8,5 +8,7 @@ script:
 - docker ps -a
 - docker exec thegamblingclubpokerleague_php_1 ls
 - docker exec thegamblingclubpokerleague_php_1 composer install --prefer-dist --no-progress --no-suggest
+- docker exec thegamblingclubpokerleague_php_1 mkdir -p var/data
+- docker exec thegamblingclubpokerleague_php_1 bin/console doctrine:schema:update --force
 - docker exec thegamblingclubpokerleague_php_1 ls
 - docker exec thegamblingclubpokerleague_php_1 ./vendor/phpunit/phpunit/phpunit
