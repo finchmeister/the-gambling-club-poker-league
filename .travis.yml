@@ -3,10 +3,8 @@ sudo: required
 services:
   - docker
 
-before install:
-
 script:
 - docker-compose up -d
 - docker ps -a
 - docker exec thegamblingclubpokerleague_php_1 ls
-- docker exec thegamblingclubpokerleague_php ./vendor/phpunit/phpunit/phpunit
+- docker exec thegamblingclubpokerleague_php_1 ./vendor/phpunit/phpunit/phpunit
