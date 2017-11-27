@@ -6,12 +6,12 @@ services:
             dockerfile: ./docker/nginx/Dockerfile
             context: ./
         ports:
-            - "8081:80"
-        volumes:
-            - .:/var/www/html
+            - "80:80"
+        #volumes:
+        #    - .:/var/www/html
     php:
         build:
             dockerfile: ./docker/php/Dockerfile
             context: ./
-§§        volumes:
-            - .:/var/www/html
+        #volumes:
+        #    - .:/var/www/html
