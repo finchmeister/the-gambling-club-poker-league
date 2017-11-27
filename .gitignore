@@ -19,3 +19,4 @@
 /vendor/
 /web/bundles/
 .idea/
+google-cloud-auth.json

@@ -76,3 +76,12 @@ bin/console server:start 0.0.0.0:8000
 # Refresh database
 bin/console doctrine:schema:drop --force; bin/console doctrine:schema:update --force; bin/console doctrine:fixtures:load -n; bin/console app:update-league-points
 ```
+
+## GCP
+
+```
+export GOOGLE_APPLICATION_CREDENTIALS=google-cloud-auth.json 
+
+
+docker-machine create --driver google   --google-project the-gambling-club-poker-league   --google-zone europe-west1-b   --google-machine-type f1-micro   vm01
+```
