@@ -47,6 +47,9 @@ COPY bin bin/
 COPY src src/
 COPY web web/
 
+# Symfony thinks it is running an older version without a var directory
+RUN mkdir var
+
 # Tests
 COPY tests tests/
 COPY phpunit.xml.dist ./
