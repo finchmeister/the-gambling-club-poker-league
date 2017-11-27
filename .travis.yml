@@ -9,6 +9,8 @@ script:
 - docker exec thegamblingclubpokerleague_php_1 ls
 - docker exec thegamblingclubpokerleague_php_1 composer install --prefer-dist --no-progress --no-suggest
 - docker exec thegamblingclubpokerleague_php_1 mkdir -p var/data
-- docker exec thegamblingclubpokerleague_php_1 bin/console doctrine:schema:update --force
+#TODO, sort this out
+- docker exec thegamblingclubpokerleague_php_1 bin/console doctrine:schema:drop --force; bin/console doctrine:schema:update --force; bin/console doctrine:fixtures:load -n; bin/console app:update-league-points
+- docker exec thegamblingclubpokerleague_php_1 chown -R www-data:www-data var/
 - docker exec thegamblingclubpokerleague_php_1 ls
 - docker exec thegamblingclubpokerleague_php_1 ./vendor/phpunit/phpunit/phpunit
