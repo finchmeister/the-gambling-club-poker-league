@@ -47,4 +47,8 @@ COPY bin bin/
 COPY src src/
 COPY web web/
 
+# Tests
+COPY tests tests/
+COPY phpunit.xml.dist ./
+
 RUN composer dump-autoload --optimize --classmap-authoritative --no-dev
