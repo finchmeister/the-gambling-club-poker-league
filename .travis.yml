@@ -3,4 +3,10 @@ sudo: required
 services:
   - docker
 
-script: ./bin/travis_test.sh
+before install:
+- docker-compose build
+- docker-compose up -d
+- docker ps -a
+
+script:
+- docker-compose exec php ./vendor/phpunit/phpunit/phpunit
