@@ -1,5 +1,7 @@
 # the-gambling-club-poker-league
 
+[![Build Status](https://travis-ci.org/finchmeister/the-gambling-club-poker-league.svg?branch=master)](https://travis-ci.org/finchmeister/the-gambling-club-poker-league)
+
 ## Setup
 > TODO: automate with a make file
 
