@@ -85,3 +85,8 @@ export GOOGLE_APPLICATION_CREDENTIALS=google-cloud-auth.json
 
 docker-machine create --driver google   --google-project the-gambling-club-poker-league   --google-zone europe-west1-b   --google-machine-type f1-micro   vm01
 ```
+
+## Docker
+```
+docker-compose -f docker-compose-prod.yml up -d
+```

@@ -13,5 +13,7 @@ services:
         build:
             dockerfile: ./docker/php/Dockerfile
             context: ./
-        #volumes:
-        #    - .:/var/www/html
+        volumes:
+            - app_data:/var/www/html/var/data
+volumes:
+    app_data: {}

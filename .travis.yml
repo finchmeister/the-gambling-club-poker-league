@@ -4,13 +4,12 @@ services:
   - docker
 
 script:
-- docker-compose up -d > /dev/null 2>&1 || true
+- docker-compose -f docker-compose-prod.yml up -d > /dev/null 2>&1 || true
 - docker ps -a
 - docker exec thegamblingclubpokerleague_php_1 ls
+# TODO, move elsewhere
 - docker exec thegamblingclubpokerleague_php_1 composer install --prefer-dist --no-progress --no-suggest
-- docker exec thegamblingclubpokerleague_php_1 mkdir -p var/data
 - docker exec thegamblingclubpokerleague_php_1 chown -R www-data:www-data var/
-#TODO, sort this out
 - docker exec thegamblingclubpokerleague_php_1 bin/console doctrine:schema:update --force
 - docker exec thegamblingclubpokerleague_php_1 bin/console doctrine:fixtures:load -n
 - docker exec thegamblingclubpokerleague_php_1 bin/console app:update-league-points
