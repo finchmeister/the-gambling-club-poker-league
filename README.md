@@ -90,3 +90,6 @@ docker-machine create --driver google   --google-project the-gambling-club-poker
 ```
 docker-compose -f docker-compose-prod.yml up -d
 ```
+
+## Docker Machine Import
+<https://gist.github.com/schickling/2c48da462a7def0a577e>
