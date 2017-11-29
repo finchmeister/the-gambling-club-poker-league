@@ -11,5 +11,5 @@ use Symfony\Component\Validator\Constraint;
  */
 class UniquePlayer extends Constraint
 {
-    public $message = "Player id(s) {{ player }} cannot have more than 1 result per game";
+    public $message = "Player(s) {{ player }} cannot have more than 1 result per game";
 }

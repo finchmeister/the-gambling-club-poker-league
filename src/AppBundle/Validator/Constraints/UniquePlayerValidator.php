@@ -17,13 +17,21 @@ class UniquePlayerValidator extends ConstraintValidator
     public function validate($results, Constraint $constraint)
     {
         if ($results instanceof Collection) {
-            $players = $results->map(function (Result $result) {
+            // Get Id=>Player mappings
+            $playerIdMappings = [];
+            /** @var Result $result */
+            foreach ($results as $result) {
+                $player = $result->getPlayer();
+                $playerIdMappings[$player->getId()] = $player;
+            }
+
+            $playerIds = $results->map(function (Result $result) {
                 return $result->getPlayer()->getId();
             })->toArray();
             $duplicatePlayers = [];
-            foreach (array_count_values($players) as $player => $value) {
+            foreach (array_count_values($playerIds) as $playerId => $value) {
                 if ($value > 1) {
-                    $duplicatePlayers[] = $player;
+                    $duplicatePlayers[] = $playerIdMappings[$playerId]->getName();
                 }
             }
 

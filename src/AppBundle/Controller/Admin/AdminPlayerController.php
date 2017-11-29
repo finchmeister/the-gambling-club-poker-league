@@ -83,7 +83,10 @@ class AdminPlayerController extends Controller
      */
     public function editAction(Request $request, Player $player)
     {
-        $deleteForm = $this->createDeleteForm($player);
+        $deleteFormView = $player->getResults()->count() === 0
+            ? $deleteForm = $this->createDeleteForm($player)->createView()
+            : null;
+
         $editForm = $this->createForm(PlayerType::class, $player);
         $editForm->handleRequest($request);
 
@@ -101,7 +104,7 @@ class AdminPlayerController extends Controller
         return $this->render('admin/player/edit.html.twig', array(
             'player' => $player,
             'edit_form' => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
+            'delete_form' => $deleteFormView,
         ));
     }
 
