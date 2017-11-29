@@ -13,7 +13,11 @@
 {% block main %}
 
     <h2>Stats</h2>
-    <p class="lead">Coming soon...</p>
+    <ul>
+        <li>Games played: {{ overallStats.noOfGamesPlayed }}</li>
+        <li>Cash won: £{{ overallStats.cashWon }}</li>
+    </ul>
+    <p class="lead">More coming soon...</p>
 
     {% if leagueTable %}
         {% include "partial/_league_table.html.twig" %}
@@ -35,7 +39,6 @@
         <div class="row">
             <div class="col-sm-6">
                 <ul>
-                    <li>Host: {{ game.host }}</li>
                     <li>League: {{ game.isLeague }}</li>
                     <li>Buy in: £{{ game.buyIn }}</li>
                     {% if game.snacksProvider %}
@@ -60,7 +63,9 @@
                         <th>Winnnigs</th>
                         <th>Rebuys</th>
                         <th>Net</th>
-                        <th>League Player</th>
+                        {% if game.league %}
+                            <th>League Player</th>
+                        {% endif %}
                     </tr>
                     </thead>
 
@@ -73,11 +78,13 @@
                             <td>£{{ result.winnings|number_format(0) }}</td>
                             <td>{{ result.noOfRebuys|number_format(0) }}</td>
                             <td>£{{ result.net|number_format(0) }}</td>
-                            <td>
-                                {% if result.player.leaguePlayer %}
-                                    <span class="oi oi-check"></span>
-                                {% endif %}
-                            </td>
+                            {% if game.league %}
+                                <td>
+                                    {% if result.player.leaguePlayer %}
+                                        <span class="oi oi-check"></span>
+                                    {% endif %}
+                                </td>
+                            {% endif %}
                         </tr>
                     {% endfor %}
 
