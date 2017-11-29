@@ -5,33 +5,39 @@
 
 {% block main %}
 
-    <table class="table table-striped text-center">
-        <thead >
-        <tr>
-            <th>Id</th>
-            <th>Date</th>
-            <th class="text-left">Host</th>
-            <th>No of Players</th>
-            <th>Buy in</th>
-            <th>Actions</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for game in games %}
+    {% if games %}
+        <table class="table table-striped text-center table-responsive-md">
+            <thead >
             <tr>
-                <td><a href="{{ path('game_edit', { 'id': game.id }) }}">{{ game.id }}</a></td>
-                <td>{% if game.date %}{{ game.date|date(date_format) }}{% endif %}</td>
-                <td class="text-left">{{ game.host }}</td>
-                <td>{{ game.noOfPlayers }}</td>
-                <td>£{{ game.buyIn }}</td>
-                <td>
-                    <a class="btn btn-primary" href="{{ path('game_edit', { 'id': game.id }) }}">Edit</a>
-                </td>
-
+                <th>Id</th>
+                <th>Date</th>
+                <th class="text-left">Host</th>
+                <th>No of Players</th>
+                <th>Buy in</th>
+                <th>Actions</th>
             </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+            {% for game in games %}
+                <tr>
+                    <td><a href="{{ path('game_edit', { 'id': game.id }) }}">{{ game.id }}</a></td>
+                    <td>{% if game.date %}{{ game.date|date(date_format) }}{% endif %}</td>
+                    <td class="text-left">{{ game.host }}</td>
+                    <td>{{ game.noOfPlayers }}</td>
+                    <td>£{{ game.buyIn }}</td>
+                    <td>
+                        <a class="btn btn-primary" href="{{ path('game_edit', { 'id': game.id }) }}">Edit</a>
+                    </td>
+
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p class="lead">No games have been created yet</p>
+    {% endif %}
+
+
 {% endblock %}
 
 

@@ -89,6 +89,7 @@ docker-machine create --driver google   --google-project the-gambling-club-poker
 ## Docker
 ```
 docker-compose -f docker-compose-prod.yml up -d
+docker exec -it CONTAINER_ID /bin/sh
 ```
 
 ## Docker Machine Import

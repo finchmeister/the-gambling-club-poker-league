@@ -34,11 +34,11 @@ class LeagueTableService
         return $leagueTableResults;
     }
 
-    public function getLastUpdated()
+    public function getLastUpdated(): ?\DateTimeInterface
     {
         $result = $this->em->getRepository(Result::class)
             ->getLastUpdated();
-        return $result['updatedAt'];
+        return $result['updatedAt'] ?? null;
     }
 
 }

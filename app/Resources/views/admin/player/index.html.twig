@@ -5,17 +5,21 @@
 
 
     {% block main %}
-        <table class="table table-striped text-center">
+
+        {% if players %}
+
+        <table class="table table-striped text-center table-responsive-md">
             <thead>
             <tr>
                 <th>Id</th>
                 <th class="text-left">Name</th>
                 <th class="text-left">Location</th>
-                <th>Leagueplayer</th>
+                <th>League Player</th>
                 <th>Actions</th>
             </tr>
             </thead>
             <tbody>
+
             {% for player in players %}
                 <tr>
                     <td><a href="{{ path('player_show', { 'id': player.id }) }}">{{ player.id }}</a></td>
@@ -33,6 +37,10 @@
             {% endfor %}
             </tbody>
         </table>
+        {% else %}
+            <p class="lead">No players have been created yet</p>
+        {% endif %}
+
     {% endblock %}
 
     {% block sidebar %}

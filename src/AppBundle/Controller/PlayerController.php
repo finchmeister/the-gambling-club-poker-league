@@ -32,8 +32,6 @@ class PlayerController extends Controller
 
         $players = $em->getRepository(Player::class)->findAll();
 
-
-
         return $this->render('player/index.html.twig', array(
             'players' => $players,
         ));

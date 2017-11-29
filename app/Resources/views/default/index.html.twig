@@ -12,16 +12,20 @@
 
 {% block main %}
 
+    <h2>Stats</h2>
+    <p class="lead">Coming soon...</p>
 
-
-
-
-
-    {% include "partial/_league_table.html.twig" %}
+    {% if leagueTable %}
+        {% include "partial/_league_table.html.twig" %}
+    {% endif %}
 
     <hr class="my-4">
 
     <h2>Games</h2>
+
+    {% if games is empty %}
+        <p class="lead">No games played yet</p>
+    {% endif %}
 
     {% for game in games %}
 
@@ -82,17 +86,9 @@
             </div>
         </div>
 
-
-
-
-
-
-
         <hr class="my-5">
 
-
     {% endfor %}
-
 
 {% endblock %}
 

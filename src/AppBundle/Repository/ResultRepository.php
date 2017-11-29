@@ -21,7 +21,7 @@ class ResultRepository extends EntityRepository
             ->orderBy('r.updatedAt', 'DESC')
             ->setMaxResults(1)
             ->getQuery()
-            ->getSingleResult();
+            ->getResult();
     }
 
     public function getPlayersWinLoseStats(Player $player = null)

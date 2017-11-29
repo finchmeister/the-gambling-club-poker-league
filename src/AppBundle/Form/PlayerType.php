@@ -19,7 +19,7 @@ class PlayerType extends AbstractType
             ->add('location')
             ->add('leaguePlayer')
             ->add('bio', null, [
-                'attr' =>['rows' => 5],
+                'attr' => ['rows' => 5],
             ])
         ;
     }

@@ -1,16 +1,21 @@
 {% extends 'base.html.twig' %}
 
-{% block body %}
-    <h1>Player creation</h1>
+{% block title %}New Player{% endblock %}
 
-    {{ form_start(form) }}
-        {{ form_widget(form) }}
-        <input type="submit" value="Create" />
-    {{ form_end(form) }}
 
-    <ul>
-        <li>
-            <a href="{{ path('admin_player_index') }}">Back to the list</a>
-        </li>
-    </ul>
+ {% block main %}
+
+     {% form_theme form 'bootstrap_3_layout.html.twig' %}
+
+     {{ form_start(form) }}
+     {{ form_widget(form) }}
+     <input class="btn btn-primary btn-lg btn-block" type="submit" value="Save" />
+     {{ form_end(form) }}
+
+ {% endblock %}
+
+{% block sidebar %}
+
+    <a class="my-2 btn btn-primary btn-lg btn-block" href="{{ path('admin_player_index') }}">Back to the list</a>
+
 {% endblock %}

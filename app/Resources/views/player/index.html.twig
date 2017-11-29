@@ -4,6 +4,10 @@
 
 {% block main %}
 
+    {% if players is empty %}
+        <p class="lead">No players created yet</p>
+    {% endif %}
+
 {% for player in players %}
 
     <div class="row">

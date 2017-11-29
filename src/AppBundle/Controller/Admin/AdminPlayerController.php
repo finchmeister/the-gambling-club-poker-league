@@ -50,7 +50,7 @@ class AdminPlayerController extends Controller
             $em->persist($player);
             $em->flush();
 
-            return $this->redirectToRoute('admin_player_show', array('id' => $player->getId()));
+            return $this->redirectToRoute('admin_player_index', array('id' => $player->getId()));
         }
 
         return $this->render('admin/player/new.html.twig', array(
