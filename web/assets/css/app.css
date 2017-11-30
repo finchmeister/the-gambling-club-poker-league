@@ -10,5 +10,5 @@ body {
     bottom: 0;
     width: 100%;
     height: 60px; /* Set the fixed height of the footer here */
-    line-height: 60px; /* Vertically center the text there */
+    /* line-height: 60px; */ /* This is causing a margin below Vertically center the text there */
 }
