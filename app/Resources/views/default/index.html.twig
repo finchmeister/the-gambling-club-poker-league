@@ -51,47 +51,57 @@
                     <iframe src="https://open.spotify.com/embed?uri={{ game.spotifyPlaylistUri }}" width="100%" height="80" frameborder="0" allowtransparency="true"></iframe>
                 {% endif %}
             </div>
-        </div>
-        <div class="row">
-            <div class="col">
-                <table class="table text-center table-striped table-responsive-md">
-                    <thead class="">
-                    <tr>
-                        <th>#</th>
-                        <th class="text-left">Player</th>
-                        <th>Points</th>
-                        <th>Winnnigs</th>
-                        <th>Rebuys</th>
-                        <th>Net</th>
-                        {% if game.league %}
-                            <th>League Player</th>
-                        {% endif %}
-                    </tr>
-                    </thead>
 
-                    {# @var result \AppBundle\Entity\Result #}
-                    {% for result in game.results %}
+            {% if game.results is empty %}
+                <div class="col">
+                    <p class="lead">Game not played yet</p>
+                </div>
+            {% endif %}
+        </div>
+        {% if game.results is not empty %}
+
+            <div class="row">
+                <div class="col">
+                    <table class="table text-center table-striped table-responsive-md">
+                        <thead class="">
                         <tr>
-                            <td>{{ result.position }}</td>
-                            <td class="text-left"><a href="{{ path('player_show', { 'id': result.player.id }) }}">{{ result.player }}</a></td>
-                            <td>{{ result.leaguePoints|number_format(league_points_decimal_places) }}</td>
-                            <td>£{{ result.winnings|number_format(0) }}</td>
-                            <td>{{ result.noOfRebuys|number_format(0) }}</td>
-                            <td>£{{ result.net|number_format(0) }}</td>
+                            <th>#</th>
+                            <th class="text-left">Player</th>
+                            <th>Points</th>
+                            <th>Winnnigs</th>
+                            <th>Rebuys</th>
+                            <th>Net</th>
                             {% if game.league %}
-                                <td>
-                                    {% if result.player.leaguePlayer %}
-                                        <span class="oi oi-check"></span>
-                                    {% endif %}
-                                </td>
+                                <th>League Player</th>
                             {% endif %}
                         </tr>
-                    {% endfor %}
+                        </thead>
 
-                </table>
+                        {# @var result \AppBundle\Entity\Result #}
+                        {% for result in game.results %}
+                            <tr>
+                                <td>{{ result.position }}</td>
+                                <td class="text-left"><a href="{{ path('player_show', { 'id': result.player.id }) }}">{{ result.player }}</a></td>
+                                <td>{{ result.leaguePoints|number_format(league_points_decimal_places) }}</td>
+                                <td>£{{ result.winnings|number_format(0) }}</td>
+                                <td>{{ result.noOfRebuys|number_format(0) }}</td>
+                                <td>£{{ result.net|number_format(0) }}</td>
+                                {% if game.league %}
+                                    <td>
+                                        {% if result.player.leaguePlayer %}
+                                            <span class="oi oi-check"></span>
+                                        {% endif %}
+                                    </td>
+                                {% endif %}
+                            </tr>
+                        {% endfor %}
 
+                    </table>
+
+                </div>
             </div>
-        </div>
+
+        {% endif %}
 
         <hr class="my-5">
 

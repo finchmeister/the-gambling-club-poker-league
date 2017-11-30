@@ -95,7 +95,9 @@ class OverallStats
     public function getNoOfGamesPlayed(): int
     {
         if ($this->noOfGamesPlayed === null) {
-            $this->noOfGamesPlayed = $this->games->count();
+            $this->noOfGamesPlayed = $this->games->filter(function (Game $game) {
+                return $game->getResults()->isEmpty() === false;
+            })->count();
         }
         return $this->noOfGamesPlayed;
     }

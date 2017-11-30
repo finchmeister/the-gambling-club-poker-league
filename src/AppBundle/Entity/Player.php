@@ -56,6 +56,7 @@ class Player
     /**
      * @var string
      * @ORM\Column(type="text")
+     * @Assert\NotBlank()
      */
     private $bio = '';
 
