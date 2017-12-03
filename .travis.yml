@@ -22,6 +22,6 @@ script:
 - docker exec thegamblingclubpokerleague_php_1 ./vendor/phpunit/phpunit/phpunit
 - echo "Installing docker machine"
 - "./bin/install-production-docker-machine.sh"
-- "./bin/docker-machine-import.sh vm01.zip"
+- "./bin/docker-machine-import.sh var/machine/vm01.zip"
 - echo "Deploying to prod"
 - "./bin/deploy-prod.sh"
