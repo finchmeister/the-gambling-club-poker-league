@@ -1,17 +1,28 @@
 sudo: required
-
 services:
-  - docker
+- docker
+before_install:
+- openssl aes-256-cbc -K $encrypted_8d86476699e6_key -iv $encrypted_8d86476699e6_iv
+  -in google-cloud-auth.json.enc -out google-cloud-auth.json -d
+- openssl aes-256-cbc -K $encrypted_8d86476699e6_key -iv $encrypted_8d86476699e6_iv
+  -in var/machine/vm01.zip.enc -out var/machine/vm01.zip -d
 
 script:
+- echo "Running tests"
 - docker-compose -f docker-compose-prod.yml up -d > /dev/null 2>&1 || true
 - docker ps -a
 - docker exec thegamblingclubpokerleague_php_1 ls
-# TODO, move elsewhere
-- docker exec thegamblingclubpokerleague_php_1 composer install --prefer-dist --no-progress --no-suggest
+- docker exec thegamblingclubpokerleague_php_1 composer install --prefer-dist --no-progress
+  --no-suggest
 - docker exec thegamblingclubpokerleague_php_1 chown -R www-data:www-data var/
-- docker exec thegamblingclubpokerleague_php_1 bin/console doctrine:schema:update --force
-- docker exec thegamblingclubpokerleague_php_1 bin/console doctrine:fixtures:load -n
+- docker exec thegamblingclubpokerleague_php_1 bin/console doctrine:schema:update
+  --force
+- docker exec thegamblingclubpokerleague_php_1 bin/console doctrine:fixtures:load
+  -n
 - docker exec thegamblingclubpokerleague_php_1 bin/console app:update-league-points
 - docker exec thegamblingclubpokerleague_php_1 ls
 - docker exec thegamblingclubpokerleague_php_1 ./vendor/phpunit/phpunit/phpunit
+- echo "Installing docker machine"
+- ./bin/install-production-docker-machine.sh
+- echo "Deploying to prod"
+- ./bin/deploy-prod.sh

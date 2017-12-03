@@ -9,6 +9,8 @@ services:
             - "80:80"
         #volumes:
         #    - .:/var/www/html
+        depends_on:
+            - php
     php:
         build:
             dockerfile: ./docker/php/Dockerfile

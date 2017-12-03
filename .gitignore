@@ -9,9 +9,6 @@
 !/var/data
 /var/data/*
 !var/data/.gitkeep
-!/var/machine
-/var/machine/*
-!var/machine/.gitkeep
 !/var/logs
 /var/logs/*
 !var/logs/.gitkeep
@@ -23,3 +20,6 @@
 /web/bundles/
 .idea/
 google-cloud-auth.json
+!/var/machine
+var/machine/*
+!var/machine/vm01.zip.enc

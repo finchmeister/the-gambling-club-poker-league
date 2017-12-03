@@ -9,6 +9,8 @@ services:
             - "8081:80"
         volumes:
             - .:/var/www/html
+        depends_on:
+            - php
     php:
         build:
             dockerfile: ./docker/php/Dockerfile

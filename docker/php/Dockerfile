@@ -55,3 +55,8 @@ COPY tests tests/
 COPY phpunit.xml.dist ./
 
 RUN composer dump-autoload --optimize --classmap-authoritative --no-dev
+
+# TODO https://github.com/api-platform/api-platform/blob/master/api/docker/php/docker-entrypoint.sh
+#COPY docker/php/docker-entrypoint.sh /usr/local/bin/docker-entrypoint
+#RUN chmod +x /usr/local/bin/docker-entrypoint
+#ENTRYPOINT ["docker-entrypoint"]
