@@ -20,7 +20,5 @@
 /web/bundles/
 .idea/
 google-cloud-auth.json
-!/var/machine
-var/machine/*
-!var/machine/.gitkeep
+vm01.zip
 secrets.tar

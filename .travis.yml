@@ -6,22 +6,8 @@ before_install:
   -in secrets.tar.enc -out secrets.tar -d
 - tar xvf secrets.tar
 script:
-- echo "Running tests"
-- docker-compose -f docker-compose-prod.yml up -d > /dev/null 2>&1 || true
-- docker ps -a
-- docker exec thegamblingclubpokerleague_php_1 ls
-- docker exec thegamblingclubpokerleague_php_1 composer install --prefer-dist --no-progress
-  --no-suggest
-- docker exec thegamblingclubpokerleague_php_1 chown -R www-data:www-data var/
-- docker exec thegamblingclubpokerleague_php_1 bin/console doctrine:schema:update
-  --force
-- docker exec thegamblingclubpokerleague_php_1 bin/console doctrine:fixtures:load
-  -n
-- docker exec thegamblingclubpokerleague_php_1 bin/console app:update-league-points
-- docker exec thegamblingclubpokerleague_php_1 ls
-- docker exec thegamblingclubpokerleague_php_1 ./vendor/phpunit/phpunit/phpunit
 - echo "Installing docker machine"
 - "./bin/install-production-docker-machine.sh"
-- "./bin/docker-machine-import.sh var/machine/vm01.zip"
+- "./bin/docker-machine-import.sh vm01.zip"
 - echo "Deploying to prod"
-- "./bin/deploy-prod.sh"
+- docker-machine ls
