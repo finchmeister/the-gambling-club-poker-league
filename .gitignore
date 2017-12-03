@@ -22,4 +22,5 @@
 google-cloud-auth.json
 !/var/machine
 var/machine/*
-!var/machine/vm01.zip.enc
+!var/machine/.gitkeep
+secrets.tar

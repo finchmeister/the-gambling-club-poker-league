@@ -5,4 +5,4 @@ curl -L https://github.com/docker/machine/releases/download/v0.13.0/docker-machi
 chmod +x /tmp/docker-machine &&
 sudo cp /tmp/docker-machine /usr/local/bin/docker-machine
 
-./bin/docker-machine-import.sh var/machine/vm01.zip
+./bin/docker-machine-import.sh vm01.zip

@@ -94,3 +94,10 @@ docker exec -it CONTAINER_ID /bin/sh
 
 ## Docker Machine Import
 <https://gist.github.com/schickling/2c48da462a7def0a577e>
+
+# Travis Secrets:
+<https://docs.travis-ci.com/user/encrypting-files/#Encrypting-multiple-files>
+```
+tar cvf secrets.tar foo bar
+
+```
