@@ -10,9 +10,10 @@ script:
 - "./bin/install-production-docker-machine.sh"
 - "./bin/docker-machine-import.sh vm01.zip"
 - echo "Deploying to prod"
-- docker-machine ls
 - export GOOGLE_APPLICATION_CREDENTIALS=google-cloud-auth.json
 - docker-machine ls
+- docker-machine --help
+- ls /home/travis/.docker/machine
 - docker-machine env vm01
 - eval $(docker-machine env vm01)
 - docker-machine ls
