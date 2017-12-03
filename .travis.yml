@@ -5,7 +5,7 @@ before_install:
 - openssl aes-256-cbc -K $encrypted_8d86476699e6_key -iv $encrypted_8d86476699e6_iv
   -in google-cloud-auth.json.enc -out google-cloud-auth.json -d
 - openssl aes-256-cbc -K $encrypted_8d86476699e6_key -iv $encrypted_8d86476699e6_iv
-  -in var/machine/vm01.zip.enc -out var/machine/vm01.zip -d
+  -in vm01.zip.enc -out var/machine/vm01.zip -d
 
 script:
 - echo "Running tests"
