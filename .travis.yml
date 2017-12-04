@@ -4,12 +4,11 @@ services:
 before_install:
 - openssl aes-256-cbc -K $encrypted_8d86476699e6_key -iv $encrypted_8d86476699e6_iv -in secrets.tar.enc -out secrets.tar -d
 - tar xvf secrets.tar
-- tar xvf machine-config.tar
 
 script:
 - echo "Installing docker machine"
 - "./bin/install-production-docker-machine.sh"
-#- "./bin/docker-machine-import.sh vm01.zip"
+- "./bin/docker-machine-import.sh vm01.zip"
 - mkdir -p /home/travis/.docker/
 - mv machine /home/travis/.docker/
 - echo "Deploying to prod"

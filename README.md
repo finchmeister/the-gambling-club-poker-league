@@ -64,5 +64,5 @@ docker exec -it CONTAINER_ID /bin/sh
 <https://docs.travis-ci.com/user/encrypting-files/#Encrypting-multiple-files>
 ```
 tar cvf secrets.tar foo bar
-travis encrypt-file secrets.tar --add
+travis encrypt-file secrets.tar
 ```
