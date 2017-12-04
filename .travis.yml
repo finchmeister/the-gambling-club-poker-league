@@ -9,7 +9,7 @@ script:
 - docker-compose -f docker-compose-prod.yml up -d > /dev/null 2>&1 || true
 - docker ps -a
 - docker exec thegamblingclubpokerleague_php_1 ls
-- docker-compose exec php composer install --prefer-dist --no-progress --no-suggest
+- docker-compose exec php composer install --prefer-dist --no-progress --no-suggest --no-interaction
 - docker-compose exec php chown -R www-data:www-data var/
 - docker-compose exec php bin/console doctrine:schema:update --force
 - docker-compose exec php bin/console doctrine:fixtures:load -n
@@ -24,6 +24,6 @@ script:
 - eval $(docker-machine env vm01)
 - docker-machine ls
 - docker-compose -f docker-compose-prod.yml up -d > /dev/null 2>&1 || true
-- docker-compose exec php composer install --prefer-dist --no-progress --no-suggest
+- docker-compose exec php composer install --prefer-dist --no-progress --no-suggest --no-interaction
 - docker-compose exec php chown -R www-data:www-data var/
 - docker-compose exec php bin/console doctrine:schema:update --force

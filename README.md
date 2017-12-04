@@ -48,6 +48,10 @@ export GOOGLE_APPLICATION_CREDENTIALS=google-cloud-auth.json
 docker-machine env vm01
 eval $(docker-machine env vm01)
 
+# Disconnect
+docker-machine env -u
+eval $(docker-machine env -u)
+
 docker-machine create --driver google   --google-project the-gambling-club-poker-league   --google-zone europe-west1-b   --google-machine-type f1-micro   vm01
 ```
 
@@ -58,7 +62,6 @@ docker exec -it CONTAINER_ID /bin/sh
 ```
 
 ## Docker Machine Import
-<https://gist.github.com/schickling/2c48da462a7def0a577e>
 
 # Travis Secrets:
 <https://docs.travis-ci.com/user/encrypting-files/#Encrypting-multiple-files>
