@@ -6,15 +6,24 @@ before_install:
 - tar xvf secrets.tar
 
 script:
-- echo "Installing docker machine"
+- docker-compose -f docker-compose-prod.yml up -d > /dev/null 2>&1 || true
+- docker ps -a
+- docker exec thegamblingclubpokerleague_php_1 ls
+- docker-compose exec php composer install --prefer-dist --no-progress --no-suggest
+- docker-compose exec php chown -R www-data:www-data var/
+- docker-compose exec php bin/console doctrine:schema:update --force
+- docker-compose exec php bin/console doctrine:fixtures:load -n
+- docker-compose exec php bin/console app:update-league-points
+- docker-compose exec php ls
+- docker-compose exec php ./vendor/phpunit/phpunit/phpunit
 - "./bin/install-production-docker-machine.sh"
 - npm install -g machine-share
 - machine-import vm01.zip
-- echo "Deploying to prod"
 - export GOOGLE_APPLICATION_CREDENTIALS=google-cloud-auth.json
-- docker-machine ls
-- docker-machine --help
-- ls /home/travis/.docker/machine
 - docker-machine env vm01
 - eval $(docker-machine env vm01)
 - docker-machine ls
+- docker-compose -f docker-compose-prod.yml up -d > /dev/null 2>&1 || true
+- docker-compose exec php composer install --prefer-dist --no-progress --no-suggest
+- docker-compose exec php chown -R www-data:www-data var/
+- docker-compose exec php bin/console doctrine:schema:update --force
