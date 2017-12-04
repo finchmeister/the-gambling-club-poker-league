@@ -6,6 +6,7 @@
 > TODO: automate with a make file
 
 ```
+# Using in-built server
 git clone https://github.com/finchmeister/the-gambling-club-poker-league.git
 composer install
 # Delete the db 
@@ -22,43 +23,6 @@ bin/console server:run
 docker-compose up -d
 
 ```
-
-## TODO
-- [x] Show league table
-- [ ] List upcoming game
-- [ ] List all played games
-    - [ ] List results
-
-### Forms
-- [ ] Make form theme
-- [ ] Ensure all forms use theme
-- [ ] Tidy buttons
-    - [ ] Large sidebar buttons
-
-### Admin Listings
-- [ ] Consider show button
-
-
-## Edit Game
-- [ ] JS form collection tidy
-- [ ] Form errors in alerts
-- [ ] General tidy
-- [ ] Do not allow a player with a game to be deleted
-
-## Edit Player
-- [ ] Add image
-
-## Player
-- [x] Hook in real stats
-## Host
-- [] Hook in real stats
-
-## Dev
-- [x] Codesniffer
-- [x] Fixtures
-- [x] Phpunit
-- [ ] Docker
-- [ ] Travis?
 
 ## Commands
 
@@ -77,11 +41,12 @@ bin/console server:start 0.0.0.0:8000
 bin/console doctrine:schema:drop --force; bin/console doctrine:schema:update --force; bin/console doctrine:fixtures:load -n; bin/console app:update-league-points
 ```
 
-## GCP
+## Docker Machine
 
 ```
 export GOOGLE_APPLICATION_CREDENTIALS=google-cloud-auth.json 
-
+docker-machine env vm01
+eval $(docker-machine env vm01)
 
 docker-machine create --driver google   --google-project the-gambling-club-poker-league   --google-zone europe-west1-b   --google-machine-type f1-micro   vm01
 ```

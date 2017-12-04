@@ -1,39 +1,28 @@
 #! /bin/bash
 
-# Source: https://gist.github.com/schickling/2c48da462a7def0a577e
+# https://github.com/bhurlow/machine-share/blob/master/export.sh
 
-if [ -z "$1" ]; then
-  echo "Usage: machine-export.sh MACHINE_NAME"
-  echo ""
-  echo "Exports the specified docker-machine to a MACHINE_NAME.zip file"
-  echo "Note: This script requires you to have the same \$MACHINE_STORAGE_PATH/certs available on all host systems"
-  exit 0
-fi
+NAME=$1
 
-machine_name=$1
-
-docker-machine status $machine_name 2>&1 > /dev/null
-if [ $? -ne 0 ]; then
-  echo "No such machine found"
+if [ -z "$NAME" ]; then
+  echo "machine-export <machine-name>"
   exit 1
 fi
 
-set -e
+echo "exporting $NAME"
 
-MACHINE_STORAGE_PATH="${MACHINE_STORAGE_PATH:-"$HOME/.docker/machine"}"
-machine_path="$MACHINE_STORAGE_PATH/machines/$machine_name"
-tmp_path="/tmp/machine-export-$(date +%s%3)"
+# stay clean
+rm -rf /tmp/$NAME
 
-# copy to /tmp and strip out $MACHINE_STORAGE_PATH
-mkdir -p $tmp_path
-cp -r "$machine_path" "$tmp_path"
-perl -pi -e "s|$MACHINE_STORAGE_PATH|__MACHINE__STORAGE_PATH__|g" $tmp_path/$machine_name/config.json
+# save a copy of the machine data
+cp -r $HOME/.docker/machine/machines/$NAME /tmp/$NAME
 
-# create zip
-rm -f "$machine_name.zip"
-zip -rj "$machine_name.zip" "$tmp_path/$machine_name" > /dev/null
+# stub out the host specific vars
+cat /tmp/$NAME/config.json | sed -e "s:$HOME:{{HOME}}:g" > /tmp/$NAME/config.json.stub
+mv /tmp/$NAME/config.json.stub /tmp/$NAME/config.json
 
-echo "Exported machine to $machine_name.zip"
+# make a zip
+zip -r -j $NAME.zip /tmp/$NAME
 
-# cleanup
-rm -rf $tmp_path
+# clean up
+rm -rf /tmp/$NAME

@@ -1,31 +1,32 @@
 #! /bin/bash
 
-# Source: https://gist.github.com/schickling/2c48da462a7def0a577e
+# https://github.com/bhurlow/machine-share/blob/master/import.sh
 
-set -e
+TARGET=$1
+filename=$(basename "$TARGET")
+FILENAME="${filename%.*}"
 
-if [ -z "$1" ]; then
-  echo "Usage: docker-machine-import.sh MACHINE_NAME.zip"
-  echo ""
-  echo "Imports an exported machine from a MACHINE_NAME.zip file"
-  echo "Note: This script requires you to have the same \$MACHINE_STORAGE_PATH/certs available on all host systems"
-  exit 0
-fi
-
-machine_archive="$1"
-machine_name="${machine_archive/.zip/}"
-MACHINE_STORAGE_PATH="${MACHINE_STORAGE_PATH:-"$HOME/.docker/machine"}"
-mkdir -p $MACHINE_STORAGE_PATH
-machine_path="$MACHINE_STORAGE_PATH/machines/$machine_name"
-
-if [ -d "$machine_path" ]; then
-  echo "$machine_name already exists"
+if [ -d "$HOME/.docker/machine/machines/$FILENAME" ] ; then
+  echo "that machine already exists"
   exit 1
 fi
 
-rm -rf "$machine_name"
-unzip "$machine_archive" -d "$machine_name" > /dev/null
-perl -pi -e "s|__MACHINE__STORAGE_PATH__|$MACHINE_STORAGE_PATH|g" $machine_name/config.json
-mv "$machine_name" "$MACHINE_STORAGE_PATH/machines"
+# cleanup
+rm -r /tmp/$FILENAME
 
-echo "Imported $machine_name to docker-machine ($machine_path)"
+# extract
+unzip $TARGET -d /tmp/$FILENAME
+
+# add correct $HOME var
+cat /tmp/$FILENAME/config.json | sed -e "s:{{HOME}}:$HOME:g" > /tmp/$FILENAME/config.json.fixed
+mv /tmp/$FILENAME/config.json.fixed /tmp/$FILENAME/config.json
+
+mkdir -p $HOME/.docker/machine/machines/$FILENAME
+
+# move it into docker machines files
+cp -r /tmp/$FILENAME $HOME/.docker/machine/machines/
+
+# update the stupid raw driver
+machine-driverfix $FILENAME
+
+echo "ok!"
