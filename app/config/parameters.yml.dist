@@ -7,8 +7,9 @@ parameters:
     database_name: symfony
     database_user: root
     database_password: ~
-    # You should uncomment this if you want to use pdo_sqlite
-    env(database_url): 'sqlite:///%kernel.project_dir%/var/data/poker.sqlite'
+    database_path: '%kernel.project_dir%/var/data/poker.sqlite'
+    gcp_key_file_path: '%kernel.project_dir%/google-cloud-auth.json'
+    gcp_bucket_name: 'the-gambling-club-poker-league'
 
     mailer_transport: smtp
     mailer_host: 127.0.0.1
