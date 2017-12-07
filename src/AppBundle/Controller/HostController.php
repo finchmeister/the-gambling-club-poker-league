@@ -34,8 +34,6 @@ class HostController extends Controller
 
         $allPlayerStats = $computePlayerStats->getAllPlayerStats($player);
 
-        dump($allPlayerStats);
-
         return $this->render('host/show.html.twig', array(
             'host' => $player,
             'allPlayerStats' => $allPlayerStats

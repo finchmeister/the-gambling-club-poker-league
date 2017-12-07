@@ -40,12 +40,13 @@ WORKDIR /var/www/html
 COPY composer.json ./
 COPY composer.lock ./
 
-RUN composer install --prefer-dist --no-dev --no-autoloader --no-scripts --no-progress --no-suggest
+RUN composer install --prefer-dist --no-autoloader --no-scripts --no-progress --no-suggest
 
 COPY app app/
 COPY bin bin/
 COPY src src/
 COPY web web/
+COPY google-cloud-auth.json ./
 
 # Symfony thinks it is running an older version without a var directory
 RUN mkdir var
@@ -54,8 +55,9 @@ RUN mkdir var
 COPY tests tests/
 COPY phpunit.xml.dist ./
 
-RUN composer dump-autoload --optimize --classmap-authoritative --no-dev
-
+RUN composer dump-autoload --optimize --classmap-authoritative
+RUN chown -R www-data:www-data var/
+USER www-data
 # TODO https://github.com/api-platform/api-platform/blob/master/api/docker/php/docker-entrypoint.sh
 #COPY docker/php/docker-entrypoint.sh /usr/local/bin/docker-entrypoint
 #RUN chmod +x /usr/local/bin/docker-entrypoint
