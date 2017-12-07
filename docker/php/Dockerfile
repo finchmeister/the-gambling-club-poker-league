@@ -40,7 +40,6 @@ WORKDIR /var/www/html
 COPY composer.json ./
 COPY composer.lock ./
 
-RUN composer install --prefer-dist --no-autoloader --no-scripts --no-progress --no-suggest
 
 COPY app app/
 COPY bin bin/
@@ -55,6 +54,7 @@ RUN mkdir var
 COPY tests tests/
 COPY phpunit.xml.dist ./
 
+RUN composer install --prefer-dist --no-autoloader --no-progress --no-suggest
 RUN composer dump-autoload --optimize --classmap-authoritative
 RUN chown -R www-data:www-data var/
 USER www-data
