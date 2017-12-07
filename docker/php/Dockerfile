@@ -40,6 +40,7 @@ WORKDIR /var/www/html
 COPY composer.json ./
 COPY composer.lock ./
 
+RUN composer install --prefer-dist --no-autoloader --no-progress --no-suggest --no-scripts
 
 COPY app app/
 COPY bin bin/
@@ -54,8 +55,9 @@ RUN mkdir var
 COPY tests tests/
 COPY phpunit.xml.dist ./
 
-RUN composer install --prefer-dist --no-autoloader --no-progress --no-suggest
 RUN composer dump-autoload --optimize --classmap-authoritative
+# Install scripts
+RUN composer install --prefer-dist --no-autoloader --no-progress --no-suggest --no-interaction
 RUN chown -R www-data:www-data var/
 USER www-data
 # TODO https://github.com/api-platform/api-platform/blob/master/api/docker/php/docker-entrypoint.sh
