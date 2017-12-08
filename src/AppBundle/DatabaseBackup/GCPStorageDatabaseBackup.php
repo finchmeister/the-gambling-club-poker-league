@@ -9,8 +9,9 @@ use AppBundle\CloudStorage\GCPStorage;
  * Class GCPStorageDatabaseBackup
  * @package AppBundle\DatabaseBackup
  */
-class GCPStorageDatabaseBackup implements DatabaseBackupInterface
+class GCPStorageDatabaseBackup extends AbstractDatabaseBackup
 {
+    const FOLDER_NAME = 'database-backup';
 
     /**
      * @var GCPStorage
@@ -29,22 +30,26 @@ class GCPStorageDatabaseBackup implements DatabaseBackupInterface
         $this->databasePath = $databasePath;
     }
 
-    public function backupDatabase()
+    public function backupDatabase($config)
     {
-        $objectName = $this->getDatabaseBackupName();
+        $objectName = self::FOLDER_NAME . '/' . $config['name'];
         $this->gcpStorage->uploadObject($objectName, $this->databasePath);
     }
 
     public function restoreDatabase($config)
     {
+        $this->gcpStorage->downloadObject($config['name'], $this->databasePath);
     }
 
-    public function getDatabaseBackupName()
+    public function listDatabases()
     {
-        return sprintf(
-            "poker-db%s.sqlite",
-            (new \DateTime())->format('Y-m-d-Hi')
-        );
+        $prefix = self::FOLDER_NAME . "/poker";
+        $objects = $this->gcpStorage->listObjects(['prefix' => $prefix]);
+        $databaseNames = [];
+        foreach ($objects as $object) {
+            $databaseNames[] = $object->name();
+        }
+        return $databaseNames;
     }
 
 }

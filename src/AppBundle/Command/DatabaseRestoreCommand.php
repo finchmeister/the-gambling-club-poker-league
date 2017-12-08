@@ -4,12 +4,11 @@ namespace AppBundle\Command;
 
 use AppBundle\DatabaseBackup\AbstractDatabaseBackup;
 use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
-class DatabaseBackupCommand extends Command
+class DatabaseRestoreCommand extends Command
 {
     /**
      * @var AbstractDatabaseBackup
@@ -29,10 +28,8 @@ class DatabaseBackupCommand extends Command
     protected function configure()
     {
         $this
-            ->setName('app:database-backup')
-            ->setDescription('Exports database')
-            ->addArgument('env', InputArgument::OPTIONAL, 'environment')
-        ;
+            ->setName('app:database-restore')
+            ->setDescription('Restore database');
     }
 
     /**
@@ -41,9 +38,17 @@ class DatabaseBackupCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $io = new SymfonyStyle($input, $output);
-        $env = $input->getArgument('env');
-        $name = $this->databaseBackup->getDatabaseBackupName($env);
-        $this->databaseBackup->backupDatabase(['name' => $name]);
-        $io->success('Database successfully backed up');
+
+        $databaseNames = $this->databaseBackup->listDatabases();
+        $databaseToRestore = $io->choice(
+            'Select which database to restore',
+            $databaseNames
+        );
+        $this->databaseBackup->restoreDatabase(['name' => $databaseToRestore]);
+
+        $io->success(sprintf(
+            "Database %s successfully restored",
+            $databaseToRestore
+        ));
     }
 }

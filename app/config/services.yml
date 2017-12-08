@@ -34,7 +34,6 @@ services:
 
     # Configure which points system to use
     AppBundle\League\LeaguePointsInterface: '@AppBundle\League\SimpleOnePointPerPosition'
-    AppBundle\DatabaseBackup\DatabaseBackupInterface: '@AppBundle\DatabaseBackup\GCPStorageDatabaseBackup'
 
     AppBundle\CloudStorage\GCPStorage:
         arguments: ['%gcp_key_file_path%', '%gcp_bucket_name%']

@@ -3,7 +3,9 @@
 
 namespace AppBundle\CloudStorage;
 
+use Google\Cloud\Storage\ObjectIterator;
 use Google\Cloud\Storage\StorageClient;
+use Google\Cloud\Storage\StorageObject;
 
 /**
  * Class GCPStorage
@@ -35,13 +37,24 @@ class GCPStorage
         $this->bucketName = $bucketName;
     }
 
-    public function uploadObject($objectName, $source)
+    public function uploadObject($objectName, $source): StorageObject
     {
         $file = fopen($source, 'r');
         $object = $this->bucket->upload($file, [
             'name' => $objectName
         ]);
         return $object;
+    }
+
+    public function listObjects($options): ObjectIterator
+    {
+        return $this->bucket->objects($options);
+    }
+
+    public function downloadObject($objectName, $destination)
+    {
+        $object = $this->bucket->object($objectName);
+        $object->downloadToFile($destination);
     }
 
 }
