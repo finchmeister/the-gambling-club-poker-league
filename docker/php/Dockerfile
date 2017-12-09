@@ -59,7 +59,6 @@ RUN composer dump-autoload --optimize --classmap-authoritative
 # Install scripts
 RUN composer install --prefer-dist --no-autoloader --no-progress --no-suggest --no-interaction
 RUN chown -R www-data:www-data var/
-USER www-data
 # TODO https://github.com/api-platform/api-platform/blob/master/api/docker/php/docker-entrypoint.sh
 #COPY docker/php/docker-entrypoint.sh /usr/local/bin/docker-entrypoint
 #RUN chmod +x /usr/local/bin/docker-entrypoint

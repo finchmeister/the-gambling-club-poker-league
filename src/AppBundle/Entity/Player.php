@@ -5,6 +5,8 @@ namespace AppBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -59,6 +61,19 @@ class Player
      * @Assert\NotBlank()
      */
     private $bio = '';
+
+    /**
+     * @var string
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $profilePicturePublicUrl = null;
+
+    /**
+     * @var string
+     * @ORM\Column(type="string", nullable=true)
+     * @Assert\File(mimeTypes={ "image/jpeg", "image/png" })
+     */
+    private $profilePictureFile = null;
 
     /**
      * @var \DateTime
@@ -199,6 +214,42 @@ class Player
     public function setBio(string $bio): Player
     {
         $this->bio = $bio;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getProfilePicturePublicUrl(): ?string
+    {
+        return $this->profilePicturePublicUrl;
+    }
+
+    /**
+     * @param UploadedFile|string $profilePicturePublicUrl
+     * @return Player
+     */
+    public function setProfilePicturePublicUrl($profilePicturePublicUrl): Player
+    {
+        $this->profilePicturePublicUrl = $profilePicturePublicUrl;
+        return $this;
+    }
+
+    /**
+     * @return File|string
+     */
+    public function getProfilePictureFile()
+    {
+        return $this->profilePictureFile;
+    }
+
+    /**
+     * @param string $profilePictureFile
+     * @return Player
+     */
+    public function setProfilePictureFile($profilePictureFile): Player
+    {
+        $this->profilePictureFile = $profilePictureFile;
         return $this;
     }
 

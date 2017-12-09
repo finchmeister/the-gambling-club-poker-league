@@ -60,22 +60,6 @@ class AdminPlayerController extends Controller
     }
 
     /**
-     * Finds and displays a player entity.
-     *
-     * @Route("/{id}", name="admin_player_show")
-     * @Method("GET")
-     */
-    public function showAction(Player $player)
-    {
-        $deleteForm = $this->createDeleteForm($player);
-
-        return $this->render('admin/player/show.html.twig', array(
-            'player' => $player,
-            'delete_form' => $deleteForm->createView(),
-        ));
-    }
-
-    /**
      * Displays a form to edit an existing player entity.
      *
      * @Route("/{id}/edit", name="player_edit")
