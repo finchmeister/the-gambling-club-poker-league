@@ -5,6 +5,12 @@ html {
 body {
     margin-bottom: 60px; /* Margin bottom by footer height */
 }
+
+.main-banner {
+    background-image: url('../image/kings.jpeg');
+    background-size: cover;
+}
+
 .footer {
     position: absolute;
     bottom: 0;
