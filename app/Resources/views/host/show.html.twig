@@ -4,14 +4,23 @@
 
 {% block main %}
 
-    <ul>
-        <li>Games played: x</li>
-        <li>Amount won:</li>
-        <li>No of rebuys:</li>
-        <li>Most wins:</li>
-        <li>Biggest winner:</li>
-        <li>Fortress: host won/played</li>
-    </ul>
+<div class="row">
+    <div class="col-sm-9">
+        <ul>
+            <li>Games played: x</li>
+            <li>Amount won:</li>
+            <li>No of rebuys:</li>
+            <li>Most wins:</li>
+            <li>Biggest winner:</li>
+            <li>Fortress: host won/played</li>
+        </ul>
+
+    </div>
+    <div class="col-sm-3">
+        <img src="{{ host.profilePicturePublicUrl ?: 'http://via.placeholder.com/350x350' }}" class="img-fluid rounded">
+    </div>
+</div>
+
 
 // TODO: Display games played here.
 

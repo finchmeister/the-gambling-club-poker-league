@@ -52,8 +52,6 @@ class PlayerController extends Controller
 
         $allPlayerStats = $computePlayerStats->getAllPlayerStats($player);
 
-        dump($allPlayerStats);
-
         return $this->render('player/show.html.twig', array(
             'player' => $player,
             'allPlayerStats' => $allPlayerStats
