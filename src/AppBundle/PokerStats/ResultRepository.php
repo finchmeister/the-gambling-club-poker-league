@@ -4,8 +4,13 @@
 namespace AppBundle\PokerStats;
 
 
-class ResultsStats
+class ResultRepository
 {
 
     // Set results, manipulate them
+    public function getSum()
+    {
+    }
+
 }
+
