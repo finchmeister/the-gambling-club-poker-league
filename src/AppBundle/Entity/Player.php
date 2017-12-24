@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity;
 
+use AppBundle\PokerStats\PlayerStatsInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -80,6 +81,11 @@ class Player
      * @ORM\Column(type="datetime")
      */
     private $createdAt;
+
+    /**
+     * @var PlayerStatsInterface
+     */
+    private $playerStats;
 
     public function __construct()
     {
@@ -259,6 +265,24 @@ class Player
     public function getCreatedAt(): \DateTime
     {
         return $this->createdAt;
+    }
+
+    /**
+     * @return PlayerStatsInterface|null
+     */
+    public function getPlayerStats(): ?PlayerStatsInterface
+    {
+        return $this->playerStats;
+    }
+
+    /**
+     * @param PlayerStatsInterface $playerStats
+     * @return Player
+     */
+    public function setPlayerStats(PlayerStatsInterface $playerStats): Player
+    {
+        $this->playerStats = $playerStats;
+        return $this;
     }
 }
 

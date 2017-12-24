@@ -5,8 +5,7 @@ namespace AppBundle\Controller;
 
 
 use AppBundle\Entity\Player;
-use AppBundle\League\PlayerService;
-use AppBundle\PlayerStats\ComputePlayerStats;
+use AppBundle\PokerStats\StatsFactory;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -23,14 +22,21 @@ class PlayerController extends Controller
      *
      * @Route("/", name="player_index")
      * @Method("GET")
-     * @param PlayerService $playerService
+     * @param StatsFactory $playerStatsFactory
      * @return \Symfony\Component\HttpFoundation\Response
+     * @internal param PlayerService $playerService
      */
-    public function indexAction(PlayerService $playerService)
+    public function indexAction(StatsFactory $playerStatsFactory)
     {
         $em = $this->getDoctrine()->getManager();
 
         $players = $em->getRepository(Player::class)->findAll();
+
+        foreach ($players as $player) {
+            $player->setPlayerStats(
+                $playerStatsFactory->getAllPlayerStats($player)
+            );
+        }
 
         return $this->render('player/index.html.twig', array(
             'players' => $players,
@@ -41,20 +47,19 @@ class PlayerController extends Controller
      * @Route("/{id}", name="player_show")
      * @Method("GET")
      * @param Player $player
-     * @param ComputePlayerStats $computePlayerStats
+     * @param StatsFactory $playerStatsFactory
      * @return \Symfony\Component\HttpFoundation\Response
      * @internal param PlayerService $playerService
      */
     public function showAction(
         Player $player,
-        ComputePlayerStats $computePlayerStats
+        StatsFactory $playerStatsFactory
     ) {
 
-        $allPlayerStats = $computePlayerStats->getAllPlayerStats($player);
+        $player->setPlayerStats($playerStatsFactory->getAllPlayerStats($player));
 
         return $this->render('player/show.html.twig', array(
             'player' => $player,
-            'allPlayerStats' => $allPlayerStats
         ));
     }
 

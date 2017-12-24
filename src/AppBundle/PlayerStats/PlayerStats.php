@@ -106,7 +106,6 @@ class PlayerStats
 
     public function getForm()
     {
-        // TODO, sort is probably wrong
         return $this->getResults()->map(
             function (Result $result) {
                 return $result->getPosition();

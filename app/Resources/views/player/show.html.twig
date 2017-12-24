@@ -10,23 +10,61 @@
         <div class="col-sm-9">
 
             <p>{{ player.bio }}</p>
+
+            <h2 class="my-4">Stats</h2>
+
+            <div>
+                <table class="table text-center">
+                    <thead>
+                    <tr>
+                        <th scope="col">Won</th>
+                        <th scope="col">Played</th>
+                        <th scope="col">Win %</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>{{ player.playerStats.countGamesWon }}</td>
+                        <td>{{ player.playerStats.countGamesPlayed }}</td>
+                        <td>{{ (player.playerStats.winRatio * 100)|number_format(2) }}%</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div>
+                <table class="table text-center">
+                    <thead>
+                    <tr>
+                        <th scope="col">£ Won</th>
+                        <th scope="col">Bought In</th>
+                        <th scope="col">Net</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>{{ player.playerStats.sumCashWon|price }}</td>
+                        <td>{{ player.playerStats.sumBoughtIn|price }}</td>
+                        <td>{{ player.playerStats.net|price }}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+
+
             <ul>
                 <li>League Position: //TODO</li>
-                <li>Games Won / Games Played: {{ allPlayerStats.gamesWon }}/{{ allPlayerStats.gamesPlayed }} : {{ (allPlayerStats.winRatio*100)|number_format(2) }}%</li>
-                <li>Won / Bought In / Net: £{{ allPlayerStats.cashWon }} / £{{ allPlayerStats.boughtIn }} / £{{ allPlayerStats.net }}</li>
-                <li>No of Rebuys: {{ allPlayerStats.noOfRebuys }}</li>
-                <li>Games Paid / Games Played: {{ allPlayerStats.gamesPaid }}/{{ allPlayerStats.gamesPlayed }} : {{ (allPlayerStats.paidRatio*100)|number_format(2) }}%</li>
-                <li>Average Win: £{{ allPlayerStats.averageWin|number_format(2) }}</li>
-                <li>Average Spend: £{{ allPlayerStats.averageLoss|number_format(2) }}</li>
-                <li>Average Profit: £{{ allPlayerStats.averageProfit|number_format(2) }}</li>
-                <li>Average Position: {{ allPlayerStats.averagePosition|number_format(2) }}</li>
-                <li>Most Common Position: {{ allPlayerStats.mostCommonPosition }}</li>
-                <li>Middle Position: {{ allPlayerStats.middlePosition }}</li>
-                <li>Average Position: {{ allPlayerStats.averagePosition|number_format(2) }}</li>
-                <li>Form: {{ allPlayerStats.form|join(', ') }}</li>
-                <li>Highest Position: {{ allPlayerStats.highestPosition }}</li>
-                <li>Biggest Win: {{ allPlayerStats.biggestWin }}</li>
-                <li>Biggest Spend: {{ allPlayerStats.biggestLoss }}</li>
+                <li>No of Rebuys: {{ player.playerStats.sumRebuys }}</li>
+                <li>Games Paid / Games Played: {{ player.playerStats.countGamesPaid }}/{{ player.playerStats.countGamesPlayed }} : {{ player.playerStats.gamesPaidRatio|percent }}</li>
+                <li>Average Net: {{ player.playerStats.meanNet|price }}</li>
+                <li>Average Position: {{ player.playerStats.meanPosition|number_format(2) }}</li>
+                <li>Form: {{ player.playerStats.form|join(', ') }}</li>
+                <li>Highest Position: {{ player.playerStats.bestPosition }}</li>
+                <li>Biggest Win: {{ player.playerStats.maxCashWin|price }}</li>
+                <li>Biggest Net: {{ player.playerStats.maxProfit|price }}</li>
+                <li>Worst Net: {{ player.playerStats.minProfit|price }}</li>
+                <li>Biggest Spend: {{ player.playerStats.maxBoughtIn|price }}</li>
             </ul>
         </div>
         <div class="col-sm-3">
@@ -99,7 +137,7 @@
                 labels: ["Winnings", "Bought In", "Net"],
                 datasets: [{
                     label: '£',
-                    data: [{{ allPlayerStats.cashWon }}, {{ allPlayerStats.boughtIn }}, {{ allPlayerStats.net }}],
+                    data: [{{ player.playerStats.sumCashWon }}, {{ player.playerStats.sumBoughtIn }}, {{ player.playerStats.net }}],
                     backgroundColor: [
                         'rgba(75, 192, 192, 0.2)',
                         'rgba(255, 99, 132, 0.2)',
@@ -129,7 +167,7 @@
             data: {
                 labels: ["Won", "Not Won"],
                 datasets: [{
-                    data: [{{ allPlayerStats.gamesWon }}, {{ allPlayerStats.gamesNotWon }}],
+                    data: [{{ player.playerStats.countGamesWon }}, {{ player.playerStats.countGamesPlayed - player.playerStats.countGamesWon }}],
                     backgroundColor: [
                         'rgba(75, 192, 192, 0.2)',
                         'rgba(255, 99, 132, 0.2)'
@@ -147,7 +185,7 @@
             data: {
                 labels: ["Paid", "Not Paid"],
                 datasets: [{
-                    data: [{{ allPlayerStats.gamesPaid }}, {{ allPlayerStats.gamesNotPaid }}],
+                    data: [{{ player.playerStats.countGamesPaid }}, {{ player.playerStats.countGamesPlayed - player.playerStats.countGamesPaid }}],
                     backgroundColor: [
                         'rgba(75, 192, 192, 0.2)',
                         'rgba(255, 99, 132, 0.2)'
@@ -165,10 +203,10 @@
             type: 'line',
             data: {
                 labels: ["1", "2", "3", "4", "5", "6"],
-                labels: [{% for e in allPlayerStats.form %}"{{ loop.index }}", {% endfor %}],
+                labels: [{% for e in  player.playerStats.form %}"{{ loop.index }}", {% endfor %}],
                 datasets: [{
                     label: "Score",
-                    data: [{{ allPlayerStats.form|join(', ') }}],
+                    data: [{{ player.playerStats.form|join(', ') }}],
                     fill: false,
                     backgroundColor: [
                         'rgba(75, 192, 192, 0.2)'

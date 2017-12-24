@@ -5,8 +5,7 @@ namespace AppBundle\Controller;
 
 
 use AppBundle\Entity\Player;
-use AppBundle\League\PlayerService;
-use AppBundle\PlayerStats\ComputePlayerStats;
+use AppBundle\PokerStats\StatsFactory;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -22,21 +21,19 @@ class HostController extends Controller
     /**
      * @Route("/{id}", name="host_show")
      * @Method("GET")
-     * @param Player $player
-     * @param ComputePlayerStats $computePlayerStats
+     * @param Player $host
+     * @param StatsFactory $statsFactory
      * @return \Symfony\Component\HttpFoundation\Response
-     * @internal param PlayerService $playerService
      */
     public function showAction(
-        Player $player,
-        ComputePlayerStats $computePlayerStats
+        Player $host,
+        StatsFactory $statsFactory
     ) {
 
-        $allPlayerStats = $computePlayerStats->getAllPlayerStats($player);
-
+        $hostStats = $statsFactory->getHostStats($host);
         return $this->render('host/show.html.twig', array(
-            'host' => $player,
-            'allPlayerStats' => $allPlayerStats
+            'host' => $host,
+            'hostStats' => $hostStats,
         ));
     }
 
