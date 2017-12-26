@@ -107,6 +107,16 @@ class Player
     }
 
     /**
+     * @param int $id
+     * @return Player
+     */
+    public function setId(int $id): Player
+    {
+        $this->id = $id;
+        return $this;
+    }
+
+    /**
      * @return string
      */
     public function getName(): ?string

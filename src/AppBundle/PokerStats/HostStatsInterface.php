@@ -12,7 +12,7 @@ interface HostStatsInterface
 
     public function getSumRebuys();
 
-    public function getMaxCountWins(): Player;
+    public function getMaxCountWinsPlayer(): ?Player;
 
     public function getFortress();
 }

@@ -1,0 +1,35 @@
+<table class="table text-center table-striped table-responsive-md">
+    <thead class="">
+    <tr>
+        <th>#</th>
+        <th class="text-left">Player</th>
+        <th>Points</th>
+        <th>Winnings</th>
+        <th>Rebuys</th>
+        <th>Net</th>
+        {% if game.league %}
+            <th>League Player</th>
+        {% endif %}
+    </tr>
+    </thead>
+
+    {# @var result \AppBundle\Entity\Result #}
+    {% for result in game.results %}
+        <tr>
+            <td>{{ result.position }}</td>
+            <td class="text-left"><a href="{{ path('player_show', { 'id': result.player.id }) }}">{{ result.player }}</a></td>
+            <td>{{ result.leaguePoints|number_format(league_points_decimal_places) }}</td>
+            <td>£{{ result.winnings|number_format(0) }}</td>
+            <td>{{ result.noOfRebuys|number_format(0) }}</td>
+            <td>£{{ result.net|number_format(0) }}</td>
+            {% if game.league %}
+                <td>
+                    {% if result.player.leaguePlayer %}
+                        <span class="oi oi-check"></span>
+                    {% endif %}
+                </td>
+            {% endif %}
+        </tr>
+    {% endfor %}
+
+</table>

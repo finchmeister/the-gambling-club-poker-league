@@ -7,12 +7,15 @@
 <div class="row">
     <div class="col-sm-9">
         <ul>
-            <li>Games played: x</li>
+            <li>Games played: {{ hostStats.countGamesPlayed }}</li>
             <li>Amount won: {{ hostStats.sumCashWon }}</li>
             <li>No of rebuys: {{ hostStats.sumRebuys }}</li>
-            <li>Most wins:</li>
-            <li>Biggest winner:</li>
-            <li>Fortress: host won/played</li>
+                {% if hostStats.maxCountWinsPlayer %}
+            <li>Most wins:
+                    {{ hostStats.maxCountWinsPlayer }} ({{ hostStats.maxCountWins }})
+                {% endif %}</li>
+            <li>Host wins: {{ hostStats.countHostWins }}</li>
+            <li>Fortress: {{ hostStats.countHostWins }}/{{ hostStats.countGamesPlayed }} {{ hostStats.fortressRatio|percent }}</li>
         </ul>
 
     </div>
@@ -21,10 +24,9 @@
     </div>
 </div>
 
+    <h2>Games</h2>
 
-// TODO: Display games played here.
-
-
+    {% include 'partial/_game.html.twig' %}
 
 {% endblock %}
 

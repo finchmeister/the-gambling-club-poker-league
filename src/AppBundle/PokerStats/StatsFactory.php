@@ -3,8 +3,8 @@
 
 namespace AppBundle\PokerStats;
 
+use AppBundle\Entity\Game;
 use AppBundle\Entity\Player;
-use AppBundle\Entity\Result;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManager;
 
@@ -48,10 +48,14 @@ class StatsFactory
 
     public function getHostStats(Player $host): HostStats
     {
-        $results = $this->entityManager->getRepository(Result::class)
-            ->getAllResultsForHost($host);
+        $games = $this->entityManager->getRepository(Game::class)
+            ->getAllHostGames($host);
 
         $hostStats = $this->initialiseHostStats();
-        return $hostStats->setResults(new ArrayCollection($results));
+        $hostStats
+            ->setGames(new ArrayCollection($games))
+            ->setHost($host);
+        return $hostStats;
     }
+
 }

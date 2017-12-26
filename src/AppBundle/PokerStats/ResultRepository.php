@@ -4,12 +4,50 @@
 namespace AppBundle\PokerStats;
 
 
+use AppBundle\Entity\Player;
 use AppBundle\Entity\Result;
 use Doctrine\Common\Collections\Collection;
 
 class ResultRepository
 {
 
+    public function getMaxCountWinsPlayer(Collection $results): ?Player
+    {
+        if ($results->isEmpty()) {
+            return null;
+        }
+        $winningResults = $this->getWinningResults($results);
+        $winningPlayers = $winningResults->map(function (Result $result) {
+            return $result->getPlayer();
+        });
+        $winningPlayerIds = $winningPlayers->map(function (Player $player) {
+            return $player->getId();
+        });
+        $countWinningPlayers = array_count_values($winningPlayerIds->toArray());
+
+        $commonValues = array_keys($countWinningPlayers, max($countWinningPlayers));
+        if (count($commonValues) > 1) {
+            return null;
+        }
+        $players = array_combine($winningPlayerIds->toArray(), $winningPlayers->toArray());
+        return $players[$commonValues[0]];
+    }
+
+    public function getCountPlayerWins(Player $player, Collection $results)
+    {
+        $results = $this->getWinningResults($results);
+        return $results->filter(function (Result $result) use ($player) {
+            return $result->getPlayer() === $player;
+        })->count();
+    }
+
+    public function getMaxCountWins(Collection $results): ?int
+    {
+        if ($player = $this->getMaxCountWinsPlayer($results)) {
+            return $this->getCountPlayerWins($player, $results);
+        };
+        return null;
+    }
 
     public function getSumCashWon(Collection $results): int
     {

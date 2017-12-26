@@ -4,6 +4,7 @@
 namespace AppBundle\Controller;
 
 
+use AppBundle\Entity\Game;
 use AppBundle\Entity\Player;
 use AppBundle\PokerStats\StatsFactory;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -31,9 +32,15 @@ class HostController extends Controller
     ) {
 
         $hostStats = $statsFactory->getHostStats($host);
+
+        $em = $this->getDoctrine();
+
+        $games = $em->getRepository(Game::class)
+            ->findBy(['host' => $host], ['date' => 'DESC']);
         return $this->render('host/show.html.twig', array(
             'host' => $host,
             'hostStats' => $hostStats,
+            'games' => $games,
         ));
     }
 

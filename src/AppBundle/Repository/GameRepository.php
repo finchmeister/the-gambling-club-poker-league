@@ -2,6 +2,7 @@
 
 namespace AppBundle\Repository;
 
+use AppBundle\Entity\Player;
 use Doctrine\ORM\EntityRepository;
 
 /**
@@ -26,6 +27,15 @@ class GameRepository extends EntityRepository
             ->andWhere('player.leaguePlayer = 1')
             ->groupBy('player.id')
             ->orderBy('winnings', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function getAllHostGames(Player $host)
+    {
+        return $this->createQueryBuilder('game')
+            ->andWhere('game.host = :host')
+            ->setParameter('host', $host)
             ->getQuery()
             ->getResult();
     }
