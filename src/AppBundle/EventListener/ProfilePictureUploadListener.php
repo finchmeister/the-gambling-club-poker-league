@@ -44,6 +44,9 @@ class ProfilePictureUploadListener
             return;
         }
 
+        // FIXME
+        return;
+
         if ($filename = $entity->getProfilePictureFile()) {
             $tmpLocation = '/tmp/'.md5($filename);
             $this->storage->downloadObject($filename, $tmpLocation);
