@@ -58,8 +58,9 @@ COPY phpunit.xml.dist ./
 RUN composer dump-autoload --optimize --classmap-authoritative
 # Install scripts
 RUN composer install --prefer-dist --no-autoloader --no-progress --no-suggest --no-interaction
-RUN chown -R www-data:www-data var/
+RUN chown -R www-data var/
 # TODO https://github.com/api-platform/api-platform/blob/master/api/docker/php/docker-entrypoint.sh
+# https://github.com/dunglas/symfony-docker
 #COPY docker/php/docker-entrypoint.sh /usr/local/bin/docker-entrypoint
 #RUN chmod +x /usr/local/bin/docker-entrypoint
 #ENTRYPOINT ["docker-entrypoint"]
