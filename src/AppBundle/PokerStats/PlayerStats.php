@@ -142,4 +142,9 @@ class PlayerStats implements PlayerStatsInterface
             : null;
     }
 
+    public function getSumGeneralPoints()
+    {
+        return $this->resultRepository->getSumGeneralPoints($this->results);
+    }
+
 }

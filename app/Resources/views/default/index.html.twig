@@ -13,6 +13,9 @@
 {% block main %}
 
     <h2>Stats</h2>
+
+    {% include 'partial/_all_stats_table.html.twig' %}
+
     <ul>
         <li>Games played: {{ overallStats.noOfGamesPlayed }}</li>
         <li>Cash won: £{{ overallStats.cashWon }}</li>

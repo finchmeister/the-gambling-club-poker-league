@@ -42,4 +42,6 @@ interface PlayerStatsInterface
     public function getForm();
 
     public function getMeanPosition();
+
+    public function getSumGeneralPoints();
 }

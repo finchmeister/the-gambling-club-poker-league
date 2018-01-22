@@ -3,8 +3,10 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Game;
+use AppBundle\Entity\Player;
 use AppBundle\League\LeagueTableService;
 use AppBundle\PlayerStats\ComputeStats;
+use AppBundle\PokerStats\StatsFactory;
 use Doctrine\Common\Collections\ArrayCollection;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -21,7 +23,8 @@ class DefaultController extends Controller
     public function indexAction(
         Request $request,
         LeagueTableService $leagueTableService,
-        ComputeStats $computeStats
+        ComputeStats $computeStats,
+        StatsFactory $playerStatsFactory
     ) {
         // TODO refactor into services
         $em = $this->getDoctrine();
@@ -30,10 +33,28 @@ class DefaultController extends Controller
 
         $overallStats = $computeStats->getOverallStats(new ArrayCollection($games));
 
+        //$allStatsTable = $em->getRepository(Game::class)->getAllStatsTable();
+
+        $players = $em->getRepository(Player::class)->findAll();
+
+        $allStatsTable = [];
+        foreach ($players as $player) {
+            $allStatsTable[] = [
+                'player' => $player,
+                'stats' => $playerStatsFactory->getAllPlayerStats($player),
+            ];
+        }
+
+        // TODO, move out
+        usort($allStatsTable, function ($a, $b) {
+            return $b['stats']->getSumGeneralPoints() <=> $a['stats']->getSumGeneralPoints();
+        });
+
         $leagueTable = $leagueTableService->getLeagueTable();
         return $this->render('default/index.html.twig', [
             'games' => $games,
             'leagueTable' => $leagueTable,
+            'allStatsTable' => $allStatsTable,
             'lastUpdated' => $leagueTableService->getLastUpdated(),
             'overallStats' => $overallStats,
         ]);

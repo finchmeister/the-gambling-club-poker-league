@@ -281,5 +281,22 @@ class Result
     {
         $this->updatedAt = new \DateTime('now');
     }
+
+    /**
+     * @link http://www.homepokertourney.com/poker-league-points-systems.htm
+     * @return float|null
+     */
+    public function getGeneralPoints(): ?float
+    {
+        $noOfPlayersInGame = $this->getGame()->getNoOfPlayers();
+        if ($noOfPlayersInGame === null) {
+            return 0;
+        }
+        $buyIn = $this->getGame()->getBuyIn();
+        $boughtIn = $this->getBoughtIn();
+        $position = $this->position;
+        return sqrt($noOfPlayersInGame * $buyIn * $buyIn / $boughtIn) /
+            ($position + 1);
+    }
 }
 

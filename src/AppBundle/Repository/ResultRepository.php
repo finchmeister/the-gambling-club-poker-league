@@ -25,7 +25,7 @@ class ResultRepository extends EntityRepository
     public function getPlayersWinLoseStats(Player $player = null)
     {
         $qb = $this->createQueryBuilder('result')
-            ->select('player.name, player.id AS player_id')
+            ->select('player.name, player.id AS playerId')
             ->join('result.player', 'player')
             ->addSelect('COUNT(result.id) as gamesPlayed')
             ->addSelect('SUM(CASE WHEN result.position = 1 THEN 1 ELSE 0 END) as gamesWon')

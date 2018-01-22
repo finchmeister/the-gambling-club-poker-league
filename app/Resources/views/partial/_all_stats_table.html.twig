@@ -1,0 +1,27 @@
+<h2>All Stats</h2>
+<table class="table table-striped text-center table-responsive-md">
+    <thead class="">
+    <tr>
+        <th>#</th>
+        <th class="text-left">Player</th>
+        <th>Points</th>
+        <th>Winnings</th>
+        <th>Bought-In</th>
+        <th>Net</th>
+        <th># Rebuys</th>
+        <th># Won</th>
+    </tr>
+    </thead>
+    {% for row in allStatsTable %}
+        <tr>
+            <th scope="row">{{ loop.index }}</th>
+            <td class="text-left"><a href="{{ path('player_show', { 'id': row['player'].id }) }}">{{ row['player'].name }}</a></td>
+            <td>{{ row['stats'].sumGeneralPoints|number_format(2) }}</td>
+            <td>{{ row['stats'].sumCashWon|price }}</td>
+            <td>{{ row['stats'].sumBoughtIn|price }}</td>
+            <td>{{ row['stats'].net|price }}</td>
+            <td>{{ row['stats'].sumRebuys }}</td>
+            <td>{{ row['stats'].countGamesWon }}</td>
+        </tr>
+    {% endfor %}
+</table>
