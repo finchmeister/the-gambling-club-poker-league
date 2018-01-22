@@ -37,7 +37,7 @@
                     <thead>
                     <tr>
                         <th scope="col">£ Won</th>
-                        <th scope="col">Bought In</th>
+                        <th scope="col">Bought-In</th>
                         <th scope="col">Net</th>
                     </tr>
                     </thead>
@@ -134,7 +134,7 @@
         new Chart(document.getElementById("winLoseNetBarChart"), {
             type: 'bar',
             data: {
-                labels: ["Winnings", "Bought In", "Net"],
+                labels: ["Winnings", "Bought-In", "Net"],
                 datasets: [{
                     label: '£',
                     data: [{{ player.playerStats.sumCashWon }}, {{ player.playerStats.sumBoughtIn }}, {{ player.playerStats.net }}],

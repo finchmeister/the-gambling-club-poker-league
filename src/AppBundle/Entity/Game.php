@@ -304,7 +304,7 @@ class Game
         if ($results = $this->getResults()) {
             $pot = $results->count() * $this->getBuyIn();
             foreach ($results as $result) {
-                $pot += $result->getNoOfRebuys() * $this->getBuyIn();
+                $pot += $result->getNoOfRebuys() * $this->getBuyIn() + $result->getAddOn();
             }
             return $pot;
         } else {
@@ -334,6 +334,13 @@ class Game
     public function setUpdatedAt()
     {
         $this->updatedAt = new \DateTime('now');
+    }
+
+    public function hasAddOn(): bool
+    {
+        return $this->results->filter(function (Result $result) {
+            return $result->getAddOn() > 0;
+        })->count() > 0;
     }
 
 }

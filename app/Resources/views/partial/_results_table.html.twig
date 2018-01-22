@@ -5,8 +5,12 @@
         <th class="text-left">Player</th>
         <th>Points</th>
         <th>Winnings</th>
-        <th>Rebuys</th>
+        <th>Bought-In</th>
         <th>Net</th>
+        <th># Rebuys</th>
+        {% if game.hasAddOn %}
+            <th>Add-On</th>
+        {% endif %}
         {% if game.league %}
             <th>League Player</th>
         {% endif %}
@@ -19,9 +23,13 @@
             <td>{{ result.position }}</td>
             <td class="text-left"><a href="{{ path('player_show', { 'id': result.player.id }) }}">{{ result.player }}</a></td>
             <td>{{ result.leaguePoints|number_format(league_points_decimal_places) }}</td>
-            <td>£{{ result.winnings|number_format(0) }}</td>
-            <td>{{ result.noOfRebuys|number_format(0) }}</td>
-            <td>£{{ result.net|number_format(0) }}</td>
+            <td>{{ result.winnings|price }}</td>
+            <td>{{ result.boughtIn|price }}</td>
+            <td>{{ result.net|price }}</td>
+            <td>{{ result.noOfRebuys }}</td>
+            {% if game.hasAddOn %}
+                <td>{{ result.addOn|price }}</td>
+            {% endif %}
             {% if game.league %}
                 <td>
                     {% if result.player.leaguePlayer %}

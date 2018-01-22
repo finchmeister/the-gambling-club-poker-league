@@ -12,7 +12,8 @@
             <div class="col-sm-6">
                 <ul>
                     <li>League: {{ game.isLeague }}</li>
-                    <li>Buy in: £{{ game.buyIn }}</li>
+                    <li>Buy in: {{ game.buyIn|price }}</li>
+                    <li>Pot: {{ game.pot|price }}</li>
                     {% if game.snacksProvider %}
                         <li>Snacks: {{ game.snacks }} by {{ game.snacksProvider }}</li>
                     {% endif %}

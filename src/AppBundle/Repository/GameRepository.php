@@ -20,7 +20,7 @@ class GameRepository extends EntityRepository
             ->addSelect('SUM(results.winnings) AS winnings')
             ->addSelect('SUM(results.leaguePoints) AS leaguePoints')
             ->addSelect('SUM(results.noOfRebuys) AS noOfRebuys')
-            ->addSelect('SUM((results.noOfRebuys + 1)*game.buyIn) AS boughtIn')
+            ->addSelect('SUM((results.noOfRebuys + 1)*game.buyIn + results.addOn) AS boughtIn')
             ->leftJoin('game.results', 'results')
             ->leftJoin('results.player', 'player')
             ->andWhere('game.isLeague = 1')
