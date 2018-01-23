@@ -174,5 +174,13 @@ class ResultRepository
             : null;
     }
 
+    public function getSumGeneralPoints(Collection $results): float
+    {
+        return array_sum($results->map(
+            function (Result $result) {
+                return $result->getGeneralPoints();
+            }
+        )->toArray());
+    }
 }
 

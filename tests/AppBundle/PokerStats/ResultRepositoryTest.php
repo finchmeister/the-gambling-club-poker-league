@@ -1,9 +1,10 @@
 <?php
 
-namespace AppBundle\PokerStats;
+namespace Tests\AppBundle\PokerStats;
 
 use AppBundle\Entity\Player;
 use AppBundle\Entity\Result;
+use AppBundle\PokerStats\ResultRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use PHPUnit\Framework\TestCase;

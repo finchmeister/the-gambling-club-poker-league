@@ -4,6 +4,7 @@ namespace AppBundle\Repository;
 
 use AppBundle\Entity\Player;
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\QueryBuilder;
 
 /**
  * GameRepository
@@ -15,18 +16,29 @@ class GameRepository extends EntityRepository
 {
     public function getLeagueTable()
     {
-        return $this->createQueryBuilder('game')
-            ->select('player.name, player.id AS player_id')
-            ->addSelect('SUM(results.winnings) AS winnings')
+        return $this->getTableQueryBuilder()
             ->addSelect('SUM(results.leaguePoints) AS leaguePoints')
-            ->addSelect('SUM(results.noOfRebuys) AS noOfRebuys')
-            ->addSelect('SUM((results.noOfRebuys + 1)*game.buyIn) AS boughtIn')
-            ->leftJoin('game.results', 'results')
-            ->leftJoin('results.player', 'player')
             ->andWhere('game.isLeague = 1')
             ->andWhere('player.leaguePlayer = 1')
-            ->groupBy('player.id')
-            ->orderBy('winnings', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    protected function getTableQueryBuilder(): QueryBuilder
+    {
+        return $this->createQueryBuilder('game')
+            ->select('player.name, player.id AS playerId')
+            ->addSelect('SUM(results.winnings) AS winnings')
+            ->addSelect('SUM(results.noOfRebuys) AS noOfRebuys')
+            ->addSelect('SUM((results.noOfRebuys + 1)*game.buyIn + results.addOn) AS boughtIn')
+            ->innerJoin('game.results', 'results')
+            ->leftJoin('results.player', 'player')
+            ->groupBy('player.id');
+    }
+
+    public function getAllStatsTable()
+    {
+        return $this->getTableQueryBuilder()
             ->getQuery()
             ->getResult();
     }

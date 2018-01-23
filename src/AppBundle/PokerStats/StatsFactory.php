@@ -25,10 +25,11 @@ class StatsFactory
         $this->entityManager = $entityManager;
     }
 
-    public function initialisePlayerStats(): PlayerStats
+    public function initialisePlayerStats(Player $player): PlayerStats
     {
         return new PlayerStats(
-            $this->resultRepository
+            $this->resultRepository,
+            $player
         );
     }
 
@@ -42,7 +43,7 @@ class StatsFactory
     public function getAllPlayerStats(Player $player): PlayerStatsInterface
     {
         $results = $player->getResults();
-        $playerStats = $this->initialisePlayerStats();
+        $playerStats = $this->initialisePlayerStats($player);
         return $playerStats->setResults($results);
     }
 
@@ -56,6 +57,22 @@ class StatsFactory
             ->setGames(new ArrayCollection($games))
             ->setHost($host);
         return $hostStats;
+    }
+
+    /**
+     * @return PlayerStatsInterface[]
+     */
+    public function getAllPlayersStats(): array
+    {
+        $allPlayersStats = [];
+        $players = $this->entityManager->getRepository(Player::class)->findAll();
+        foreach ($players as $player) {
+            $allPlayersStats[] = ($this->getAllPlayerStats($player));
+        }
+        usort($allPlayersStats, function (PlayerStatsInterface $a, PlayerStatsInterface $b) {
+            return $b->getSumGeneralPoints() <=> $a->getSumGeneralPoints();
+        });
+        return $allPlayersStats;
     }
 
 }

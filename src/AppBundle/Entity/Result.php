@@ -67,6 +67,14 @@ class Result
     private $noOfRebuys = 0;
 
     /**
+     * @var int
+     *
+     * @ORM\Column(type="float", options={"default" : 0})
+     * @Assert\GreaterThanOrEqual(0)
+     */
+    private $addOn = 0;
+
+    /**
      * @var \DateTime
      * @ORM\Column(type="datetime")
      */
@@ -219,7 +227,25 @@ class Result
      */
     public function getBoughtIn(): int
     {
-        return ($this->getNoOfRebuys() + 1) * $this->getGame()->getBuyIn();
+        return ($this->noOfRebuys + 1) * $this->getGame()->getBuyIn() + $this->addOn;
+    }
+
+    /**
+     * @return int
+     */
+    public function getAddOn(): int
+    {
+        return $this->addOn;
+    }
+
+    /**
+     * @param int $addOn
+     * @return Result
+     */
+    public function setAddOn(int $addOn): Result
+    {
+        $this->addOn = $addOn;
+        return $this;
     }
 
     /**
@@ -254,6 +280,23 @@ class Result
     public function setUpdatedAt()
     {
         $this->updatedAt = new \DateTime('now');
+    }
+
+    /**
+     * @link http://www.homepokertourney.com/poker-league-points-systems.htm
+     * @return float|null
+     */
+    public function getGeneralPoints(): ?float
+    {
+        $noOfPlayersInGame = $this->getGame()->getNoOfPlayers();
+        if ($noOfPlayersInGame === null) {
+            return 0;
+        }
+        $buyIn = $this->getGame()->getBuyIn();
+        $boughtIn = $this->getBoughtIn();
+        $position = $this->position;
+        return sqrt($noOfPlayersInGame * $buyIn * $buyIn / $boughtIn) /
+            ($position + 1);
     }
 }
 

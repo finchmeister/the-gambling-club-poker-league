@@ -3,6 +3,7 @@
 
 namespace AppBundle\PokerStats;
 
+use AppBundle\Entity\Player;
 use AppBundle\Entity\Result;
 use Doctrine\Common\Collections\Collection;
 
@@ -17,11 +18,25 @@ class PlayerStats implements PlayerStatsInterface
      * @var Result[]|Collection
      */
     protected $results;
+    /**
+     * @var Player
+     */
+    private $player;
 
     public function __construct(
-        ResultRepository $resultRepository
+        ResultRepository $resultRepository,
+        Player $player
     ) {
         $this->resultRepository = $resultRepository;
+        $this->player = $player;
+    }
+
+    /**
+     * @return Player
+     */
+    public function getPlayer(): Player
+    {
+        return $this->player;
     }
 
     /**
@@ -140,6 +155,11 @@ class PlayerStats implements PlayerStatsInterface
             ? array_sum($this->resultRepository->getPositions($this->results)->toArray())
             / $this->getCountGamesPlayed()
             : null;
+    }
+
+    public function getSumGeneralPoints()
+    {
+        return $this->resultRepository->getSumGeneralPoints($this->results);
     }
 
 }

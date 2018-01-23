@@ -2,8 +2,11 @@
 
 namespace AppBundle\PokerStats;
 
+use AppBundle\Entity\Player;
+
 interface PlayerStatsInterface
 {
+    public function getPlayer(): Player;
 
     public function getCountGamesPlayed();
 
@@ -42,4 +45,6 @@ interface PlayerStatsInterface
     public function getForm();
 
     public function getMeanPosition();
+
+    public function getSumGeneralPoints();
 }

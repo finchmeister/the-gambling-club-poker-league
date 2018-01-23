@@ -16,13 +16,15 @@ class ResultType extends AbstractType
     {
         $builder
             ->add('position')
+            ->add('player')
             ->add('winnings', null, [
-                'data' => 0
+                'empty_data' => 0,
             ])
             ->add('noOfRebuys', null, [
-                'data' => 0
+                'empty_data' => 0,
             ])
-            ->add('player');
+            ->add('addOn')
+        ;
     }
     
     /**

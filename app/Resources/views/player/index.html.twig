@@ -24,7 +24,7 @@
             <ul>
                 <li>League Position:</li>
                 <li>Games Won / Games Played: {{ player.playerStats.countGamesWon }}/{{ player.playerStats.countGamesPlayed }} : {{ (player.playerStats.winRatio * 100)|number_format(0) }}%</li>
-                <li>Won / Bought In / Net: £{{ player.playerStats.sumCashWon }} / £{{ player.playerStats.sumBoughtIn }} / £{{ player.playerStats.net }}</li>
+                <li>Won / Bought-In / Net: £{{ player.playerStats.sumCashWon }} / £{{ player.playerStats.sumBoughtIn }} / £{{ player.playerStats.net }}</li>
             </ul>
 
             <a class="btn btn-primary" href="{{ path('player_show', { 'id': player.id }) }}">Go to Player Stats</a>

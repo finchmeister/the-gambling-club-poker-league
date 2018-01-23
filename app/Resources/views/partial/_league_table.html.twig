@@ -17,12 +17,12 @@
     {% for row in leagueTable %}
         <tr>
             <th scope="row">{{ loop.index }}</th>
-            <td class="text-left"><a href="{{ path('player_show', { 'id': row.player_id }) }}">{{ row.name }}</a></td>
+            <td class="text-left"><a href="{{ path('player_show', { 'id': row.playerId }) }}">{{ row.name }}</a></td>
             <td>{{ row.leaguePoints|number_format(league_points_decimal_places) }}</td>
-            <td>£{{ row.winnings|number_format(0) }}</td>
-            <td>£{{ row.boughtIn|number_format(0) }}</td>
-            <td>£{{ row.net|number_format(0) }}</td>
-            <td>{{ row.noOfRebuys|number_format(0) }}</td>
+            <td>{{ row.winnings|price }}</td>
+            <td>{{ row.boughtIn|price }}</td>
+            <td>{{ row.net|price }}</td>
+            <td>{{ row.noOfRebuys }}</td>
 
         </tr>
     {% endfor %}
