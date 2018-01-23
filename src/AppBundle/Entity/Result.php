@@ -69,7 +69,7 @@ class Result
     /**
      * @var int
      *
-     * @ORM\Column(type="float", options={"default" : 0})
+     * @ORM\Column(type="float")
      * @Assert\GreaterThanOrEqual(0)
      */
     private $addOn = 0;
