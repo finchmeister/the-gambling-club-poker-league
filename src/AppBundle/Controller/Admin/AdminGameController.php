@@ -95,7 +95,6 @@ class AdminGameController extends Controller
             return $this->redirectToRoute('game_edit', array('id' => $game->getId()));
         }
 
-        dump($game);
         return $this->render('admin/game/edit.html.twig', array(
             'game' => $game,
             'edit_form' => $editForm->createView(),
