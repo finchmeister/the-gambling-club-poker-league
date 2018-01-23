@@ -1,5 +1,5 @@
 {% extends 'base.html.twig' %}
-
+{% import _self as formMacros %}
 {% block title %}Edit Game{% endblock %}
 
 {% block main %}
@@ -20,19 +20,13 @@
 
     <h2 class="">Results</h2>
     
-    <div id="results-container" class="results" data-prototype="{{ form_widget(edit_form.results.vars.prototype)|e('html_attr') }}">
-        {% for result in edit_form.results %}
+    <div id="results-container" class="results"
+         data-prototype="{{ formMacros.printResultRow(edit_form.results.vars.prototype)|e('html_attr') }}"
+         data-index="{{ edit_form.results|length }}"
+    >
+        {% for resultForm in edit_form.results %}
 
-            <div class="card my-3">
-                <div class="card-header">
-                    {#<button type="button" class="close" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>#}
-                </div>
-                <div class="card-body">
-                    {{ form_widget(result) }}
-                </div>
-            </div>
+            {{ formMacros.printResultRow(resultForm) }}
 
         {% endfor %}
     </div>
@@ -42,6 +36,22 @@
 
 
 {% endblock %}
+
+
+{% macro printResultRow(resultForm) %}
+
+    <div class="card my-3">
+        <div class="card-header">
+            <button type="button" class="close" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="card-body">
+            {{ form_widget(resultForm) }}
+        </div>
+    </div>
+
+{% endmacro %}
 
 
 {% block sidebar %}
@@ -71,9 +81,7 @@
              // Get the div that holds the collection of results
              $collectionHolder = $('#results-container');
 
-             $collectionHolder.find('.card').each(function() {
-                 addResultFormDeleteLink($(this));
-             });
+             addDeleteLinkToAllForms($collectionHolder);
 
              // add the "add a result" anchor and li to the results ul
              $collectionHolder.append($addResultLink);
@@ -99,41 +107,29 @@
              // get the new index
              var index = $collectionHolder.data('index');
 
-             var newForm = prototype;
-             // You need this only if you didn't set 'label' => false in your results field in TaskType
-             // Replace '__name__label__' in the prototype's HTML to
-             // instead be a number based on how many items we have
-             // newForm = newForm.replace(/__name__label__/g, index);
-
-             // Replace '__name__' in the prototype's HTML to
-             // instead be a number based on how many items we have
-             newForm = newForm.replace(/__name__/g, index);
+             var newForm = prototype.replace(/__name__/g, index);
 
              // increase the index with one for the next item
              $collectionHolder.data('index', index + 1);
 
-             // Display the form in the page in an li, before the "Add a result" link li
+             $newLinkLi.before(newForm);
 
-             var $newFormHeader = $('<div class="card-header"></div>');
-             var $newFormBody = $('<div class="card-body"></div>').append(newForm);
-             var $newCardForm = $('<div class="card my-3"></div>').append($newFormHeader);
-             $newCardForm = $newCardForm.append($newFormBody);
+             addDeleteLinkToAllForms($collectionHolder);
 
-             $newLinkLi.before($newCardForm);
              var $noOfElements = $('.card').length;
-             $('input[id$="position"]').val($noOfElements);
-
-             addResultFormDeleteLink($newCardForm);
+             $('input[id$="position"]').last().val($noOfElements);
          }
 
+         function addDeleteLinkToAllForms($collectionHolder) {
+             $collectionHolder.find('.card').each(function() {
+                 addResultFormDeleteLink($(this));
+             });
+         }
 
          function addResultFormDeleteLink($resultForm) {
-             var $removeFormA = $('<button type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>');
-             $resultForm.find('.card-header').html($removeFormA);
-             $removeFormA.on('click', function(e) {
+             $resultForm.find('.close').on('click', function(e) {
                  // prevent the link from creating a "#" on the URL
                  e.preventDefault();
-                 // remove the li for the result form
                  $resultForm.remove();
              });
          }
