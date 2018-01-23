@@ -2,8 +2,11 @@
 
 namespace AppBundle\PokerStats;
 
+use AppBundle\Entity\Player;
+
 interface PlayerStatsInterface
 {
+    public function getPlayer(): Player;
 
     public function getCountGamesPlayed();
 

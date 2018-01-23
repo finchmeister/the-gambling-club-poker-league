@@ -3,7 +3,6 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Game;
-use AppBundle\Entity\Player;
 use AppBundle\League\LeagueTableService;
 use AppBundle\PlayerStats\ComputeStats;
 use AppBundle\PokerStats\StatsFactory;
@@ -18,6 +17,8 @@ class DefaultController extends Controller
      * @Route("/", name="homepage")
      * @param Request $request
      * @param LeagueTableService $leagueTableService
+     * @param ComputeStats $computeStats
+     * @param StatsFactory $playerStatsFactory
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function indexAction(
@@ -31,30 +32,16 @@ class DefaultController extends Controller
         $games = $em->getRepository(Game::class)
             ->findBy([], ['date' => 'DESC']);
 
+        // TODO look at overall stats implementation
         $overallStats = $computeStats->getOverallStats(new ArrayCollection($games));
 
-        //$allStatsTable = $em->getRepository(Game::class)->getAllStatsTable();
-
-        $players = $em->getRepository(Player::class)->findAll();
-
-        $allStatsTable = [];
-        foreach ($players as $player) {
-            $allStatsTable[] = [
-                'player' => $player,
-                'stats' => $playerStatsFactory->getAllPlayerStats($player),
-            ];
-        }
-
-        // TODO, move out
-        usort($allStatsTable, function ($a, $b) {
-            return $b['stats']->getSumGeneralPoints() <=> $a['stats']->getSumGeneralPoints();
-        });
+        $allPlayersStats = $playerStatsFactory->getAllPlayersStats();
 
         $leagueTable = $leagueTableService->getLeagueTable();
         return $this->render('default/index.html.twig', [
             'games' => $games,
             'leagueTable' => $leagueTable,
-            'allStatsTable' => $allStatsTable,
+            'allPlayersStats' => $allPlayersStats,
             'lastUpdated' => $leagueTableService->getLastUpdated(),
             'overallStats' => $overallStats,
         ]);

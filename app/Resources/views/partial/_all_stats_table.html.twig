@@ -12,16 +12,16 @@
         <th># Won</th>
     </tr>
     </thead>
-    {% for row in allStatsTable %}
+    {% for row in allPlayersStats %}
         <tr>
             <th scope="row">{{ loop.index }}</th>
-            <td class="text-left"><a href="{{ path('player_show', { 'id': row['player'].id }) }}">{{ row['player'].name }}</a></td>
-            <td>{{ row['stats'].sumGeneralPoints|number_format(2) }}</td>
-            <td>{{ row['stats'].sumCashWon|price }}</td>
-            <td>{{ row['stats'].sumBoughtIn|price }}</td>
-            <td>{{ row['stats'].net|price }}</td>
-            <td>{{ row['stats'].sumRebuys }}</td>
-            <td>{{ row['stats'].countGamesWon }}</td>
+            <td class="text-left"><a href="{{ path('player_show', { 'id': row.player.id }) }}">{{ row.player.name }}</a></td>
+            <td>{{ row.sumGeneralPoints|number_format(2) }}</td>
+            <td>{{ row.sumCashWon|price }}</td>
+            <td>{{ row.sumBoughtIn|price }}</td>
+            <td>{{ row.net|price }}</td>
+            <td>{{ row.sumRebuys }}</td>
+            <td>{{ row.countGamesWon }}</td>
         </tr>
     {% endfor %}
 </table>

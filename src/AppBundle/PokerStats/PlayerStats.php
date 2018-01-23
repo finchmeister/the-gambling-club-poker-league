@@ -3,6 +3,7 @@
 
 namespace AppBundle\PokerStats;
 
+use AppBundle\Entity\Player;
 use AppBundle\Entity\Result;
 use Doctrine\Common\Collections\Collection;
 
@@ -17,11 +18,25 @@ class PlayerStats implements PlayerStatsInterface
      * @var Result[]|Collection
      */
     protected $results;
+    /**
+     * @var Player
+     */
+    private $player;
 
     public function __construct(
-        ResultRepository $resultRepository
+        ResultRepository $resultRepository,
+        Player $player
     ) {
         $this->resultRepository = $resultRepository;
+        $this->player = $player;
+    }
+
+    /**
+     * @return Player
+     */
+    public function getPlayer(): Player
+    {
+        return $this->player;
     }
 
     /**
