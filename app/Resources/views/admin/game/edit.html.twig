@@ -81,9 +81,7 @@
              // Get the div that holds the collection of results
              $collectionHolder = $('#results-container');
 
-             $collectionHolder.find('.card').each(function() {
-                 addResultFormDeleteLink($(this));
-             });
+             addDeleteLinkToAllForms($collectionHolder);
 
              // add the "add a result" anchor and li to the results ul
              $collectionHolder.append($addResultLink);
@@ -111,29 +109,27 @@
 
              var newForm = prototype.replace(/__name__/g, index);
 
-             console.log(newForm)
-
              // increase the index with one for the next item
              $collectionHolder.data('index', index + 1);
 
              $newLinkLi.before(newForm);
-             //var $noOfElements = $('.card').length;
-             //$('input[id$="position"]').val($noOfElements);
 
-             addResultFormDeleteLink(newForm);
+             addDeleteLinkToAllForms($collectionHolder);
+
+             var $noOfElements = $('.card').length;
+             $('input[id$="position"]').last().val($noOfElements);
          }
 
+         function addDeleteLinkToAllForms($collectionHolder) {
+             $collectionHolder.find('.card').each(function() {
+                 addResultFormDeleteLink($(this));
+             });
+         }
 
          function addResultFormDeleteLink($resultForm) {
-
-
-
-             var $removeFormA = $('<button type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>');
-             $resultForm.find('.card-header').html($removeFormA);
-             $removeFormA.on('click', function(e) {
+             $resultForm.find('.close').on('click', function(e) {
                  // prevent the link from creating a "#" on the URL
                  e.preventDefault();
-                 // remove the li for the result form
                  $resultForm.remove();
              });
          }
