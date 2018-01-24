@@ -10,6 +10,7 @@
         <th>Net</th>
         <th># Rebuys</th>
         <th># Won</th>
+        <th># Played</th>
     </tr>
     </thead>
     {% for row in allPlayersStats %}
@@ -22,6 +23,7 @@
             <td>{{ row.net|price }}</td>
             <td>{{ row.sumRebuys }}</td>
             <td>{{ row.countGamesWon }}</td>
+            <td>{{ row.countGamesPlayed }}</td>
         </tr>
     {% endfor %}
 </table>
