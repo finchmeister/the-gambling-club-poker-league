@@ -24,6 +24,7 @@ security:
 
         main:
             anonymous: ~
+            logout_on_user_change: true
 
             form_login:
                 # The route name that the login form submits to
