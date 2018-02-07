@@ -10,3 +10,9 @@ Dockerfile*
 .env*
 !var/.gitignore
 var/*
+/web/web_test.php
+.idea/
+google-cloud-auth.json
+vm01.zip
+secrets.tar
+machine-config.tar
