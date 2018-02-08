@@ -24,7 +24,7 @@ class PlayerType extends AbstractType
                 'attr' => ['rows' => 5],
                 'empty_data' => ''
             ])
-            ->add('profilePictureFile', FileType::class, [
+            ->add('profilePicture', FileType::class, [
                 'required' => false,
             ])
         ;

@@ -77,6 +77,16 @@ class Player
     private $profilePictureFile = null;
 
     /**
+     * @var File|null
+     * @ORM\Column(type="string", nullable=true)
+     * @Assert\Image(
+     *     maxSize = "1M",
+     *     mimeTypes = {"image/jpeg", "image/png"},
+     * )
+     */
+    private $profilePicture;
+
+    /**
      * @var \DateTime
      * @ORM\Column(type="datetime")
      */
@@ -292,6 +302,24 @@ class Player
     public function setPlayerStats(PlayerStatsInterface $playerStats): Player
     {
         $this->playerStats = $playerStats;
+        return $this;
+    }
+
+    /**
+     * @return null|File
+     */
+    public function getProfilePicture()
+    {
+        return $this->profilePicture;
+    }
+
+    /**
+     * @param null|File $profilePicture
+     * @return Player
+     */
+    public function setProfilePicture($profilePicture)
+    {
+        $this->profilePicture = $profilePicture;
         return $this;
     }
 }
