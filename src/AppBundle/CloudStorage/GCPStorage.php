@@ -10,6 +10,7 @@ use Google\Cloud\Storage\StorageObject;
 /**
  * Class GCPStorage
  * @package AppBundle\CloudStorage
+ * @deprecated now using flysystem
  */
 class GCPStorage
 {

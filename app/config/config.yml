@@ -62,3 +62,15 @@ swiftmailer:
     username: '%mailer_user%'
     password: '%mailer_password%'
     spool: { type: memory }
+
+#oneup_flysystem: # Done through service definition
+#    adapters:
+#        gcp_adapter:
+#            googlecloudstorage:
+#                client: Google\Cloud\Storage\StorageClient
+#                bucket: Google\Cloud\Storage\Bucket
+#
+#    filesystems:
+#        tgc:
+#            adapter: gcp_adapter
+#            visibility: public

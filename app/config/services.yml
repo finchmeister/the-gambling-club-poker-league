@@ -41,12 +41,26 @@ services:
     AppBundle\DatabaseBackup\GCPStorageDatabaseBackup:
         arguments: ['@AppBundle\CloudStorage\GCPStorage', '%database_path%']
 
-    AppBundle\EventListener\ProfilePictureUploadListener:
-         tags:
-          - { name: doctrine.event_listener, event: prePersist }
-          - { name: doctrine.event_listener, event: preUpdate }
-          - { name: doctrine.event_listener, event: postLoad }
-    # add more services, or override services that need manual wiring
-    # AppBundle\Service\ExampleService:
-    #     arguments:
-    #         $someArgument: 'some_value'
+    Google\Cloud\Storage\StorageClient:
+        arguments:
+            - projectId: '%gcp_project_id%'
+              keyFilePath: '%gcp_key_file_path%'
+
+    Google\Cloud\Storage\Bucket:
+        factory: 'Google\Cloud\Storage\StorageClient:bucket'
+        arguments: ['%gcp_bucket_name%']
+
+    Superbalist\Flysystem\GoogleStorage\GoogleStorageAdapter:
+        arguments: ['@Google\Cloud\Storage\StorageClient', '@Google\Cloud\Storage\Bucket']
+
+    League\Flysystem\Filesystem:
+        arguments:
+            - '@Superbalist\Flysystem\GoogleStorage\GoogleStorageAdapter'
+            - visibility: public
+              disable_asserts: false
+
+    AppBundle\CloudStorage\GCPStorageHelper:
+            arguments:
+              - '%gcp_project_id%'
+              - '%gcp_bucket_name%'
+              - '%gcp_key_file_path%'

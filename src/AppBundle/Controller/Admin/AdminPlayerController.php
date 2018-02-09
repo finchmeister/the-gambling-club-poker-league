@@ -64,9 +64,14 @@ class AdminPlayerController extends Controller
      *
      * @Route("/{id}/edit", name="player_edit")
      * @Method({"GET", "POST"})
+     * @param Request $request
+     * @param Player $player
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
-    public function editAction(Request $request, Player $player)
-    {
+    public function editAction(
+        Request $request,
+        Player $player
+    ) {
         $deleteFormView = $player->getResults()->count() === 0
             ? $deleteForm = $this->createDeleteForm($player)->createView()
             : null;

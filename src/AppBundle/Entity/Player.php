@@ -70,11 +70,13 @@ class Player
     private $profilePicturePublicUrl = null;
 
     /**
-     * @var string
-     * @ORM\Column(type="string", nullable=true)
-     * @Assert\File(mimeTypes={ "image/jpeg", "image/png" })
+     * @var File|null
+     * @Assert\Image(
+     *     maxSize = "1M",
+     *     mimeTypes = {"image/jpeg", "image/png"},
+     * )
      */
-    private $profilePictureFile = null;
+    private $profilePicture;
 
     /**
      * @var \DateTime
@@ -252,24 +254,6 @@ class Player
     }
 
     /**
-     * @return File|string
-     */
-    public function getProfilePictureFile()
-    {
-        return $this->profilePictureFile;
-    }
-
-    /**
-     * @param string $profilePictureFile
-     * @return Player
-     */
-    public function setProfilePictureFile($profilePictureFile): Player
-    {
-        $this->profilePictureFile = $profilePictureFile;
-        return $this;
-    }
-
-    /**
      * @return \DateTime
      */
     public function getCreatedAt(): \DateTime
@@ -292,6 +276,32 @@ class Player
     public function setPlayerStats(PlayerStatsInterface $playerStats): Player
     {
         $this->playerStats = $playerStats;
+        return $this;
+    }
+
+    /**
+     * @return null|File
+     */
+    public function getProfilePicture()
+    {
+        return $this->profilePicture;
+    }
+
+    /**
+     * @return string
+     */
+    public function getProfilePicturePath(): string
+    {
+        return sprintf('images/profile/%s.jpg', md5(uniqid()));
+    }
+
+    /**
+     * @param null|File|string $profilePicture
+     * @return Player
+     */
+    public function setProfilePicture($profilePicture)
+    {
+        $this->profilePicture = $profilePicture;
         return $this;
     }
 }
