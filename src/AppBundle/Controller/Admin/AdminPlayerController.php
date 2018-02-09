@@ -4,12 +4,9 @@ namespace AppBundle\Controller\Admin;
 
 use AppBundle\Entity\Player;
 use AppBundle\Form\PlayerType;
-use League\Flysystem\Filesystem;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Symfony\Component\HttpFoundation\File\File;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -67,41 +64,22 @@ class AdminPlayerController extends Controller
      *
      * @Route("/{id}/edit", name="player_edit")
      * @Method({"GET", "POST"})
+     * @param Request $request
+     * @param Player $player
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
-    public function editAction(Request $request, Player $player)
-    {
+    public function editAction(
+        Request $request,
+        Player $player
+    ) {
         $deleteFormView = $player->getResults()->count() === 0
             ? $deleteForm = $this->createDeleteForm($player)->createView()
             : null;
 
-        if ($fileName = $player->getProfilePicture()) {
-            $player->setProfilePicture(new File($this->getParameter('test_upload_path').'/'.$fileName));
-        }
-
         $editForm = $this->createForm(PlayerType::class, $player);
         $editForm->handleRequest($request);
 
-
         if ($editForm->isSubmitted() && $editForm->isValid()) {
-            // $file stores the uploaded PDF file
-            /** @var UploadedFile $file */
-            $file = $player->getProfilePicture();
-
-            $fileName = md5(uniqid()).'.'.$file->guessExtension();
-
-            $file->move(
-                $this->getParameter('test_upload_path'),
-                $fileName
-            );
-            /** @var Filesystem $filesystem */
-            $filesystem = $this->get('oneup_flysystem.tgc_filesystem');
-            $filesystem->put(
-                'bob.jpg',
-                file_get_contents($this->getParameter('test_upload_path').'/'.$fileName)
-            );
-
-            $player->setProfilePicture($fileName);
-
             $this->getDoctrine()->getManager()->flush();
 
             $this->addFlash('success', sprintf(
@@ -116,7 +94,6 @@ class AdminPlayerController extends Controller
             'player' => $player,
             'edit_form' => $editForm->createView(),
             'delete_form' => $deleteFormView,
-            'filepath' => $this->getParameter('test_upload_path').'/'.$fileName,
         ));
     }
 

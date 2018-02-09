@@ -13,7 +13,7 @@
      {{ form_row(edit_form.bio) }}
      {{ form_row(edit_form.profilePicture) }}
 
-     <img src="{{ asset(filepath) }}">
+     <img src="{{ asset(player.profilePicturePublicUrl) }}">
 
      <input class="btn btn-primary btn-lg btn-block" type="submit" value="Save" />
      {{ form_end(edit_form) }}
