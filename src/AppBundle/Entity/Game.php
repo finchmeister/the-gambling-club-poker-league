@@ -57,7 +57,7 @@ class Game
      * @ORM\OneToMany(
      *     targetEntity="AppBundle\Entity\Result",
      *     mappedBy="game",
-     *     cascade={"persist"}
+     *     cascade={"persist", "remove"}
      * )
      * @Assert\Valid()
      * @TGCPLAssert\UniquePlayer()
