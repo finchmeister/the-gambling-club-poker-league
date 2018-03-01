@@ -47,4 +47,6 @@ interface PlayerStatsInterface
     public function getMeanPosition();
 
     public function getSumGeneralPoints();
+
+    public function getSumLeaguePoints();
 }

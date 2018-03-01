@@ -12,7 +12,7 @@
         <th># Played</th>
     </tr>
     </thead>
-    {% for row in allPlayersStats %}
+    {% for row in playerStats %}
         <tr>
             <th scope="row">{{ loop.index }}</th>
             <td class="text-left"><a href="{{ path('player_show', { 'id': row.player.id }) }}">{{ row.player.name }}</a></td>

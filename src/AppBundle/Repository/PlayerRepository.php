@@ -18,4 +18,9 @@ class PlayerRepository extends EntityRepository
         return $this->createQueryBuilder('player')
             ->leftJoin('player', 'result');
     }
+
+    public function findAllLeaguePlayers()
+    {
+        return $this->findBy(['leaguePlayer' => true]);
+    }
 }
