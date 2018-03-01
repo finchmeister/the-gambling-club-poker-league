@@ -28,7 +28,7 @@
         <div class="tab-pane fade show active" id="leagueStats" role="tabpanel" aria-labelledby="leagueStats-tab">
             {% if leagueTable %}
 
-                {% include 'partial/_all_stats_table.html.twig' with {'playerStats' : leaguePlayersStats} %}
+                {% include 'partial/_all_stats_table.html.twig' with {'playerStats' : leaguePlayersStats, 'isLeague' : true} %}
 
 {#{% include "partial/_league_table.html.twig" %}#}
             {% endif %}

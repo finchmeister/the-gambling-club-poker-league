@@ -100,21 +100,19 @@ class StatsFactory
 
     /**
      * @param PlayerStatsInterface[] $playerStats
-     * @return array
      */
-    protected static function sortPlayerStatsByGeneralPoints(array $playerStats)
+    protected static function sortPlayerStatsByGeneralPoints(array &$playerStats)
     {
         usort($playerStats, function (PlayerStatsInterface $a, PlayerStatsInterface $b) {
             return $b->getSumGeneralPoints() <=> $a->getSumGeneralPoints();
         });
-        return $playerStats;
     }
 
     /**
      * @param PlayerStatsInterface[]|array $playerStats
      * @return array
      */
-    protected static function sortPlayerStatsByLeaguePoints(array $playerStats)
+    protected static function sortPlayerStatsByLeaguePoints(array &$playerStats)
     {
         usort($playerStats, function (PlayerStatsInterface $a, PlayerStatsInterface $b) {
             return $b->getSumLeaguePoints() <=> $a->getSumLeaguePoints();

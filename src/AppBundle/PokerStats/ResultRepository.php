@@ -182,5 +182,14 @@ class ResultRepository
             }
         )->toArray());
     }
+
+    public function getSumLeaguePoints(Collection $results): float
+    {
+        return array_sum($results->map(
+            function (Result $result) {
+                return $result->getLeaguePoints();
+            }
+        )->toArray());
+    }
 }
 

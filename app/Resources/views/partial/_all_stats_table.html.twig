@@ -16,7 +16,7 @@
         <tr>
             <th scope="row">{{ loop.index }}</th>
             <td class="text-left"><a href="{{ path('player_show', { 'id': row.player.id }) }}">{{ row.player.name }}</a></td>
-            <td>{{ row.sumGeneralPoints|number_format(2) }}</td>
+            <td>{{ (isLeague is defined) ? row.sumLeaguePoints|number_format(0) : row.sumGeneralPoints|number_format(2) }}</td>
             <td>{{ row.sumCashWon|price }}</td>
             <td>{{ row.sumBoughtIn|price }}</td>
             <td>{{ row.net|price }}</td>

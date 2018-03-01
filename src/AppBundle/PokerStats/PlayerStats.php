@@ -164,8 +164,7 @@ class PlayerStats implements PlayerStatsInterface
 
     public function getSumLeaguePoints()
     {
-        return 5;
-        // TODO: Implement getSumLeaguePoints() method.
+        return $this->resultRepository->getSumLeaguePoints($this->results);
     }
 
 }
