@@ -56,7 +56,7 @@ class Result
      * @ORM\Column(name="winnings", type="float")
      * @Assert\GreaterThanOrEqual(0)
      */
-    private $winnings = 0;
+    private $winnings;
 
     /**
      * @var int
@@ -64,7 +64,7 @@ class Result
      * @ORM\Column(name="no_of_rebuys", type="integer")
      * @Assert\GreaterThanOrEqual(0)
      */
-    private $noOfRebuys = 0;
+    private $noOfRebuys;
 
     /**
      * @var int
@@ -72,7 +72,7 @@ class Result
      * @ORM\Column(type="float", options={"default" : 0})
      * @Assert\GreaterThanOrEqual(0)
      */
-    private $addOn = 0;
+    private $addOn;
 
     /**
      * @var \DateTime
@@ -94,6 +94,7 @@ class Result
 
     public function __construct()
     {
+        $this->winnings = $this->noOfRebuys = $this->addOn = 0;
         $this->createdAt = $this->updatedAt = new \DateTime();
     }
 
