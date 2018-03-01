@@ -29,19 +29,26 @@ class DefaultController extends Controller
     ) {
         // TODO refactor into services
         $em = $this->getDoctrine();
-        $games = $em->getRepository(Game::class)
+        $allGames = $em->getRepository(Game::class)
             ->findBy([], ['date' => 'DESC']);
+        $allGames = new ArrayCollection($allGames);
+        $leagueGames = $allGames->filter(function (Game $game) {
+            return $game->isLeague();
+        });
 
         // TODO look at overall stats implementation
-        $overallStats = $computeStats->getOverallStats(new ArrayCollection($games));
+        $overallStats = $computeStats->getOverallStats($allGames);
 
         $allPlayersStats = $playerStatsFactory->getAllPlayersStats();
+        $leaguePlayersStats = $playerStatsFactory->getLeaguePlayersStats();
 
         $leagueTable = $leagueTableService->getLeagueTable();
         return $this->render('default/index.html.twig', [
-            'games' => $games,
+            'allGames' => $allGames,
+            'leagueGames' => $leagueGames,
             'leagueTable' => $leagueTable,
             'allPlayersStats' => $allPlayersStats,
+            'leaguePlayersStats' => $leaguePlayersStats,
             'lastUpdated' => $leagueTableService->getLastUpdated(),
             'overallStats' => $overallStats,
         ]);

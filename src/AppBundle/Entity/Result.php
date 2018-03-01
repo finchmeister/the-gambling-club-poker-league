@@ -254,10 +254,20 @@ class Result
      */
     public function getLeaguePoints(): ?float
     {
+        $noOfPlayersInGame = $this->getGame()->getNoOfPlayers();
+        if ($noOfPlayersInGame === null) {
+            return 0;
+        }
+        $leaguePoints = $this->getGame()->getNoOfPlayers() - $this->getPosition();
+        if ($this->getPosition() === 1) {
+            $leaguePoints++; // Bonus point
+        }
+        return $leaguePoints;
         return $this->leaguePoints;
     }
 
     /**
+     * @deprecated just compute directly
      * @param float|null $leaguePoints
      * @return Result
      */
