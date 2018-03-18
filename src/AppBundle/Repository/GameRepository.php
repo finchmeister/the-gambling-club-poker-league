@@ -2,7 +2,10 @@
 
 namespace AppBundle\Repository;
 
+use AppBundle\Entity\Game;
 use AppBundle\Entity\Player;
+use AppBundle\Entity\Result;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
 
@@ -50,5 +53,26 @@ class GameRepository extends EntityRepository
             ->setParameter('host', $host)
             ->getQuery()
             ->getResult();
+    }
+
+    /**
+     * @param Player $player
+     * @return ArrayCollection
+     */
+    public function getAllPlayersGames(Player $player): ArrayCollection
+    {
+        $allGames = $this->findBy([], ['date' => 'DESC']);
+        $allGames = new ArrayCollection($allGames);
+        $playersGames = new ArrayCollection();
+        /** @var Game $game */
+        foreach ($allGames as $game) {
+            /** @var Result $result */
+            foreach ($game->getResults() as $result) {
+                if ($result->getPlayer() === $player) {
+                    $playersGames->add($game);
+                }
+            }
+        }
+        return $playersGames;
     }
 }

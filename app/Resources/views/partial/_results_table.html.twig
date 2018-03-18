@@ -19,7 +19,7 @@
 
     {# @var result \AppBundle\Entity\Result #}
     {% for result in game.results %}
-        <tr>
+        <tr class="{% if player is defined and player == result.player %}table-success{% endif %}">
             <td>{{ result.position }}</td>
             <td class="text-left"><a href="{{ path('player_show', { 'id': result.player.id }) }}">{{ result.player }}</a></td>
             <td>{{ result.generalPoints|number_format(league_points_decimal_places) }}</td>

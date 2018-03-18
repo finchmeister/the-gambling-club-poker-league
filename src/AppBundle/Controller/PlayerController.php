@@ -4,6 +4,7 @@
 namespace AppBundle\Controller;
 
 
+use AppBundle\Entity\Game;
 use AppBundle\Entity\Player;
 use AppBundle\PokerStats\StatsFactory;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -58,8 +59,12 @@ class PlayerController extends Controller
 
         $player->setPlayerStats($playerStatsFactory->getAllPlayerStats($player));
 
+        $em = $this->getDoctrine();
+        $playersGames = $em->getRepository(Game::class)->getAllPlayersGames($player);
+
         return $this->render('player/show.html.twig', array(
             'player' => $player,
+            'playersGames' => $playersGames,
         ));
     }
 

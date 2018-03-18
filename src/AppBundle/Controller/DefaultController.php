@@ -27,7 +27,7 @@ class DefaultController extends Controller
         ComputeStats $computeStats,
         StatsFactory $playerStatsFactory
     ) {
-        // TODO refactor into services
+        // TODO refactor into services, see player controller
         $em = $this->getDoctrine();
         $allGames = $em->getRepository(Game::class)
             ->findBy([], ['date' => 'DESC']);
