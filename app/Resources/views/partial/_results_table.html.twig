@@ -3,16 +3,16 @@
     <tr>
         <th>#</th>
         <th class="text-left">Player</th>
-        <th>Points</th>
-        <th>Winnings</th>
-        <th>Bought-In</th>
-        <th>Net</th>
-        <th># Rebuys</th>
+        <th>{{ displayTextAtBreakPoints('Points', 'P', 'md') }}</th>
+        <th>{{ displayTextAtBreakPoints('Winnings', 'W', 'md') }}</th>
+        <th>{{ displayTextAtBreakPoints('Bought-In', 'B', 'md') }}</th>
+        <th>{{ displayTextAtBreakPoints('Net', 'N', 'md') }}</th>
+        <th>{{ displayTextAtBreakPoints('# Rebuys', 'GR', 'md') }}</th>
         {% if game.hasAddOn %}
-            <th>Add-On</th>
+            <th>{{ displayTextAtBreakPoints('Add-On', 'A', 'md') }}</th>
         {% endif %}
         {% if game.league %}
-            <th>League Player</th>
+            <th>{{ displayTextAtBreakPoints('League Player', 'LP', 'md') }}</th>
         {% endif %}
     </tr>
     </thead>
