@@ -3,13 +3,13 @@
     <tr>
         <th>#</th>
         <th class="text-left">Player</th>
-        <th>Points</th>
-        <th>Winnings</th>
-        <th>Bought-In</th>
-        <th>Net</th>
-        <th># Rebuys</th>
-        <th># Won</th>
-        <th># Played</th>
+        <th><span class="d-none d-md-block">Points</span><span class="d-block d-md-none">P</span></th>
+        <th>{{ displayTextAtBreakPoints('Points', 'P', 'md') }}</th>
+        <th>{{ displayTextAtBreakPoints('Bought-In', 'B', 'md') }}</th>
+        <th>{{ displayTextAtBreakPoints('Net', 'N', 'md') }}</th>
+        <th>{{ displayTextAtBreakPoints('# Rebuys', 'GR', 'md') }}</th>
+        <th>{{ displayTextAtBreakPoints('# Won', 'GW', 'md') }}</th>
+        <th>{{ displayTextAtBreakPoints('# Played', 'GP', 'md') }}</th>
     </tr>
     </thead>
     {% for row in playerStats %}
