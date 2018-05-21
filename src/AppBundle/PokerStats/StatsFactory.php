@@ -77,7 +77,7 @@ class StatsFactory
         $allPlayersStats = [];
         $players = $this->entityManager->getRepository(Player::class)->findAll();
         foreach ($players as $player) {
-            $allPlayersStats[] = ($this->getAllPlayerStats($player));
+            $allPlayersStats[] = $this->getAllPlayerStats($player);
         }
         self::sortPlayerStatsByGeneralPoints($allPlayersStats);
         return $allPlayersStats;
@@ -92,7 +92,7 @@ class StatsFactory
         $players = $this->entityManager->getRepository(Player::class)
             ->findAllLeaguePlayers();
         foreach ($players as $player) {
-            $allPlayersStats[] = ($this->getLeaguePlayerStats($player));
+            $allPlayersStats[] = $this->getLeaguePlayerStats($player);
         }
         self::sortPlayerStatsByLeaguePoints($allPlayersStats);
         return $allPlayersStats;
@@ -112,7 +112,7 @@ class StatsFactory
      * @param PlayerStatsInterface[]|array $playerStats
      * @return array
      */
-    protected static function sortPlayerStatsByLeaguePoints(array &$playerStats)
+    protected static function sortPlayerStatsByLeaguePoints(array &$playerStats): array
     {
         usort($playerStats, function (PlayerStatsInterface $a, PlayerStatsInterface $b) {
             return $b->getSumLeaguePoints() <=> $a->getSumLeaguePoints();

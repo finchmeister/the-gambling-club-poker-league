@@ -14,31 +14,12 @@
             <h2 class="my-4">Stats</h2>
 
             <div>
-                <table class="table text-center">
+                <table class="table">
                     <thead>
                     <tr>
-                        <th scope="col">Won</th>
-                        <th scope="col">Played</th>
-                        <th scope="col">Win %</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td>{{ player.playerStats.countGamesWon }}</td>
-                        <td>{{ player.playerStats.countGamesPlayed }}</td>
-                        <td>{{ (player.playerStats.winRatio * 100)|number_format(2) }}%</td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <div>
-                <table class="table text-center">
-                    <thead>
-                    <tr>
-                        <th scope="col">£ Won</th>
-                        <th scope="col">Bought-In</th>
-                        <th scope="col">Net</th>
+                        <th>Won</th>
+                        <th>Bought-In</th>
+                        <th>Net</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -51,7 +32,27 @@
                 </table>
             </div>
 
+            <div>
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>Won</th>
+                        <th>Played</th>
+                        <th>Win %</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>{{ player.playerStats.countGamesWon }}</td>
+                        <td>{{ player.playerStats.countGamesPlayed }}</td>
+                        <td>{{ player.playerStats.winRatio|percent }}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
 
+
+y
 
             <ul>
                 <li>League Position: //TODO</li>
@@ -80,12 +81,12 @@
     </div>
 
 
-    TODO: charts in grid
+    {#TODO: charts in grid
     <ul>
         <li>Line: Position over time</li>
         <li>Bar: Win / Bought / Lost</li>
         <li>Pie: Win</li>
-    </ul>
+    </ul>#}
 
     <div class="row">
         <div class="col-sm-6">
@@ -146,7 +147,7 @@
                 labels: ["Winnings", "Bought-In", "Net"],
                 datasets: [{
                     label: '£',
-                    data: [{{ player.playerStats.sumCashWon }}, {{ player.playerStats.sumBoughtIn }}, {{ player.playerStats.net }}],
+                    data: [{{ player.playerStats.sumCashWon }}, -{{ player.playerStats.sumBoughtIn }}, {{ player.playerStats.net }}],
                     backgroundColor: [
                         'rgba(75, 192, 192, 0.2)',
                         'rgba(255, 99, 132, 0.2)',

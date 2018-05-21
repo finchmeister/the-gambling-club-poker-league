@@ -10,14 +10,31 @@
 
         <div class="row">
             <div class="col-sm-6">
-                <ul>
-                    <li>League: {{ game.isLeague }}</li>
-                    <li>Buy in: {{ game.buyIn|price }}</li>
-                    <li>Pot: {{ game.pot|price }}</li>
-                    {% if game.snacksProvider %}
-                        <li>Snacks: {{ game.snacks }} by {{ game.snacksProvider }}</li>
-                    {% endif %}
-                </ul>
+
+                <div class="row my-3">
+
+                    <div class="col">
+                        <div class="text-muted">Buy in</div>
+                        <span>{{ game.buyIn|price }}</span>
+                    </div>
+
+                    <div class="col">
+                        <div class="text-muted">Pot</div>
+                        <span>{{ game.pot|price }}</span>
+                    </div>
+
+                    <div class="col">
+                        <div class="text-muted">League</div>
+                        <span class="px-3 oi oi-{{ game.isLeague ? 'check' : 'x' }}"></span>
+
+                        {% if game.snacksProvider %}
+                            <span class="text-muted">Snacks</span>
+                            <span>Snacks: {{ game.snacks }} by {{ game.snacksProvider }}</span>
+                        {% endif %}
+                    </div>
+                </div>
+
+
             </div>
             <div class="col-sm-6">
                 {% if game.spotifyPlaylistUri %}

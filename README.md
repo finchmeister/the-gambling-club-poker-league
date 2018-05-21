@@ -21,6 +21,8 @@ bin/console server:run
 ## Docker
 ```
 docker-compose up -d
+docker-compose exec php bin/console app:database-restore
+
 
 ```
 

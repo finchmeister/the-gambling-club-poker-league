@@ -33,6 +33,7 @@
 {#{% include "partial/_league_table.html.twig" %}#}
             {% endif %}
 
+
             <hr class="my-4">
 
             <h2>Games</h2>
@@ -43,11 +44,17 @@
         <div class="tab-pane fade" id="allStats" role="tabpanel" aria-labelledby="allStats-tab">
             {% include 'partial/_all_stats_table.html.twig' with {'playerStats' : allPlayersStats}  %}
 
-            <ul>
-                <li>Games played: {{ overallStats.noOfGamesPlayed }}</li>
-                <li>Cash won: {{ overallStats.cashWon|price }}</li>
-            </ul>
-            <p class="lead">More coming soon...</p>
+            <div class="row">
+                <div class="col-3">
+                    <div class="text-muted">Games Played</div>
+                    <span>{{ overallStats.noOfGamesPlayed }}</span>
+                </div>
+                <div class="col-3">
+                    <div class="text-muted">Cash won</div>
+                    <span>{{ overallStats.cashWon|price }}</span>
+                </div>
+
+            </div>
 
             <hr class="my-4">
 
