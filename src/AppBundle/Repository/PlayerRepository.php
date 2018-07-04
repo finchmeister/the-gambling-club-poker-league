@@ -23,4 +23,25 @@ class PlayerRepository extends EntityRepository
     {
         return $this->findBy(['leaguePlayer' => true]);
     }
+
+    /**
+     * @return int
+     */
+    public function getNoOfGamesAllPlayed(): int
+    {
+        $qb = $this->createQueryBuilder('player');
+        $expr = $qb->expr();
+        $result = $qb
+            ->select('COUNT(r.id) as games_played')
+            ->innerJoin('player.results', 'r')
+            ->innerJoin('r.game', 'g')
+            ->andWhere($expr->eq('g.isLeague', true))
+            ->andWhere($expr->eq('player.leaguePlayer', true))
+            ->groupBy('player.id')
+            ->orderBy('games_played', 'ASC')
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getResult();
+        return $result[0]['games_played'];
+    }
 }

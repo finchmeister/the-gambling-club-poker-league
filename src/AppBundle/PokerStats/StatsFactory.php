@@ -8,6 +8,7 @@ use AppBundle\Entity\Player;
 use AppBundle\Entity\Result;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManager;
+use AppBundle\Repository\PlayerRepository;
 
 class StatsFactory
 {
@@ -17,6 +18,8 @@ class StatsFactory
      * @var EntityManager
      */
     private $entityManager;
+    /** @var PlayerRepository  */
+    private $playerRepository;
 
     public function __construct(
         ResultRepository $resultRepository,
@@ -24,6 +27,8 @@ class StatsFactory
     ) {
         $this->resultRepository = $resultRepository;
         $this->entityManager = $entityManager;
+        $this->playerRepository = $this->entityManager
+            ->getRepository(Player::class);
     }
 
     public function initialisePlayerStats(Player $player): PlayerStats
@@ -53,8 +58,25 @@ class StatsFactory
         $results = $player->getResults()->filter(function (Result $result) {
             return $result->getGame()->isLeague();
         });
+
+
         $playerStats = $this->initialisePlayerStats($player);
         return $playerStats->setResults($results);
+    }
+
+
+    public function getLeaguePlayerTopStats(Player $player, int $noOfResults): PlayerStatsInterface
+    {
+        $results = $player->getResults()->filter(function (Result $result) {
+            return $result->getGame()->isLeague();
+        })->toArray();
+        self::sortResultsByLeaguePoints($results);
+        $reducedResults = new ArrayCollection();
+        foreach (range(0, $noOfResults-1) as $i) {
+            $reducedResults->add($results[$i]);
+        }
+        $playerStats = $this->initialisePlayerStats($player);
+        return $playerStats->setResults($reducedResults);
     }
 
     public function getHostStats(Player $host): HostStats
@@ -75,7 +97,7 @@ class StatsFactory
     public function getAllPlayersStats(): array
     {
         $allPlayersStats = [];
-        $players = $this->entityManager->getRepository(Player::class)->findAll();
+        $players = $this->playerRepository->findAll();
         foreach ($players as $player) {
             $allPlayersStats[] = $this->getAllPlayerStats($player);
         }
@@ -88,20 +110,45 @@ class StatsFactory
      */
     public function getLeaguePlayersStats(): array
     {
-        $allPlayersStats = [];
-        $players = $this->entityManager->getRepository(Player::class)
-            ->findAllLeaguePlayers();
+        $leaguePlayersStats = [];
+        $players = $this->playerRepository->findAllLeaguePlayers();
         foreach ($players as $player) {
-            $allPlayersStats[] = $this->getLeaguePlayerStats($player);
+            $leaguePlayersStats[] = $this->getLeaguePlayerStats($player);
         }
-        self::sortPlayerStatsByLeaguePoints($allPlayersStats);
-        return $allPlayersStats;
+        self::sortPlayerStatsByLeaguePoints($leaguePlayersStats);
+        return $leaguePlayersStats;
+    }
+
+    /**
+     * @return PlayerStatsInterface[]
+     */
+    public function getLeaguePlayersTopStats(): array
+    {
+        $leaguePlayersTopStats = [];
+        $players = $this->playerRepository->findAllLeaguePlayers();
+        $noOfGamesAllPlayed = $this->getNoOfGamesAllPlayed();
+        foreach ($players as $player) {
+            $leaguePlayersTopStats[] = $this->getLeaguePlayerTopStats(
+                $player,
+                $noOfGamesAllPlayed
+            );
+        }
+        self::sortPlayerStatsByLeaguePoints($leaguePlayersTopStats);
+        return $leaguePlayersTopStats;
+    }
+
+    /**
+     * @return int
+     */
+    public function getNoOfGamesAllPlayed(): int
+    {
+        return $this->playerRepository->getNoOfGamesAllPlayed();
     }
 
     /**
      * @param PlayerStatsInterface[] $playerStats
      */
-    protected static function sortPlayerStatsByGeneralPoints(array &$playerStats)
+    protected static function sortPlayerStatsByGeneralPoints(array &$playerStats): void
     {
         usort($playerStats, function (PlayerStatsInterface $a, PlayerStatsInterface $b) {
             return $b->getSumGeneralPoints() <=> $a->getSumGeneralPoints();
@@ -109,14 +156,22 @@ class StatsFactory
     }
 
     /**
-     * @param PlayerStatsInterface[]|array $playerStats
-     * @return array
+     * @param PlayerStatsInterface[] $playerStats
      */
-    protected static function sortPlayerStatsByLeaguePoints(array &$playerStats): array
+    protected static function sortPlayerStatsByLeaguePoints(array &$playerStats): void
     {
         usort($playerStats, function (PlayerStatsInterface $a, PlayerStatsInterface $b) {
             return $b->getSumLeaguePoints() <=> $a->getSumLeaguePoints();
         });
-        return $playerStats;
+    }
+
+    /**
+     * @param Result[] $results
+     */
+    protected static function sortResultsByLeaguePoints(array &$results): void
+    {
+        usort($results, function (Result $a, Result $b) {
+            return $b->getLeaguePoints() <=> $a->getLeaguePoints();
+        });
     }
 }

@@ -17,7 +17,14 @@ use Doctrine\ORM\QueryBuilder;
  */
 class GameRepository extends EntityRepository
 {
-    public function getLeagueTable()
+    public function getAllGames(): ArrayCollection
+    {
+        $allGames = $this->findBy([], ['date' => 'DESC']);
+        return new ArrayCollection($allGames);
+    }
+
+
+    public function getLeagueTable(): array
     {
         return $this->getTableQueryBuilder()
             ->addSelect('SUM(results.leaguePoints) AS leaguePoints')
@@ -27,6 +34,12 @@ class GameRepository extends EntityRepository
             ->getResult();
     }
 
+    public function getLeagueTableTopResults()
+    {
+        $this->getTableQueryBuilder()
+            ->orderBy('results.leaguePoints', 'DESC');
+    }
+
     protected function getTableQueryBuilder(): QueryBuilder
     {
         return $this->createQueryBuilder('game')
@@ -34,6 +47,7 @@ class GameRepository extends EntityRepository
             ->addSelect('SUM(results.winnings) AS winnings')
             ->addSelect('SUM(results.noOfRebuys) AS noOfRebuys')
             ->addSelect('SUM((results.noOfRebuys + 1)*game.buyIn + results.addOn) AS boughtIn')
+            ->addSelect('SUM(results.winnings) - SUM((results.noOfRebuys + 1)*game.buyIn + results.addOn) AS net')
             ->innerJoin('game.results', 'results')
             ->leftJoin('results.player', 'player')
             ->groupBy('player.id');
