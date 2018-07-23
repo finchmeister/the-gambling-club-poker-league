@@ -24,3 +24,6 @@ google-cloud-auth.json
 vm01.zip
 secrets.tar
 machine-config.tar
+*.log
+/web/build/*
+node_modules

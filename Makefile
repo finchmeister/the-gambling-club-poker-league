@@ -1,9 +1,15 @@
-# TODO
 
-.PHONY: schema-update cc
+.PHONY: up schema-update cc tests
+
+up:
+	docker-compose up -d
 
 schema-update:
 	docker-compose exec php bin/console doctrine:schema:update --force
 
 cc:
 	docker-compose exec php bin/console c:c
+
+tests:
+	docker-compose exec php ./vendor/phpunit/phpunit/phpunit
+

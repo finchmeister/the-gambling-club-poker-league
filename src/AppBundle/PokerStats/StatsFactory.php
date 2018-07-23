@@ -7,15 +7,15 @@ use AppBundle\Entity\Game;
 use AppBundle\Entity\Player;
 use AppBundle\Entity\Result;
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\ORM\EntityManager;
 use AppBundle\Repository\PlayerRepository;
+use Doctrine\ORM\EntityManagerInterface;
 
 class StatsFactory
 {
 
     private $resultRepository;
     /**
-     * @var EntityManager
+     * @var EntityManagerInterface
      */
     private $entityManager;
     /** @var PlayerRepository  */
@@ -23,7 +23,7 @@ class StatsFactory
 
     public function __construct(
         ResultRepository $resultRepository,
-        EntityManager $entityManager
+        EntityManagerInterface $entityManager
     ) {
         $this->resultRepository = $resultRepository;
         $this->entityManager = $entityManager;

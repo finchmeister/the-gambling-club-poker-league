@@ -16,6 +16,9 @@ script:
 #- docker-compose exec php bin/console app:update-league-points
 #- docker-compose exec php ls
 #- docker-compose exec php ./vendor/phpunit/phpunit/phpunit
+
+- yarn install
+- yarn run encore production
 - "./bin/install-production-docker-machine.sh"
 - npm install -g machine-share
 - machine-import vm01.zip
