@@ -16,7 +16,7 @@ class ArrayHelper
             return null;
         }
         $array = array_values($array);
-        asort($array);
+        sort($array);
         $middleIndex = (int)floor((count($array) - 1)/2);
         if (count($array)%2 === 0) {
             $lowIndex = $middleIndex;
