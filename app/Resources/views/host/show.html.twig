@@ -6,17 +6,59 @@
 
 <div class="row">
     <div class="col-sm-9">
-        <ul>
-            <li>Games played: {{ hostStats.countGamesPlayed }}</li>
-            <li>Amount won: {{ hostStats.sumCashWon }}</li>
-            <li>No of rebuys: {{ hostStats.sumRebuys }}</li>
-                {% if hostStats.maxCountWinsPlayer %}
-            <li>Most wins:
-                    {{ hostStats.maxCountWinsPlayer }} ({{ hostStats.maxCountWins }})
-                {% endif %}</li>
-            <li>Host wins: {{ hostStats.countHostWins }}</li>
-            <li>Fortress: {{ hostStats.countHostWins }}/{{ hostStats.countGamesPlayed }} {{ hostStats.fortressRatio|percent }}</li>
-        </ul>
+
+        <h2 class="my-4">Stats</h2>
+
+        <div class="row">
+            <div class="col-6">
+                <p class="lead">Games Played</p>
+                <h1 class="display-3">{{ hostStats.countGamesPlayed }}</h1>
+            </div>
+
+            <div class="col-6">
+                <p class="lead">Amount won</p>
+                <h1 class="display-3 {{ hostStats.sumCashWon > 0 ? 'text-success' }}">{{ hostStats.sumCashWon|price }}</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <p class="lead">No of rebuys</p>
+                <h1 class="display-3">{{ hostStats.sumRebuys }}</h1>
+            </div>
+
+        </div>
+
+        {% if hostStats.maxCountWinsPlayer %}
+
+        <div class="row">
+            <div class="col-6">
+                <p class="lead">Most Wins</p>
+                <h1 class="display-3">{{ hostStats.maxCountWinsPlayer }} ({{ hostStats.maxCountWins }})</h1>
+            </div>
+
+        </div>
+
+        {% endif %}
+
+        <div class="row">
+            <hr class="my-4">
+        </div>
+
+        <div class="row">
+            <div class="col-6">
+                <p class="lead">Host wins</p>
+                <h1 class="display-3">{{ hostStats.countHostWins }}</h1>
+            </div>
+
+            <div class="col-6">
+                <p class="lead">Fortress</p>
+                <h1 class="display-3">{{ hostStats.fortressRatio|percent }}</h1>
+            </div>
+        </div>
+
+        <div class="row">
+            <hr class="my-4">
+        </div>
 
     </div>
     <div class="col-sm-3">

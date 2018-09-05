@@ -21,11 +21,21 @@
         <div class="col-sm-9">
 
             <p>{{ player.bio }}</p>
-            <ul>
-                <li>League Position:</li>
-                <li>Games Won / Games Played: {{ player.playerStats.countGamesWon }}/{{ player.playerStats.countGamesPlayed }} : {{ (player.playerStats.winRatio * 100)|number_format(0) }}%</li>
-                <li>Won / Bought-In / Net: £{{ player.playerStats.sumCashWon }} / £{{ player.playerStats.sumBoughtIn }} / £{{ player.playerStats.net }}</li>
-            </ul>
+
+            <div class="row">
+                <div class="col-4">
+                    <p>Won</p>
+                    <p class="display-5 {{ player.playerStats.sumCashWon > 0 ? 'text-success' }}">{{ player.playerStats.sumCashWon|price }}</p>
+                </div>
+                <div class="col-4">
+                    <p>Bought-In</p>
+                    <p class="display-5 {{ player.playerStats.sumBoughtIn > 0 ? 'text-danger' }}">{{ player.playerStats.sumBoughtIn|price }}</p>
+                </div>
+                <div class="col-4">
+                    <p>Net</p>
+                    <p class="display-5 text-{{ player.playerStats.net > 0 ? 'success' : 'danger' }}">{{ player.playerStats.net|price }}</p>
+                </div>
+            </div>
 
             <a class="btn btn-primary" href="{{ path('player_show', { 'id': player.id }) }}">Go to Player Stats</a>
             <a class="btn btn-primary" href="{{ path('host_show', { 'id': player.id }) }}">Go to Host Stats</a>
@@ -33,7 +43,7 @@
                 <a class="btn btn-primary" href="{{ path('player_edit', { 'id': player.id }) }}" role="button">Edit Player</a>
             {% endif %}
         </div>
-        <div class="col-sm-3">
+        <div class="col-sm-3 p-4">
             <img src="{{ player.profilePicturePublicUrl ?: 'http://via.placeholder.com/350x350' }}" class="img-fluid rounded">
         </div>
 
