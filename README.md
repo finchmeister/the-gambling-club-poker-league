@@ -47,3 +47,15 @@ travis encrypt-file secrets.tar
 4\. Update vm name in .travis.yml
 
 5\. Update gitignore and dockerignore
+
+6\. Start application via docker-compose
+```
+docker-machine env vm02
+eval $(docker-machine env -u)
+docker-compose -f docker-compose-prod.yml up -d
+```
+7\. Restore db in app
+```
+docker-compose exec php bin/console app:database-restore
+```
+8\. Update DNS to point to new server
