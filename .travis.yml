@@ -21,10 +21,10 @@ script:
 - yarn run encore production
 - "./bin/install-production-docker-machine.sh"
 - npm install -g machine-share
-- machine-import vm01.zip
+- machine-import vm02.zip
 - export GOOGLE_APPLICATION_CREDENTIALS=google-cloud-auth.json
-- docker-machine env vm01
-- eval $(docker-machine env vm01)
+- docker-machine env vm02
+- eval $(docker-machine env vm02)
 - docker-machine ls
 - docker-compose -f docker-compose-prod.yml up -d --build > /dev/null 2>&1 || true
 - docker-compose exec php bin/console doctrine:schema:update --force
