@@ -14,5 +14,7 @@ var/*
 .idea/
 # google-cloud-auth.json
 vm01.zip
+vm02.zip
 secrets.tar
 machine-config.tar
+node_modules

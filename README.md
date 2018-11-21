@@ -45,3 +45,5 @@ tar cvf secrets.tar  google-cloud-auth.json vm02.zip
 travis encrypt-file secrets.tar
 ```
 4\. Update vm name in .travis.yml
+
+5\. Update gitignore and dockerignore
