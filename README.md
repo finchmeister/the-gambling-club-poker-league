@@ -7,8 +7,8 @@
 
 ```
 export GOOGLE_APPLICATION_CREDENTIALS=google-cloud-auth.json 
-docker-machine env vm01
-eval $(docker-machine env vm01)
+docker-machine env vm02
+eval $(docker-machine env vm02)
 
 # Disconnect
 docker-machine env -u

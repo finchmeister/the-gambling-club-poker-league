@@ -1,5 +1,5 @@
 
-.PHONY: up schema-update cc tests
+.PHONY: up schema-update cc tests exec
 
 up:
 	docker-compose up -d
@@ -13,3 +13,5 @@ cc:
 tests:
 	docker-compose exec php ./vendor/phpunit/phpunit/phpunit
 
+exec:
+	docker-compose exec php /bin/sh
