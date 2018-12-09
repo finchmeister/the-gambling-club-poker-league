@@ -3,6 +3,7 @@
 namespace AppBundle\Repository;
 
 use AppBundle\Entity\Game;
+use AppBundle\Entity\League;
 use AppBundle\Entity\Player;
 use AppBundle\Entity\Result;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -23,6 +24,19 @@ class GameRepository extends EntityRepository
         return new ArrayCollection($allGames);
     }
 
+    public function getLeagueGames(League $league): ArrayCollection
+    {
+        $qb = $this->createQueryBuilder('g')
+            ->where('g.date >= :startDate')
+            ->setParameter('startDate', $league->getStartDate());
+        if ($league->getEndDate() !== null) {
+            $qb->andWhere('g.date <= :endDate')
+                ->setParameter('endDate', $league->getEndDate());
+        }
+        $leagueGames = $qb->getQuery()->getResult();
+
+        return new ArrayCollection($leagueGames);
+    }
 
     public function getLeagueTable(): array
     {

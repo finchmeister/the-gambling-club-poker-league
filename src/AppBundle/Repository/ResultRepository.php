@@ -2,8 +2,11 @@
 
 namespace AppBundle\Repository;
 
+use AppBundle\Entity\League;
 use AppBundle\Entity\Player;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Query\Expr;
 
 /**
  * ResultRepository
@@ -11,6 +14,20 @@ use Doctrine\ORM\EntityRepository;
  */
 class ResultRepository extends EntityRepository
 {
+    public function getPlayersLeagueResults(Player $player, League $league): array
+    {
+        $qb =  $this->createQueryBuilder('r')
+            ->leftJoin('r.game', 'g')
+            ->innerJoin('r.player', 'p', Expr\Join::WITH, 'p = :player')
+            ->setParameter('player', $player)
+            ->andWhere('g.date >= :startDate')
+            ->setParameter('startDate', $league->getStartDate());
+        if ($league->getEndDate() !== null) {
+            $qb->andWhere('g.date <= :endDate')
+                ->setParameter('endDate', $league->getEndDate());
+        }
+        return $qb->getQuery()->getResult();
+    }
 
     public function getLastUpdated()
     {

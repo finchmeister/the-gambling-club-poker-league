@@ -3,9 +3,11 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Game;
+use AppBundle\Entity\League;
 use AppBundle\League\LeagueTableService;
 use AppBundle\PlayerStats\ComputeStats;
 use AppBundle\PokerStats\StatsFactory;
+use AppBundle\Repository\LeagueRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -29,23 +31,33 @@ class DefaultController extends Controller
         $gameRepository = $this->getDoctrine()
             ->getRepository(Game::class);
         $allGames = $gameRepository->getAllGames();
-        $leagueGames = $allGames->filter(function (Game $game) {
-            return $game->isLeague();
-        });
+
+        /** @var LeagueRepository $leagueRepository */
+        $leagueRepository = $this->getDoctrine()
+            ->getRepository(League::class);
+
+        /** @var League[] $leagues */
+        $leagues = $leagueRepository->findBy([], ['startDate' => 'DESC']);
+
+        $leaguesData = [];
+        foreach ($leagues as $league) {
+            $leaguesData[] = [
+                'league' => $league,
+                'leagueGames' => $gameRepository->getLeagueGames($league),
+                'leaguePlayersStats' => $playerStatsFactory->getLeaguePlayersStats($league),
+                'leaguePlayersTopStats' => $playerStatsFactory->getLeaguePlayersTopStats($league),
+                'noOfGamesAllPlayed' => $playerStatsFactory->getNoOfGamesAllPlayed($league),
+            ];
+        }
+
         $overallStats = $computeStats->getOverallStats($allGames);
 
         $allPlayersStats = $playerStatsFactory->getAllPlayersStats();
-        $leaguePlayersTopStats = $playerStatsFactory->getLeaguePlayersTopStats();
-        $leaguePlayersStats = $playerStatsFactory->getLeaguePlayersStats();
-        $noOfGamesAllPlayed = $playerStatsFactory->getNoOfGamesAllPlayed();
 
         return $this->render('default/index.html.twig', [
             'allGames' => $allGames,
-            'leagueGames' => $leagueGames,
+            'leaguesData' => $leaguesData,
             'allPlayersStats' => $allPlayersStats,
-            'leaguePlayersStats' => $leaguePlayersStats,
-            'leaguePlayersTopStats' => $leaguePlayersTopStats,
-            'noOfGamesAllPlayed' => $noOfGamesAllPlayed,
             'lastUpdated' => $leagueTableService->getLastUpdated(),
             'overallStats' => $overallStats,
         ]);
