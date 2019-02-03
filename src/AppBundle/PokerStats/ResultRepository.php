@@ -3,7 +3,6 @@
 
 namespace AppBundle\PokerStats;
 
-
 use AppBundle\Entity\Player;
 use AppBundle\Entity\Result;
 use Doctrine\Common\Collections\Collection;

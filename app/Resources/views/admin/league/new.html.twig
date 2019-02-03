@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New League{% endblock %}
+
+{% block main %}
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+{% endblock %}
+
+{% block sidebar %}
+    <input class="btn btn-success btn-lg btn-block" type="submit" value="Save" />
+    {{ form_end(form) }}
+    <a class="my-2 btn btn-primary btn-lg btn-block"  href="{{ path('admin_league_index') }}">Back to the list</a>
+{% endblock %}

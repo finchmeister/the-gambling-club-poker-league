@@ -4,8 +4,10 @@
 namespace AppBundle\PokerStats;
 
 use AppBundle\Entity\Game;
+use AppBundle\Entity\League;
 use AppBundle\Entity\Player;
 use AppBundle\Entity\Result;
+use AppBundle\Repository\GameRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use AppBundle\Repository\PlayerRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -20,6 +22,10 @@ class StatsFactory
     private $entityManager;
     /** @var PlayerRepository  */
     private $playerRepository;
+    /** @var GameRepository  */
+    private $gameRepository;
+    /** @var \AppBundle\Repository\ResultRepository */
+    private $resultDocRepository;
 
     public function __construct(
         ResultRepository $resultRepository,
@@ -29,6 +35,10 @@ class StatsFactory
         $this->entityManager = $entityManager;
         $this->playerRepository = $this->entityManager
             ->getRepository(Player::class);
+        $this->gameRepository = $this->entityManager
+            ->getRepository(Game::class);
+        $this->resultDocRepository = $this->entityManager
+            ->getRepository(Result::class);
     }
 
     public function initialisePlayerStats(Player $player): PlayerStats
@@ -53,27 +63,34 @@ class StatsFactory
         return $playerStats->setResults($results);
     }
 
-    public function getLeaguePlayerStats(Player $player): PlayerStatsInterface
+    public function getLeaguePlayerStats(Player $player, League $league): PlayerStatsInterface
     {
-        $results = $player->getResults()->filter(function (Result $result) {
-            return $result->getGame()->isLeague();
-        });
-
+        $results = $this->resultDocRepository->getPlayersLeagueResults(
+            $player,
+            $league
+        );
 
         $playerStats = $this->initialisePlayerStats($player);
-        return $playerStats->setResults($results);
+        return $playerStats->setResults(new ArrayCollection($results));
     }
 
 
-    public function getLeaguePlayerTopStats(Player $player, int $noOfResults): PlayerStatsInterface
-    {
-        $results = $player->getResults()->filter(function (Result $result) {
-            return $result->getGame()->isLeague();
-        })->toArray();
+    public function getLeaguePlayerTopStats(
+        Player $player,
+        int $noOfResults,
+        League $league
+    ): PlayerStatsInterface {
+
+        $results = $this->resultDocRepository->getPlayersLeagueResults(
+            $player,
+            $league
+        );
         self::sortResultsByLeaguePoints($results);
         $reducedResults = new ArrayCollection();
-        foreach (range(0, $noOfResults-1) as $i) {
-            $reducedResults->add($results[$i]);
+        if (\count($results) > 0) {
+            foreach (range(0, $noOfResults - 1) as $i) {
+                $reducedResults->add($results[$i]);
+            }
         }
         $playerStats = $this->initialisePlayerStats($player);
         return $playerStats->setResults($reducedResults);
@@ -81,7 +98,7 @@ class StatsFactory
 
     public function getHostStats(Player $host): HostStats
     {
-        $games = $this->entityManager->getRepository(Game::class)
+        $games = $this->gameRepository
             ->getAllHostGames($host);
 
         $hostStats = $this->initialiseHostStats();
@@ -106,31 +123,34 @@ class StatsFactory
     }
 
     /**
+     * @param League $league
      * @return PlayerStatsInterface[]
      */
-    public function getLeaguePlayersStats(): array
+    public function getLeaguePlayersStats(League $league): array
     {
         $leaguePlayersStats = [];
-        $players = $this->playerRepository->findAllLeaguePlayers();
+        $players = $league->getPlayers();
         foreach ($players as $player) {
-            $leaguePlayersStats[] = $this->getLeaguePlayerStats($player);
+            $leaguePlayersStats[] = $this->getLeaguePlayerStats($player, $league);
         }
         self::sortPlayerStatsByLeaguePoints($leaguePlayersStats);
         return $leaguePlayersStats;
     }
 
     /**
+     * @param League $league
      * @return PlayerStatsInterface[]
      */
-    public function getLeaguePlayersTopStats(): array
+    public function getLeaguePlayersTopStats(League $league): array
     {
         $leaguePlayersTopStats = [];
-        $players = $this->playerRepository->findAllLeaguePlayers();
-        $noOfGamesAllPlayed = $this->getNoOfGamesAllPlayed();
+        $players = $league->getPlayers();
+        $noOfGamesAllPlayed = $this->getNoOfGamesAllPlayed($league);
         foreach ($players as $player) {
             $leaguePlayersTopStats[] = $this->getLeaguePlayerTopStats(
                 $player,
-                $noOfGamesAllPlayed
+                $noOfGamesAllPlayed,
+                $league
             );
         }
         self::sortPlayerStatsByLeaguePoints($leaguePlayersTopStats);
@@ -138,11 +158,12 @@ class StatsFactory
     }
 
     /**
+     * @param League $league
      * @return int
      */
-    public function getNoOfGamesAllPlayed(): int
+    public function getNoOfGamesAllPlayed(League $league): int
     {
-        return $this->playerRepository->getNoOfGamesAllPlayed();
+        return $this->playerRepository->getNoOfGamesAllPlayed($league);
     }
 
     /**

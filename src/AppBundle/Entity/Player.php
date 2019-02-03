@@ -85,14 +85,22 @@ class Player
     private $createdAt;
 
     /**
+     * @var ArrayCollection|League[]
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\League", mappedBy="players")
+     */
+    private $leagues;
+
+    /**
      * @var PlayerStatsInterface
      */
     private $playerStats;
+
 
     public function __construct()
     {
         $this->createdAt = new \DateTime();
         $this->results = new ArrayCollection();
+        $this->leagues = new ArrayCollection();
     }
 
     public function __toString()
@@ -299,10 +307,20 @@ class Player
      * @param null|File|string $profilePicture
      * @return Player
      */
-    public function setProfilePicture($profilePicture)
+    public function setProfilePicture($profilePicture): Player
     {
         $this->profilePicture = $profilePicture;
         return $this;
+    }
+
+    public function addLeague(League $league): void
+    {
+        $this->leagues[] = $league;
+    }
+
+    public function removeLeague(League $league): void
+    {
+        $this->leagues->removeElement($league);
     }
 }
 

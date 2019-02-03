@@ -3,10 +3,8 @@
 {% block title %}Admin{% endblock %}
 
 {% block main %}
-    <div class="row">
-
-
-        <div class="col-sm-12">
+    <div class="col-sm-12">
+        <div class="row">
             <div class="card-deck">
                 <div class="card">
                     <div class="card-body">
@@ -17,19 +15,25 @@
                     </div>
                 </div>
 
-            <div class="card">
-                <div class="card-body">
-                    <h4 class="card-title">Manage Games</h4>
-                    <p class="card-text">Set up games and add results</p>
-                    <a class="btn btn-primary btn-lg" href="{{ path('game_index') }}">Manage Games</a>
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Manage Games</h4>
+                        <p class="card-text">Set up games and add results</p>
+                        <a class="btn btn-primary btn-lg" href="{{ path('admin_game_index') }}">Manage Games</a>
+                    </div>
                 </div>
-            </div>
+
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Manage Leagues</h4>
+                        <p class="card-text">Set up leagues and add players</p>
+                        <a class="btn btn-primary btn-lg" href="{{ path('admin_league_index') }}">Manage Leagues</a>
+                    </div>
+                </div>
             </div>
         </div>
 
     </div>
-
-
 
 
 {% endblock %}

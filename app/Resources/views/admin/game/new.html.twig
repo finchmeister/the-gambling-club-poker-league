@@ -15,7 +15,7 @@
     {% do form.snacksProvider.setRendered %}
     {% do form.results.setRendered %}
 
-    <input class="btn btn-primary btn-lg btn-block" type="submit" value="Save" />
+    <input class="btn btn-success btn-lg btn-block" type="submit" value="Save" />
 
     {{ form_end(form) }}
 
@@ -23,6 +23,6 @@
 
 {% block sidebar %}
 
-    <a class="my-2 btn btn-primary btn-lg btn-block"  href="{{ path('game_index') }}">Back to the list</a>
+    <a class="my-2 btn btn-primary btn-lg btn-block"  href="{{ path('admin_game_index') }}">Back to the list</a>
 
 {% endblock %}

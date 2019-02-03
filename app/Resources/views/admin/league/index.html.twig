@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+
+{% block title %}League list{% endblock %}
+
+{% block main %}
+
+    {% if leagues %}
+        <table class="table table-striped text-center table-responsive-md">
+            <thead >
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>No of Players</th>
+                <th>Buy in</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for league in leagues %}
+                <tr>
+                    <td>{{ league.id }}</td>
+                    <td>{{ league.name }}</td>
+                    <td>{{ league.startDate|date(date_format) }}</td>
+                    <td>{{ league.endDate|date(date_format) }}</td>
+                    <td>{{ league.noOfPlayers }}</td>
+                    <td>{{ league.buyIn|price }}</td>
+                    <td>
+                        <a class="btn btn-primary" href="{{ path('league_edit', { 'id': league.id }) }}">Edit</a>
+                    </td>
+
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p class="lead">No leagues have been created yet</p>
+    {% endif %}
+
+
+{% endblock %}
+
+
+    {% block sidebar %}
+
+            <a class="p-2 btn btn-success btn-lg btn-block" role="button" href="{{ path('league_new') }}">Create a new league</a>
+
+            <a class="p-2 btn btn-primary btn-lg btn-block" role="button" href="{{ path('admin') }}">Back to admin</a>
+    {% endblock %}

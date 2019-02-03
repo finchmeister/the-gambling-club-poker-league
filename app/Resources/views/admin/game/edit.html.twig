@@ -29,7 +29,7 @@
         {% endfor %}
     </div>
 
-        <input class="btn my-3 btn-primary btn-block btn-lg " type="submit" value="Save" />
+        <input class="btn my-3 btn-success btn-block btn-lg " type="submit" value="Save" />
     {{ form_end(edit_form) }}
 
 
@@ -58,7 +58,7 @@
     {% include 'admin/_delete_modal.html.twig' with {'entity' : 'game', 'form' : delete_form } %}
 
     <div class="my-2">
-        <a class="btn btn-primary btn-lg btn-block"  href="{{ path('game_index') }}">Back to the list</a>
+        <a class="btn btn-primary btn-lg btn-block"  href="{{ path('admin_game_index') }}">Back to the list</a>
     </div>
 
 

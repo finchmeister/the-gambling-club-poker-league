@@ -20,7 +20,7 @@ class AdminGameController extends Controller
     /**
      * Lists all game entities.
      *
-     * @Route("/", name="game_index")
+     * @Route("/", name="admin_game_index")
      * @Method("GET")
      */
     public function indexAction()
@@ -51,7 +51,7 @@ class AdminGameController extends Controller
             $em->persist($game);
             $em->flush();
 
-            return $this->redirectToRoute('game_index');
+            return $this->redirectToRoute('admin_game_index');
         }
 
         return $this->render('admin/game/new.html.twig', array(
@@ -125,7 +125,7 @@ class AdminGameController extends Controller
             ));
         }
 
-        return $this->redirectToRoute('game_index');
+        return $this->redirectToRoute('admin_game_index');
     }
 
     /**

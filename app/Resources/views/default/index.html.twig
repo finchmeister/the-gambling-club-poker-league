@@ -13,11 +13,13 @@
 {% block main %}
 
     <ul class="nav nav-tabs nav-justified mb-4" id="myTab" role="tablist">
-        <li class="nav-item">
-            <a class="nav-link active" id="leagueStats-tab" data-toggle="tab" href="#leagueStats" role="tab" aria-controls="leagueStats" aria-selected="true">
-                League
-            </a>
-        </li>
+        {% for leagueData in leaguesData %}
+            <li class="nav-item">
+                <a class="nav-link {{ loop.index == '1' ? 'active' }}" id="leagueStats-tab-{{ leagueData.league.id }}" data-toggle="tab" href="#leagueStats{{ leagueData.league.id }}" role="tab" aria-controls="leagueStats{{ leagueData.league.id }}" aria-selected="true">
+                    League {{ leagueData.league.name }}
+                </a>
+            </li>
+        {% endfor %}
         <li class="nav-item">
             <a class="nav-link" id="allStats-tab" data-toggle="tab" href="#allStats" role="tab" aria-controls="allStats" aria-selected="false">
                 All
@@ -25,37 +27,50 @@
         </li>
     </ul>
     <div class="tab-content" id="myTabContent">
-        <div class="tab-pane fade show active" id="leagueStats" role="tabpanel" aria-labelledby="leagueStats-tab">
-            {% if leaguePlayersStats is not empty and leaguePlayersTopStats is not empty %}
 
+        {% for leagueData in leaguesData %}
 
-                <div class="tab-content">
-                    <div class="tab-pane fade show active" id="top-tab" role="tabpanel">
-                        {% include 'partial/_all_stats_table.html.twig' with {playerStats : leaguePlayersTopStats, 'isLeague' : true, bob : 'je'} %}
+            <div class="tab-pane fade show active" id="leagueStats{{ leagueData.league.id }}" role="tabpanel" aria-labelledby="leagueStats-tab-{{ leagueData.league.id }}">
+                {% if leagueData.leaguePlayersStats is not empty and leagueData.leaguePlayersTopStats is not empty %}
+
+                    {% if leagueData.league.firstPlace %}
+                        <div class="text-center font-italic">
+
+                        <p class="lead">Winner: {{ leagueData.league.firstPlace }} - {{ leagueData.league.firstPrize | price }}</p>
+                        <p class="">Runner up: {{ leagueData.league.secondPlace }} - {{ leagueData.league.secondPrize | price }}</p>
+                        </div>
+                    {% endif %}
+
+                    <div class="tab-content">
+                        <div class="tab-pane fade show active" id="top-tab" role="tabpanel">
+                            {% include 'partial/_all_stats_table.html.twig' with {playerStats : leagueData.leaguePlayersTopStats, 'isLeague' : true} %}
+                        </div>
+                        <div class="tab-pane fade" id="all-tab" role="tabpanel">
+                            {% include 'partial/_all_stats_table.html.twig' with {playerStats : leagueData.leaguePlayersStats, 'isLeague' : true} %}
+                        </div>
                     </div>
-                    <div class="tab-pane fade" id="all-tab" role="tabpanel">
-                        {% include 'partial/_all_stats_table.html.twig' with {playerStats : leaguePlayersStats, 'isLeague' : true, bob : 'ch'} %}
-                    </div>
-                </div>
 
-                <ul class="nav nav-pills mb-3 justify-content-center" id="pills-tab" role="tablist">
-                    <li class="nav-item">
-                        <a class="nav-link active" id="top-tab" data-toggle="pill" href="#top-tab" role="tab" aria-controls="pills-home" aria-selected="true">Top {{ noOfGamesAllPlayed }}</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" id="all-tab" data-toggle="pill" href="#all-tab" role="tab" aria-controls="pills-profile" aria-selected="false">All</a>
-                    </li>
-                </ul>
+                    <ul class="nav nav-pills mb-3 justify-content-center" id="pills-tab" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="top-tab" data-toggle="pill" href="#top-tab" role="tab" aria-controls="pills-home" aria-selected="true">Top {{ leagueData.noOfGamesAllPlayed }}</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="all-tab" data-toggle="pill" href="#all-tab" role="tab" aria-controls="pills-profile" aria-selected="false">All</a>
+                        </li>
+                    </ul>
 
-            {% endif %}
+                {% endif %}
 
-            <hr class="my-4">
+                <hr class="my-4">
 
-            <h2>Games</h2>
+                <h2>Games</h2>
 
-            {% include 'partial/_game.html.twig' with {'games' : leagueGames} %}
+                {% include 'partial/_game.html.twig' with {'games' : leagueData.leagueGames} %}
 
-        </div>
+            </div>
+
+        {% endfor %}
+
         <div class="tab-pane fade" id="allStats" role="tabpanel" aria-labelledby="allStats-tab">
             {% include 'partial/_all_stats_table.html.twig' with {'playerStats' : allPlayersStats}  %}
 

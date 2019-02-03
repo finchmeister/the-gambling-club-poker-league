@@ -54,7 +54,7 @@ docker-machine env vm02
 eval $(docker-machine env -u)
 docker-compose -f docker-compose-prod.yml up -d
 ```
-7\. Restore db in app
+7\. Restore db in app (note permissions of the db)
 ```
 docker-compose exec php bin/console app:database-restore
 ```
