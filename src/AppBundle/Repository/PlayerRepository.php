@@ -39,8 +39,8 @@ class PlayerRepository extends EntityRepository
             ->innerJoin('r.game', 'g')
             ->andWhere($expr->eq('g.isLeague', true))
             ->andWhere($expr->eq('player.leaguePlayer', true))
-            ->andWhere('g.date >= :startDate')
-            ->setParameter('startDate', $league->getStartDate());
+            ->andWhere('g.date > :startDate')
+            ->setParameter('startDate', $league->getStartDate()->sub(new \DateInterval('P1D')));
         if ($league->getEndDate() !== null) {
             $qb->andWhere('g.date <= :endDate')
                 ->setParameter('endDate', $league->getEndDate());

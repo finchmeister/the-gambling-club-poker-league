@@ -27,8 +27,8 @@ class GameRepository extends EntityRepository
     public function getLeagueGames(League $league): ArrayCollection
     {
         $qb = $this->createQueryBuilder('g')
-            ->where('g.date >= :startDate')
-            ->setParameter('startDate', $league->getStartDate());
+            ->where('g.date > :startDate')
+            ->setParameter('startDate', $league->getStartDate()->sub(new \DateInterval('P1D')));
         if ($league->getEndDate() !== null) {
             $qb->andWhere('g.date <= :endDate')
                 ->setParameter('endDate', $league->getEndDate());
