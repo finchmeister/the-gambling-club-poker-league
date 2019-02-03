@@ -304,12 +304,12 @@ class Game
         if ($results = $this->getResults()) {
             $pot = $results->count() * $this->getBuyIn();
             foreach ($results as $result) {
-                $pot += $result->getNoOfRebuys() * $this->getBuyIn() + $result->getAddOn();
+                $pot += $result->getNoOfRebuys() * $this->getBuyIn() + $result->getAddOn() + $result->getTopUp();
             }
             return $pot;
-        } else {
-            return null;
         }
+
+        return null;
     }
 
     /**
@@ -340,6 +340,13 @@ class Game
     {
         return $this->results->filter(function (Result $result) {
             return $result->getAddOn() > 0;
+        })->count() > 0;
+    }
+
+    public function hasTopUp(): bool
+    {
+        return $this->results->filter(function (Result $result) {
+            return $result->getTopUp() > 0;
         })->count() > 0;
     }
 

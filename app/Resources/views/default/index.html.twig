@@ -30,7 +30,7 @@
 
         {% for leagueData in leaguesData %}
 
-            <div class="tab-pane fade show active" id="leagueStats{{ leagueData.league.id }}" role="tabpanel" aria-labelledby="leagueStats-tab-{{ leagueData.league.id }}">
+            <div class="tab-pane fade show {{ loop.index == '1' ? 'active' }}" id="leagueStats{{ leagueData.league.id }}" role="tabpanel" aria-labelledby="leagueStats-tab-{{ leagueData.league.id }}">
                 {% if leagueData.leaguePlayersStats is not empty and leagueData.leaguePlayersTopStats is not empty %}
 
                     {% if leagueData.league.firstPlace %}

@@ -38,43 +38,7 @@ class GameRepository extends EntityRepository
         return new ArrayCollection($leagueGames);
     }
 
-    public function getLeagueTable(): array
-    {
-        return $this->getTableQueryBuilder()
-            ->addSelect('SUM(results.leaguePoints) AS leaguePoints')
-            ->andWhere('game.isLeague = 1')
-            ->andWhere('player.leaguePlayer = 1')
-            ->getQuery()
-            ->getResult();
-    }
-
-    public function getLeagueTableTopResults()
-    {
-        $this->getTableQueryBuilder()
-            ->orderBy('results.leaguePoints', 'DESC');
-    }
-
-    protected function getTableQueryBuilder(): QueryBuilder
-    {
-        return $this->createQueryBuilder('game')
-            ->select('player.name, player.id AS playerId')
-            ->addSelect('SUM(results.winnings) AS winnings')
-            ->addSelect('SUM(results.noOfRebuys) AS noOfRebuys')
-            ->addSelect('SUM((results.noOfRebuys + 1)*game.buyIn + results.addOn) AS boughtIn')
-            ->addSelect('SUM(results.winnings) - SUM((results.noOfRebuys + 1)*game.buyIn + results.addOn) AS net')
-            ->innerJoin('game.results', 'results')
-            ->leftJoin('results.player', 'player')
-            ->groupBy('player.id');
-    }
-
-    public function getAllStatsTable()
-    {
-        return $this->getTableQueryBuilder()
-            ->getQuery()
-            ->getResult();
-    }
-
-    public function getAllHostGames(Player $host)
+    public function getAllHostGames(Player $host): array
     {
         return $this->createQueryBuilder('game')
             ->andWhere('game.host = :host')

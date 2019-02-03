@@ -45,7 +45,33 @@
             </button>
         </div>
         <div class="card-body">
-            {{ form_widget(resultForm) }}
+            <div class="row">
+                <div class="col-4 col-sm-3">
+                    {{ form_row(resultForm.position, {'attr' : {'readonly' : 'true'}}) }}
+                </div>
+                <div class="col-8 col-sm-9">
+                    {{ form_row(resultForm.player) }}
+                </div>
+            </div>
+
+            <div class="row">
+                 <div class="col-6">
+                     {{ form_row(resultForm.winnings) }}
+                 </div>
+                 <div class="col-6">
+                     {{ form_row(resultForm.noOfRebuys) }}
+                 </div>
+            </div>
+
+            <div class="row">
+                 <div class="col-6">
+                     {{ form_row(resultForm.addOn) }}
+                 </div>
+                 <div class="col-6">
+                     {{ form_row(resultForm.topUp) }}
+                 </div>
+            </div>
+
         </div>
     </div>
 
@@ -66,7 +92,6 @@
 
  {% block javascripts %}
      {{ parent() }}
-
 
      <script>
 
