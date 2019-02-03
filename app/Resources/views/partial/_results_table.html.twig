@@ -11,6 +11,9 @@
         {% if game.hasAddOn %}
             <th>{{ displayTextAtBreakPoints('Add-On', 'A', 'md') }}</th>
         {% endif %}
+        {% if game.hasTopUp %}
+            <th>{{ displayTextAtBreakPoints('Top-up', 'A', 'md') }}</th>
+        {% endif %}
         {% if game.league %}
             <th>{{ displayTextAtBreakPoints('League Player', 'LP', 'md') }}</th>
         {% endif %}
@@ -29,6 +32,9 @@
             <td>{{ result.noOfRebuys }}</td>
             {% if game.hasAddOn %}
                 <td>{{ result.addOn|price }}</td>
+            {% endif %}
+            {% if game.hasTopUp %}
+                <td>{{ result.topUp|price }}</td>
             {% endif %}
             {% if game.league %}
                 <td>

@@ -20,6 +20,7 @@ class ResultType extends AbstractType
             ->add('winnings')
             ->add('noOfRebuys')
             ->add('addOn')
+            ->add('topUp')
         ;
     }
     

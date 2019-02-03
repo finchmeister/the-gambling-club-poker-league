@@ -75,6 +75,14 @@ class Result
     private $addOn;
 
     /**
+     * @var int
+     *
+     * @ORM\Column(type="float", options={"default" : 0})
+     * @Assert\GreaterThanOrEqual(0)
+     */
+    private $topUp;
+
+    /**
      * @var \DateTime
      * @ORM\Column(type="datetime")
      */
@@ -94,7 +102,7 @@ class Result
 
     public function __construct()
     {
-        $this->winnings = $this->noOfRebuys = $this->addOn = 0;
+        $this->winnings = $this->noOfRebuys = $this->addOn = $this->topUp = 0;
         $this->createdAt = $this->updatedAt = new \DateTime();
     }
 
@@ -228,7 +236,7 @@ class Result
      */
     public function getBoughtIn(): int
     {
-        return ($this->noOfRebuys + 1) * $this->getGame()->getBuyIn() + $this->addOn;
+        return ($this->noOfRebuys + 1) * $this->getGame()->getBuyIn() + $this->addOn + $this->topUp;
     }
 
     /**
@@ -250,6 +258,24 @@ class Result
     }
 
     /**
+     * @return int
+     */
+    public function getTopUp(): int
+    {
+        return $this->topUp;
+    }
+
+    /**
+     * @param int $topUp
+     * @return Result
+     */
+    public function setTopUp(int $topUp): Result
+    {
+        $this->topUp = $topUp;
+        return $this;
+    }
+
+    /**
      * @return float|null
      */
     public function getLeaguePoints(): ?float
@@ -263,7 +289,6 @@ class Result
             $leaguePoints++; // Bonus point
         }
         return $leaguePoints;
-        return $this->leaguePoints;
     }
 
     /**
@@ -288,7 +313,7 @@ class Result
     /**
      * @ORM\PreUpdate
      */
-    public function setUpdatedAt()
+    public function setUpdatedAt(): void
     {
         $this->updatedAt = new \DateTime('now');
     }
