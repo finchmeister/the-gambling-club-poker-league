@@ -33,7 +33,7 @@ ENV COMPOSER_ALLOW_SUPERUSER 1
 
 # Run composer installs in parallel
 # php -d memory_limit=-1 /usr/local/bin/composer #
-RUN composer global require "hirak/prestissimo:^0.3" --prefer-dist --no-progress --no-suggest --optimize-autoloader --classmap-authoritative \
+RUN php -d memory_limit=-1 /usr/local/bin/composer global require "hirak/prestissimo:^0.3" --prefer-dist --no-progress --no-suggest --optimize-autoloader --classmap-authoritative \
 	&& composer clear-cache
 
 WORKDIR /var/www/html
@@ -41,7 +41,7 @@ WORKDIR /var/www/html
 COPY composer.json ./
 COPY composer.lock ./
 
-RUN composer install --prefer-dist --no-autoloader --no-progress --no-suggest --no-scripts
+RUN php -d memory_limit=-1 /usr/local/bin/composer install --prefer-dist --no-autoloader --no-progress --no-suggest --no-scripts
 
 COPY app app/
 COPY bin bin/
