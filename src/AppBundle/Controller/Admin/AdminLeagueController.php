@@ -45,7 +45,7 @@ class AdminLeagueController extends Controller
             $em->persist($league);
             $em->flush();
 
-            return $this->redirectToRoute('admin_player_index', array('id' => $league->getId()));
+            return $this->redirectToRoute('admin_league_index', array('id' => $league->getId()));
         }
 
         return $this->render('admin/league/new.html.twig', array(
