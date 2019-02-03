@@ -33,6 +33,7 @@ class GameRepository extends EntityRepository
             $qb->andWhere('g.date <= :endDate')
                 ->setParameter('endDate', $league->getEndDate());
         }
+        $qb->addOrderBy('g.date', 'DESC');
         $leagueGames = $qb->getQuery()->getResult();
 
         return new ArrayCollection($leagueGames);
