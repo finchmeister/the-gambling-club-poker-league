@@ -5,27 +5,33 @@ html {
   position: relative;
   min-height: 100%;
 }
-body {
-  margin-bottom: 60px; /* Margin bottom by footer height */
-}
+
 
 .main-banner {
   background-image: url('../image/kings.jpeg');
   background-size: cover;
 }
 
-.footer {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  height: 60px; /* Set the fixed height of the footer here */
-  /* line-height: 60px; */ /* This is causing a margin below Vertically center the text there */
-}
-
 .display-5 {
   font-size: 2rem;
 }
 
+$font-family-base: 'Roboto', sans-serif;
+$headings-font-family: 'Playfair Display', serif;
 
+.heading-font {
+  font-family: $headings-font-family;
+}
+
+$gc-green: #093a38;
+
+$dark: $gc-green;
+$body-bg: #f5f5f5;
+
+$primary: $gc-green;
+
+thead {
+  font-family: $headings-font-family;
+}
 
 @import '~bootstrap/scss/bootstrap';

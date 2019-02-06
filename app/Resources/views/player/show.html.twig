@@ -13,127 +13,103 @@
 
             <h2 class="my-4">Stats</h2>
 
-            <div class="row">
+            <div class="row py-3">
                 <div class="col-6">
-                    <p class="lead">Won</p>
+                    <h3>Won</h3>
                     <h1 class="display-3 {{ player.playerStats.sumCashWon > 0 ? 'text-success' }}">{{ player.playerStats.sumCashWon|price }}</h1>
                 </div>
 
                 <div class="col-6">
-                    <p class="lead">Bought-In</p>
+                    <h3>Bought-In</h3>
                     <h1 class="display-3 {{ player.playerStats.sumBoughtIn > 0 ? 'text-danger' }}">{{ player.playerStats.sumBoughtIn|price }}</h1>
                 </div>
             </div>
 
-            <div class="row">
+            <div class="row py-3">
                 <div class="col-6">
-                    <p class="lead">Net</p>
+                    <h3>Net</h3>
                     <h1 class="display-3 text-{{ player.playerStats.net > 0 ? 'success' : 'danger' }}">{{ player.playerStats.net|price }}</h1>
                 </div>
 
                 <div class="col-6">
-                    <p class="lead">No. of Rebuys</p>
+                    <h3>No. of Rebuys</h3>
                     <h1 class="display-3">{{ player.playerStats.sumRebuys }}</h1>
                 </div>
             </div>
 
-            <div class="row">
-                <hr class="my-4">
-            </div>
-
-            <div class="row">
+            <div class="row py-3">
                 <div class="col">
-                    <p class="lead">Form</p>
+                    <h3>Form</h3>
                     <h1 class="display-3">{{ player.playerStats.form|join(', ') }}</h1>
                 </div>
             </div>
 
-            <div class="row">
-                <hr class="my-4">
-            </div>
-
-            <div class="row">
+            <div class="row py-3">
                 <div class="col-6">
-                    <p class="lead">No. of Games Won</p>
+                    <h3>No. of Games Won</h3>
                     <h1 class="display-3">{{ player.playerStats.countGamesWon }}</h1>
                 </div>
 
                 <div class="col-6">
-                    <p class="lead">No. of Games Played</p>
+                    <h3>No. of Games Played</h3>
                     <h1 class="display-3">{{ player.playerStats.countGamesPlayed }}</h1>
                 </div>
             </div>
 
-            <div class="row">
+            <div class="row py-3">
                 <div class="col">
-                    <p class="lead">Win %</p>
+                    <h3>Win %</h3>
                     <h1 class="display-3 ">{{ player.playerStats.winRatio|percent }}</h1>
                 </div>
             </div>
 
-            <div class="row">
-                <hr class="my-4">
-            </div>
-
-            <div class="row">
+            <div class="row py-3">
                 <div class="col-6">
-                    <p class="lead">No. of Games Paid</p>
+                    <h3>No. of Games Paid</h3>
                     <h1 class="display-3">{{ player.playerStats.countGamesPaid }}</h1>
                 </div>
 
                 <div class="col-6">
-                    <p class="lead">Paid %</p>
+                    <h3>Paid %</h3>
                     <h1 class="display-3">{{ player.playerStats.gamesPaidRatio|percent }}</h1>
                 </div>
             </div>
 
-
-            <div class="row">
-                <hr class="my-4">
-            </div>
-
-            <div class="row">
+            <div class="row py-3">
                 <div class="col-6">
-                    <p class="lead">Average Net</p>
+                    <h3>Average Net</h3>
                     <h1 class="display-3 text-{{ player.playerStats.meanNet > 0 ? 'success' : 'danger' }}">{{ player.playerStats.meanNet|price }}</h1>
                 </div>
 
                 <div class="col-6">
-                    <p class="lead">Average Position</p>
+                    <h3>Average Position</h3>
                     <h1 class="display-3">{{ player.playerStats.meanPosition|number_format(2) }}</h1>
                 </div>
             </div>
 
-            <div class="row">
-                <hr class="my-4">
-            </div>
-
-            <div class="row">
+            <div class="row py-3">
                 <div class="col-6">
-                    <p class="lead">Biggest Win</p>
+                    <h3>Biggest Win</h3>
                     <h1 class="display-3 {{ player.playerStats.maxCashWin > 0 ? 'text-success' }}">{{ player.playerStats.maxCashWin|price }}</h1>
                 </div>
 
                 <div class="col-6">
-                    <p class="lead">Highest Position</p>
+                    <h3>Highest Position</h3>
                     <h1 class="display-3">{{ player.playerStats.bestPosition }}</h1>
                 </div>
             </div>
-            <div class="row">
+            <div class="row py-3">
                 <div class="col-6">
-                    <p class="lead">Biggest Net</p>
+                    <h3>Biggest Net</h3>
                     <h1 class="display-3 {{ player.playerStats.maxProfit > 0 ? 'text-success' }}">{{ player.playerStats.maxProfit|price }}</h1>
                 </div>
 
                 <div class="col-6">
-                    <p class="lead">Worst Net</p>
+                    <h3>Worst Net</h3>
                     <h1 class="display-3 {{ player.playerStats.minProfit < 0 ? 'text-danger' }}">{{ player.playerStats.minProfit|price }}</h1>
                 </div>
             </div>
 
-            <div class="row">
-                <hr class="my-4">
-            </div>
 
         </div>
         <div class="col-sm-3">
@@ -142,7 +118,7 @@
 
 
     </div>
-    <div class="row">
+    <div class="row py-3">
         <div class="col">
             <hr class="my-4">
         </div>
@@ -156,32 +132,31 @@
         <li>Pie: Win</li>
     </ul>#}
 
-    <div class="row">
-        <div class="col-sm-6 py-2">
-            <p class="lead">Win / Bought-In / Net</p>
-            <canvas id="winLoseNetBarChart" width="400" height="400"></canvas>
+    <div class="text-center">
+        <div class="row py-3">
+            <div class="col-sm-6">
+                <h3 class="py-2">Win / Bought-In / Net</h3>
+                <canvas id="winLoseNetBarChart" width="400" height="400"></canvas>
 
+            </div>
+            <div class="col-sm-6">
+                <h3 class="py-2">Win / Lose</h3>
+                <canvas id="winLosePieChart" width="400" height="400"></canvas>
+            </div>
         </div>
-        <div class="col-sm-6 py-2">
-            <p class="lead">Win / Lose</p>
-            <canvas id="winLosePieChart" width="400" height="400"></canvas>
 
+        <div class="row py-3">
+            <div class="col-sm-6">
+                <h3 class="py-2">Position Over Time</h3>
+                <canvas id="scoreAgainstTimeLineChart" width="400" height="400"></canvas>
+
+            </div>
+            <div class="col-sm-6">
+                <h3 class="py-2">Paid / Not-paid</h3>
+                <canvas id="paidPieChart" width="400" height="400"></canvas>
+            </div>
         </div>
     </div>
-
-    <div class="row">
-        <div class="col-sm-6 py-2">
-            <p class="lead">Score Over Time</p>
-            <canvas id="scoreAgainstTimeLineChart" width="400" height="400"></canvas>
-
-        </div>
-        <div class="col-sm-6 py-2">
-            <p class="lead">Paid / Not-paid</p>
-            <canvas id="paidPieChart" width="400" height="400"></canvas>
-
-        </div>
-    </div>
-
 
     <div class="row mt-3">
 
@@ -289,7 +264,7 @@
                 labels: ["1", "2", "3", "4", "5", "6"],
                 labels: [{% for e in  player.playerStats.form %}"{{ loop.index }}", {% endfor %}],
                 datasets: [{
-                    label: "Score",
+                    label: "Position",
                     data: [{{ player.playerStats.form|join(', ') }}],
                     fill: false,
                     backgroundColor: [

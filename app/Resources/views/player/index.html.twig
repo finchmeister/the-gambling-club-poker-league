@@ -24,24 +24,30 @@
 
             <div class="row">
                 <div class="col-4">
-                    <p>Won</p>
-                    <p class="display-5 {{ player.playerStats.sumCashWon > 0 ? 'text-success' }}">{{ player.playerStats.sumCashWon|price }}</p>
+                    <h4>Won</h4>
+                    <h1 class="display-5 {{ player.playerStats.sumCashWon > 0 ? 'text-success' }}">{{ player.playerStats.sumCashWon|price }}</h1>
                 </div>
                 <div class="col-4">
-                    <p>Bought-In</p>
-                    <p class="display-5 {{ player.playerStats.sumBoughtIn > 0 ? 'text-danger' }}">{{ player.playerStats.sumBoughtIn|price }}</p>
+                    <h4>Bought-In</h4>
+                    <h1 class="display-5 {{ player.playerStats.sumBoughtIn > 0 ? 'text-danger' }}">{{ player.playerStats.sumBoughtIn|price }}</h1>
                 </div>
                 <div class="col-4">
-                    <p>Net</p>
-                    <p class="display-5 text-{{ player.playerStats.net > 0 ? 'success' : 'danger' }}">{{ player.playerStats.net|price }}</p>
+                    <h4>Net</h4>
+                    <h1 class="display-5 text-{{ player.playerStats.net > 0 ? 'success' : 'danger' }}">{{ player.playerStats.net|price }}</h1>
                 </div>
             </div>
 
-            <a class="btn btn-primary" href="{{ path('player_show', { 'id': player.id }) }}">Go to Player Stats</a>
-            <a class="btn btn-primary" href="{{ path('host_show', { 'id': player.id }) }}">Go to Host Stats</a>
-            {% if is_granted('ROLE_ADMIN') %}
-                <a class="btn btn-primary" href="{{ path('player_edit', { 'id': player.id }) }}" role="button">Edit Player</a>
-            {% endif %}
+            <div class="row pt-4 pb-2">
+                <div class="col">
+                    <a class="btn btn-primary px-4" href="{{ path('player_show', { 'id': player.id }) }}">Go to Player Stats</a>
+                    <a class="btn btn-primary px-4" href="{{ path('host_show', { 'id': player.id }) }}">Go to Host Stats</a>
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <a class="btn btn-primary px-4" href="{{ path('player_edit', { 'id': player.id }) }}" role="button">Edit Player</a>
+                    {% endif %}
+                </div>
+            </div>
+
+
         </div>
         <div class="col-sm-3 p-4">
             <img src="{{ player.profilePicturePublicUrl ?: 'http://via.placeholder.com/350x350' }}" class="img-fluid rounded">

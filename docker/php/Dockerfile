@@ -32,8 +32,7 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 ENV COMPOSER_ALLOW_SUPERUSER 1
 
 # Run composer installs in parallel
-# php -d memory_limit=-1 /usr/local/bin/composer #
-RUN php -d memory_limit=-1 /usr/local/bin/composer global require "hirak/prestissimo:^0.3" --prefer-dist --no-progress --no-suggest --optimize-autoloader --classmap-authoritative \
+RUN composer global require "hirak/prestissimo:^0.3" --prefer-dist --no-progress --no-suggest --optimize-autoloader --classmap-authoritative \
 	&& composer clear-cache
 
 WORKDIR /var/www/html
@@ -41,7 +40,7 @@ WORKDIR /var/www/html
 COPY composer.json ./
 COPY composer.lock ./
 
-RUN php -d memory_limit=-1 /usr/local/bin/composer install --prefer-dist --no-autoloader --no-progress --no-suggest --no-scripts
+RUN composer install --prefer-dist --no-autoloader --no-progress --no-suggest --no-scripts
 
 COPY app app/
 COPY bin bin/
@@ -59,9 +58,10 @@ COPY phpunit.xml.dist ./
 RUN composer dump-autoload --optimize --classmap-authoritative
 # Install scripts
 RUN composer install --prefer-dist --no-autoloader --no-progress --no-suggest --no-interaction
-RUN chown -R www-data var/
+RUN chown -R www-data:www-data .
 # TODO https://github.com/api-platform/api-platform/blob/master/api/docker/php/docker-entrypoint.sh
 # https://github.com/dunglas/symfony-docker
 #COPY docker/php/docker-entrypoint.sh /usr/local/bin/docker-entrypoint
 #RUN chmod +x /usr/local/bin/docker-entrypoint
 #ENTRYPOINT ["docker-entrypoint"]
+USER www-data

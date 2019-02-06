@@ -5,26 +5,26 @@
 
     {% for game in games %}
 
-        <h3>{{ game.date|date("D jS, M Y") }}</h3>
+        <h3 class="py-2">{{ game.date|date("D jS, M Y") }}</h3>
         <h4><a href="{{ path('host_show', { 'id': game.host.id }) }}">{{ game.host }}</a> <small class="text-muted">{{ game.host.location }}</small></h4>
 
-        <div class="row">
+        <div class="row py-3">
             <div class="col-sm-6">
 
                 <div class="row my-3">
 
                     <div class="col">
-                        <div class="text-muted">Buy in</div>
+                        <div class="text-muted h5">Buy in</div>
                         <span>{{ game.buyIn|price }}</span>
                     </div>
 
                     <div class="col">
-                        <div class="text-muted">Pot</div>
+                        <div class="text-muted h5">Pot</div>
                         <span>{{ game.pot|price }}</span>
                     </div>
 
                     <div class="col">
-                        <div class="text-muted">League</div>
+                        <div class="text-muted h5">League</div>
                         <span class="px-3 oi oi-{{ game.isLeague ? 'check' : 'x' }}"></span>
 
                         {#{% if game.snacksProvider %}

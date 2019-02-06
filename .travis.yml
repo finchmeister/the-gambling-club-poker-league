@@ -20,16 +20,17 @@ script:
 #- docker-compose exec php ls
 #- docker-compose exec php ./vendor/phpunit/phpunit/phpunit
 
-- yarn install
-- yarn run encore production
-- "./bin/install-production-docker-machine.sh"
-- npm install -g machine-share
-- machine-import vm02.zip
-- export GOOGLE_APPLICATION_CREDENTIALS=google-cloud-auth.json
-- docker-machine env vm02
-- eval $(docker-machine env vm02)
-- docker-machine ls
-- export COMPOSE_TLS_VERSION=TLSv1_2
-- docker-compose -f docker-compose-prod.yml up -d --build
-- docker-compose exec php bin/console doctrine:schema:update --force
-- docker-compose exec php bin/console c:c --env=prod
+# Disable whilst build cannot be run on VM
+#- yarn install
+#- yarn run encore production
+#- "./bin/install-production-docker-machine.sh"
+#- npm install -g machine-share
+#- machine-import vm02.zip
+#- export GOOGLE_APPLICATION_CREDENTIALS=google-cloud-auth.json
+#- docker-machine env vm02
+#- eval $(docker-machine env vm02)
+#- docker-machine ls
+#- export COMPOSE_TLS_VERSION=TLSv1_2
+#- docker-compose -f docker-compose-prod.yml up -d --build
+#- docker-compose exec php bin/console doctrine:schema:update --force
+#- docker-compose exec php bin/console c:c --env=prod
