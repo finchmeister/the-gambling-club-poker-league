@@ -14,7 +14,6 @@
                 <th>Id</th>
                 <th class="text-left">Name</th>
                 <th class="text-left">Location</th>
-                <th>League Player</th>
                 <th>Actions</th>
             </tr>
             </thead>
@@ -25,10 +24,6 @@
                     <td><a href="{{ path('player_show', { 'id': player.id }) }}">{{ player.id }}</a></td>
                     <td class="text-left">{{ player.name }}</td>
                     <td class="text-left">{{ player.location }}</td>
-                    <td>{% if player.leaguePlayer %}
-                            <span class="oi oi-check"></span>
-                        {% endif %}
-                    </td>
                     <td>
                         <a class="btn btn-secondary" href="{{ path('player_show', { 'id': player.id }) }}" role="button">Show</a>
                         <a class="btn btn-primary" href="{{ path('player_edit', { 'id': player.id }) }}" role="button">Edit</a>

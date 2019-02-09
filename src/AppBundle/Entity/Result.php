@@ -334,5 +334,19 @@ class Result
         return sqrt($noOfPlayersInGame * $buyIn * $buyIn / $boughtIn) /
             ($position + 1);
     }
+
+    public function isLeaguePlayer(): ?bool
+    {
+        /** @var Game $game */
+        $game = $this->getGame();
+        if ($game->isLeague() === false) {
+            return null;
+        }
+
+        return $this->getPlayer()->getLeagues()->filter(function (League $league) use ($game) {
+            return $league->getStartDate() < $game->getDate()
+                && ($league->getEndDate() === null || $league->getEndDate() >= $game->getDate());
+        })->count();
+    }
 }
 

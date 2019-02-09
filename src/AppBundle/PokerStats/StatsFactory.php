@@ -80,17 +80,17 @@ class StatsFactory
         int $noOfResults,
         League $league
     ): PlayerStatsInterface {
-
         $results = $this->resultDocRepository->getPlayersLeagueResults(
             $player,
             $league
         );
         self::sortResultsByLeaguePoints($results);
         $reducedResults = new ArrayCollection();
-        if (\count($results) > 0) {
-            foreach (range(0, $noOfResults - 1) as $i) {
-                $reducedResults->add($results[$i]);
-            }
+        if ($noOfResults > count($results)) {
+            throw new \RuntimeException('Attempting to get too many top results');
+        }
+        foreach (range(0, $noOfResults - 1) as $i) {
+            $reducedResults->add($results[$i]);
         }
         $playerStats = $this->initialisePlayerStats($player);
         return $playerStats->setResults($reducedResults);

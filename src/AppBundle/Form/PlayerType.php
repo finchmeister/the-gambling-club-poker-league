@@ -42,7 +42,6 @@ class PlayerType extends AbstractType
         $builder
             ->add('name')
             ->add('location')
-            ->add('leaguePlayer')
             ->add('bio', TextareaType::class, [
                 'attr' => ['rows' => 5],
                 'empty_data' => ''

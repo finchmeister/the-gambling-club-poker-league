@@ -18,16 +18,17 @@ class LeagueGame
     protected $updated = false;
 
     /**
-     * LeagueGame constructor.
+     * @deprecated done via entity
      * @param LeaguePointsInterface $leaguePoints
      */
-    public function __construct(
-        LeaguePointsInterface $leaguePoints
-    ) {
-        $this->leaguePoints = $leaguePoints;
-    }
+//    public function __construct(
+//        LeaguePointsInterface $leaguePoints
+//    ) {
+//        $this->leaguePoints = $leaguePoints;
+//    }
 
     /**
+     * @deprecated
      * @param Game $game
      * @return Game
      */

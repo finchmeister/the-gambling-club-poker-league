@@ -5,7 +5,6 @@ namespace AppBundle\Command;
 
 use AppBundle\Entity\Game;
 use AppBundle\League\LeagueGame;
-use AppBundle\League\SimpleOnePointPerPosition;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;

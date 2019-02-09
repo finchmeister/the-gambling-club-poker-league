@@ -44,13 +44,6 @@ class Player
     private $location;
 
     /**
-     * @var bool
-     *
-     * @ORM\Column(name="is_league_player", type="boolean")
-     */
-    private $leaguePlayer = false;
-
-    /**
      * @var Result[]|Collection
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Result", mappedBy="player")
      */
@@ -159,24 +152,6 @@ class Player
     public function setLocation(string $location): Player
     {
         $this->location = $location;
-        return $this;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isLeaguePlayer(): bool
-    {
-        return $this->leaguePlayer;
-    }
-
-    /**
-     * @param bool $leaguePlayer
-     * @return Player
-     */
-    public function setLeaguePlayer(bool $leaguePlayer): Player
-    {
-        $this->leaguePlayer = $leaguePlayer;
         return $this;
     }
 
@@ -311,6 +286,14 @@ class Player
     {
         $this->profilePicture = $profilePicture;
         return $this;
+    }
+
+    /**
+     * @return League[]|ArrayCollection
+     */
+    public function getLeagues()
+    {
+        return $this->leagues;
     }
 
     public function addLeague(League $league): void

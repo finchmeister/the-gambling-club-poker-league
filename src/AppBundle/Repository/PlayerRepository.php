@@ -20,11 +20,6 @@ class PlayerRepository extends EntityRepository
             ->leftJoin('player', 'result');
     }
 
-    public function findAllLeaguePlayers()
-    {
-        return $this->findBy(['leaguePlayer' => true]);
-    }
-
     /**
      * @param League $league
      * @return int
@@ -37,8 +32,8 @@ class PlayerRepository extends EntityRepository
             ->select('COUNT(r.id) as games_played')
             ->innerJoin('player.results', 'r')
             ->innerJoin('r.game', 'g')
+            ->innerJoin('player.leagues', 'l', 'WITH', $expr->eq('l.id', $league->getId()))
             ->andWhere($expr->eq('g.isLeague', true))
-            ->andWhere($expr->eq('player.leaguePlayer', true))
             ->andWhere('g.date > :startDate')
             ->setParameter('startDate', $league->getStartDate()->sub(new \DateInterval('P1D')));
         if ($league->getEndDate() !== null) {
