@@ -12,6 +12,7 @@ Encore
     .enableSourceMaps(!Encore.isProduction())
     .enableBuildNotifications()
     .enableSassLoader()
+    .enableVersioning()
 ;
 
 // export the final configuration
