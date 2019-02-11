@@ -17,3 +17,7 @@ services:
             context: ./
         volumes:
             - .:/var/www/html
+    redis:
+        image: redis
+        depends_on:
+            - php
