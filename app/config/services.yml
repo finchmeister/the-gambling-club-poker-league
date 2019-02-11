@@ -30,6 +30,19 @@ services:
         public: true
         tags: ['controller.service_arguments']
 
+
+    AppBundle\Repository\GameRepository:
+        factory: ['@Doctrine\ORM\EntityManagerInterface', getRepository]
+        arguments:
+            - 'AppBundle\Entity\Game'
+
+    AppBundle\Repository\LeagueRepository:
+        factory: ['@Doctrine\ORM\EntityManagerInterface', getRepository]
+        arguments:
+            - 'AppBundle\Entity\League'
+
+
+
     AppBundle\League\LeagueGame:
         public: true
 
@@ -66,3 +79,12 @@ services:
               - '%gcp_project_id%'
               - '%gcp_bucket_name%'
               - '%gcp_key_file_path%'
+
+    AppBundle\Cache\RedisClient:
+        arguments:
+            - '%redis_host%'
+
+    AppBundle\Cache\CacheManager:
+        arguments:
+            - '@AppBundle\Cache\RedisClient'
+            - '%database_path%'

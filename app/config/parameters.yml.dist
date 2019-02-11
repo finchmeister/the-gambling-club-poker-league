@@ -11,6 +11,7 @@ parameters:
     gcp_key_file_path: '%kernel.project_dir%/google-cloud-auth.json'
     gcp_bucket_name: 'the-gambling-club-poker-league'
     gcp_project_id: 'the-gambling-club-poker-league'
+    redis_host: 'redis'
 
     mailer_transport: smtp
     mailer_host: 127.0.0.1
