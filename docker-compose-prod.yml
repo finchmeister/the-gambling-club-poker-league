@@ -17,5 +17,9 @@ services:
             context: ./
         volumes:
             - app_data:/var/www/html/var/data
+    redis:
+        image: redis
+        depends_on:
+            - php
 volumes:
     app_data: {}
