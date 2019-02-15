@@ -40,13 +40,13 @@
         </div>
         <div class="row pb-2">
             <form action="{{ path('flush_redis') }}" method="post">
-
                 <input class="btn btn-primary" type="submit" value="Flush Redis">
             </form>
-
         </div>
         <div class="row pb-2">
-            <a class="btn btn-primary" href="">Flush Cloudflare</a>
+            <form action="{{ path('flush_cloudflare') }}" method="post">
+                <input class="btn btn-primary" type="submit" value="Flush Cloudflare">
+            </form>
         </div>
 
     </div>

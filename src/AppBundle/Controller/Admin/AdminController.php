@@ -35,9 +35,18 @@ class AdminController extends Controller
     /**
      * @Route("/flush-redis", methods={"POST"}, name="flush_redis")
      */
-    public function flushRedisAction(Request $request, RedisClient $redisClient): Response
+    public function flushRedisAction(RedisClient $redisClient): Response
     {
         $redisClient->flushAll();
         return new Response('flushed');
     }
+
+    /**
+     * @Route("/flush-cloudflare", methods={"POST"}, name="flush_cloudflare")
+     */
+    public function flushCloudflareAction(): Response
+    {
+        return new Response('Todo');
+    }
+
 }
