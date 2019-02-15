@@ -4,7 +4,7 @@
         <title>{% block pageTitle %}The Gambling Club Poker League{% endblock %}</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <meta name="theme-color" content="#343a40">
+        <meta name="theme-color" content="#093a38">
         <meta name="google" content="notranslate">
         <meta http-equiv="Content-Language" content="en">
 
@@ -26,38 +26,39 @@
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark py-3">
 
             <div class="container">
-                <a class="navbar-brand heading-font" href="{{ path('homepage') }}">The Gambling Club Poker League</a>
+
+
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
+
+
                 <div class="collapse navbar-collapse heading-font" id="navbarNav">
+
+
                     <ul class="navbar-nav mr-auto">
-                        {# TODO #}
+                        <li class="nav-item {% if app.request.attributes.get('_route') == 'homepage' %}active{% endif %}">
+                            <a class="nav-link" href="{{ path('homepage') }}">Home</a>
+                        </li>
+
                         <li class="nav-item {% if app.request.attributes.get('_route') == 'player_index' %}active{% endif %}">
                             <a class="nav-link" href="{{ path('player_index') }}">Members</a>
                         </li>
 
                         {% if is_granted('ROLE_ADMIN') %}
-                            <li class="nav-item {% if app.request.attributes.get('_route') == 'admin_player_index' %}active{% endif %}">
-                                <a class="nav-link" href="{{ path('admin_player_index') }}">
-                                    Edit Players
-                                </a>
-                            </li>
-                            <li class="nav-item {% if app.request.attributes.get('_route') == 'admin_game_index' %}active{% endif %}">
-                                <a class="nav-link" href="{{ path('admin_game_index') }}">
-                                    Edit Games
-                                </a>
-                            </li>
-                            <li class="nav-item {% if app.request.attributes.get('_route') == 'admin_league_index' %}active{% endif %}">
-                                <a class="nav-link" href="{{ path('admin_league_index') }}">
-                                    Edit Leagues
-                                </a>
-                            </li>
 
-
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle {% if app.request.attributes.get('_route') in ['admin', 'admin_player_index', 'admin_game_index', 'admin_league_index'] %}active{% endif %}" href="{{ path('admin') }}" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Admin
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item {% if app.request.attributes.get('_route') == 'admin_player_index' %}active{% endif %}" href="{{ path('admin_player_index') }}">Edit Players</a>
+                                    <a class="dropdown-item {% if app.request.attributes.get('_route') == 'admin_game_index' %}active{% endif %}" href="{{ path('admin_game_index') }}">Edit Games</a>
+                                    <a class="dropdown-item {% if app.request.attributes.get('_route') == 'admin_league_index' %}active{% endif %}" href="{{ path('admin_league_index') }}">Edit Leagues</a>
+                                </div>
+                            </li>
 
                         {% endif %}
-
 
                     </ul>
                     <span class="">
@@ -71,8 +72,6 @@
 
 
                         {% endif %}
-
-
                     </span>
                 </div>
             </div>
@@ -119,7 +118,7 @@
 
     {% block footer %}
 
-        <footer class="footer mt-4 bg-dark text-white">
+        <footer class="footer mt-4 bg-dark text-white heading-font">
             <div class="container">
                 <div class="row py-4">
                     <div class="col-sm-2 col-lg-2">

@@ -37,7 +37,11 @@
 
             </div>
             <div class="col-sm-6">
-                {% if game.spotifyPlaylistUri %}
+                {% if false and game.spotifyPlaylistUri %}
+                    <a href="https://open.spotify.com/uri/{{ game.spotifyPlaylistUri }}">Playlist</a>
+                {% endif %}
+
+                {% if display_spotify_iframe and game.spotifyPlaylistUri %}
                     <iframe src="https://open.spotify.com/embed?uri={{ game.spotifyPlaylistUri }}" width="100%" height="80" frameborder="0" allowtransparency="true"></iframe>
                 {% endif %}
             </div>

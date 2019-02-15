@@ -8,6 +8,7 @@ imports:
 parameters:
     locale: en
     league_points_decimal_places: 2
+    display_spotify_iframe: false
 
 framework:
     #esi: ~
@@ -43,6 +44,7 @@ twig:
     globals:
         league_points_decimal_places: '%league_points_decimal_places%'
         date_format: 'd/m/Y'
+        display_spotify_iframe: '%display_spotify_iframe%'
 
 
 # Doctrine Configuration
