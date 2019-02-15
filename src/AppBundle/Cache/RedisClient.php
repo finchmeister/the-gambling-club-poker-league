@@ -26,17 +26,8 @@ class RedisClient
         return $this->client->set($key, $data);
     }
 
-    public function getCachedOrCompute(string $key, \Closure $callback)
+    public function flushAll()
     {
-        $data = $this->get($key);
-        if ($data !== null) {
-            return unserialize($data);
-        }
-        $data = $callback();
-        $this->set($key, serialize($data));
-
-        return $data;
+        return $this->client->flushall();
     }
-
-
 }

@@ -36,10 +36,14 @@
             <h2 class="py-4">Utilities</h2>
         </div>
         <div class="row pb-2">
-            <a class="btn btn-primary" href="">Export Database</a>
+            <a class="btn btn-primary" href="{{ path('db_export') }}">Export Database</a>
         </div>
         <div class="row pb-2">
-            <a class="btn btn-primary" href="">Flush Redis</a>
+            <form action="{{ path('flush_redis') }}" method="post">
+
+                <input class="btn btn-primary" type="submit" value="Flush Redis">
+            </form>
+
         </div>
         <div class="row pb-2">
             <a class="btn btn-primary" href="">Flush Cloudflare</a>

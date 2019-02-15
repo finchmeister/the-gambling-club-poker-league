@@ -52,6 +52,7 @@
                                     Admin
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item {% if app.request.attributes.get('_route') == 'admin' %}active{% endif %}" href="{{ path('admin') }}">Admin</a>
                                     <a class="dropdown-item {% if app.request.attributes.get('_route') == 'admin_player_index' %}active{% endif %}" href="{{ path('admin_player_index') }}">Edit Players</a>
                                     <a class="dropdown-item {% if app.request.attributes.get('_route') == 'admin_game_index' %}active{% endif %}" href="{{ path('admin_game_index') }}">Edit Games</a>
                                     <a class="dropdown-item {% if app.request.attributes.get('_route') == 'admin_league_index' %}active{% endif %}" href="{{ path('admin_league_index') }}">Edit Leagues</a>
