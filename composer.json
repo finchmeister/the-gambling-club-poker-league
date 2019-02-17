@@ -16,6 +16,7 @@
     "require": {
         "php": ">=7.1",
         "ext-json":"*",
+        "ext-curl":"*",
         "doctrine/doctrine-bundle": "^1.6",
         "doctrine/orm": "^2.5",
         "fzaninotto/faker": "^1.7",

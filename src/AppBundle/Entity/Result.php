@@ -100,6 +100,11 @@ class Result
      */
     private $leaguePoints;
 
+    /**
+     * @var bool
+     */
+    private $isLeaguePlayer;
+
     public function __construct()
     {
         $this->winnings = $this->noOfRebuys = $this->addOn = $this->topUp = 0;
@@ -340,13 +345,18 @@ class Result
         /** @var Game $game */
         $game = $this->getGame();
         if ($game->isLeague() === false) {
-            return null;
+            $this->isLeaguePlayer = null;
+            return $this->isLeaguePlayer;
         }
 
-        return $this->getPlayer()->getLeagues()->filter(function (League $league) use ($game) {
-            return $league->getStartDate() < $game->getDate()
-                && ($league->getEndDate() === null || $league->getEndDate() >= $game->getDate());
-        })->count();
+        if ($this->isLeaguePlayer === null) {
+            $this->isLeaguePlayer = $this->getPlayer()->getLeagues()->filter(function (League $league) use ($game) {
+                return $league->getStartDate() < $game->getDate()
+                    && ($league->getEndDate() === null || $league->getEndDate() >= $game->getDate());
+            })->count();
+        }
+
+        return $this->isLeaguePlayer;
     }
 }
 

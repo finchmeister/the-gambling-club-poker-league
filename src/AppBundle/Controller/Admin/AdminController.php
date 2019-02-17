@@ -6,8 +6,8 @@ use AppBundle\Cache\RedisClient;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use AppBundle\Cache\Cloudflare\Client as CloudflareClient;
 
 /**
  * Class AdminController
@@ -38,15 +38,18 @@ class AdminController extends Controller
     public function flushRedisAction(RedisClient $redisClient): Response
     {
         $redisClient->flushAll();
-        return new Response('flushed');
+        $this->addFlash('success', 'Redis flushed');
+        return $this->render('admin/view.html.twig');
     }
 
     /**
      * @Route("/flush-cloudflare", methods={"POST"}, name="flush_cloudflare")
      */
-    public function flushCloudflareAction(): Response
+    public function flushCloudflareAction(CloudflareClient $client): Response
     {
-        return new Response('Todo');
+        $client->clearEverything();
+        $this->addFlash('success', 'Cloudflare cache flushed');
+        return $this->render('admin/view.html.twig');
     }
 
 }
