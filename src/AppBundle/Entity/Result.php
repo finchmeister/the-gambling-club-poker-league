@@ -102,6 +102,7 @@ class Result
 
     /**
      * @var bool
+     * @ORM\Column(type="boolean", nullable=true)
      */
     private $isLeaguePlayer;
 
@@ -342,11 +343,25 @@ class Result
 
     public function isLeaguePlayer(): ?bool
     {
-        /** @var Game $game */
+        return $this->isLeaguePlayer;
+    }
+
+    /**
+     * @ORM\PreUpdate
+     */
+    public function updateLeaguePlayer(): void
+    {
         $game = $this->getGame();
+        if ($game === null) {
+            $this->isLeaguePlayer = null;
+        }
+
         if ($game->isLeague() === false) {
             $this->isLeaguePlayer = null;
-            return $this->isLeaguePlayer;
+        }
+
+        if ($this->getPlayer() === null) {
+            $this->isLeaguePlayer = null;
         }
 
         if ($this->isLeaguePlayer === null) {
@@ -355,8 +370,6 @@ class Result
                     && ($league->getEndDate() === null || $league->getEndDate() >= $game->getDate());
             })->count();
         }
-
-        return $this->isLeaguePlayer;
     }
 }
 

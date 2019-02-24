@@ -4,7 +4,7 @@ namespace AppBundle\Repository;
 
 use AppBundle\Entity\League;
 use AppBundle\Entity\Player;
-use Doctrine\Common\Collections\ArrayCollection;
+use AppBundle\Entity\Result;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query\Expr;
 
@@ -66,5 +66,11 @@ class ResultRepository extends EntityRepository
             ->setParameter('host', $host)
             ->getQuery()
             ->getResult();
+    }
+
+    public function save(Result $result): void
+    {
+        $this->getEntityManager()->persist($result);
+        $this->getEntityManager()->flush($result);
     }
 }

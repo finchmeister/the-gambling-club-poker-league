@@ -42,6 +42,10 @@ services:
             - 'AppBundle\Entity\League'
 
 
+    AppBundle\Repository\ResultRepository:
+        factory: ['@Doctrine\ORM\EntityManagerInterface', getRepository]
+        arguments:
+            - 'AppBundle\Entity\Result'
 
     AppBundle\League\LeagueGame:
         public: true
