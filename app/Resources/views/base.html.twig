@@ -9,7 +9,7 @@
         <meta http-equiv="Content-Language" content="en">
 
         {% block stylesheets %}
-            <link rel="stylesheet" href="{{ asset('build/css/app.css') }}">
+            <link rel="stylesheet" href="{{ preload(asset('build/css/app.css')) }}">
             <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
                   rel="stylesheet">
 
@@ -20,6 +20,7 @@
         <link href="https://fonts.googleapis.com/css?family=Playfair+Display|Roboto" rel="stylesheet">
 
     </head>
+
     <body>
     {% block header %}
 

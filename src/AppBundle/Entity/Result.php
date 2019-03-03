@@ -354,22 +354,23 @@ class Result
         $game = $this->getGame();
         if ($game === null) {
             $this->isLeaguePlayer = null;
+            return;
         }
 
         if ($game->isLeague() === false) {
             $this->isLeaguePlayer = null;
+            return;
         }
 
         if ($this->getPlayer() === null) {
             $this->isLeaguePlayer = null;
+            return;
         }
 
-        if ($this->isLeaguePlayer === null) {
-            $this->isLeaguePlayer = $this->getPlayer()->getLeagues()->filter(function (League $league) use ($game) {
-                return $league->getStartDate() < $game->getDate()
-                    && ($league->getEndDate() === null || $league->getEndDate() >= $game->getDate());
-            })->count();
-        }
+        $this->isLeaguePlayer = $this->getPlayer()->getLeagues()->filter(function (League $league) use ($game) {
+            return $league->getStartDate() < $game->getDate()
+                && ($league->getEndDate() === null || $league->getEndDate() >= $game->getDate());
+        })->count();
     }
 }
 

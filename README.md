@@ -23,6 +23,8 @@ docker exec -it CONTAINER_ID /bin/sh
 
 Get DB from prod:
 
+Export from admin
+
 ```
 eval $(docker-machine env vm02)
 docker cp thegamblingclubpokerleague_php_1:/var/www/html/var/data/poker.sqlite var/data/poker.sqlite
