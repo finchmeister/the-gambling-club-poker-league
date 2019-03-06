@@ -15,6 +15,7 @@ parameters:
     cloudflare_auth_key: ~
     cloudflare_auth_email: ~
     cloudflare_identifier: ~
+    enable_redis: true
 
     mailer_transport: smtp
     mailer_host: 127.0.0.1

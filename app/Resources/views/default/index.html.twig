@@ -35,10 +35,9 @@
                 {% if leagueData.leaguePlayersStats is not empty and leagueData.leaguePlayersTopStats is not empty %}
 
                     {% if leagueData.league.firstPlace %}
-                        <div class="text-center font-italic">
-
-                        <p class="h4">Winner: {{ leagueData.league.firstPlace }} - {{ leagueData.league.firstPrize | price }}</p>
-                        <p class="">Runner up: {{ leagueData.league.secondPlace }} - {{ leagueData.league.secondPrize | price }}</p>
+                        <div class="text-center">
+                            <p class="h4 font-italic">Winner: {{ leagueData.league.firstPlace }} - {{ leagueData.league.firstPrize | price }}</p>
+                            <p class="font-italic">Runner up: {{ leagueData.league.secondPlace }} - {{ leagueData.league.secondPrize | price }}</p>
                         </div>
                     {% endif %}
 
@@ -50,6 +49,12 @@
                             {% include 'partial/_all_stats_table.html.twig' with {playerStats : leagueData.leaguePlayersStats, 'isLeague' : true} %}
                         </div>
                     </div>
+
+                    {% if leagueData.league.buyin %}
+                        <div class="text-muted font-italic">
+                            Entry: {{ leagueData.league.buyIn | price }}
+                        </div>
+                    {% endif %}
 
                     <ul class="nav nav-pills mb-3 justify-content-center" id="pills-tab" role="tablist">
                         <li class="nav-item">

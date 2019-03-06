@@ -10,15 +10,27 @@ class CacheManager
      */
     private $databasePath;
     private $redisClient;
+    /**
+     * @var bool
+     */
+    private $cacheEnabled;
 
-    public function __construct(RedisClient $redisClient, string $databasePath)
-    {
+    public function __construct(
+        RedisClient $redisClient,
+        string $databasePath,
+        bool $cacheEnabled = true
+    ) {
         $this->redisClient = $redisClient;
         $this->databasePath = $databasePath;
+        $this->cacheEnabled = $cacheEnabled;
     }
 
     public function getCachedOrCompute(string $key, \Closure $callback)
     {
+        if ($this->cacheEnabled === false) {
+            return $callback();
+        }
+
         if ($this->isDbDataNewerThanCache() === false) {
             $data = $this->redisClient->get($key);
             if ($data !== null) {

@@ -92,6 +92,7 @@ services:
         arguments:
             - '@AppBundle\Cache\RedisClient'
             - '%database_path%'
+            - '%enable_redis%'
 
     AppBundle\Cache\Cloudflare\Client:
         arguments:

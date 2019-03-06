@@ -182,7 +182,15 @@ class StatsFactory
     protected static function sortPlayerStatsByLeaguePoints(array &$playerStats): void
     {
         usort($playerStats, function (PlayerStatsInterface $a, PlayerStatsInterface $b) {
-            return $b->getSumLeaguePoints() <=> $a->getSumLeaguePoints();
+            $sort = $b->getSumLeaguePoints() <=> $a->getSumLeaguePoints();
+            if ($sort === 0) {
+                $sort = $b->getNet() <=> $a->getNet();
+            }
+            if ($sort === 0) {
+                $sort = $b->getSumCashWon() <=> $a->getSumCashWon();
+            }
+
+            return $sort;
         });
     }
 
