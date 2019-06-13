@@ -347,7 +347,7 @@ class Result
     }
 
     /**
-     * @ORM\PreUpdate
+     * @ORM\PreFlush()
      */
     public function updateLeaguePlayer(): void
     {

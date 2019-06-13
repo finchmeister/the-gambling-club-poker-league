@@ -244,10 +244,24 @@ class Game
      * @param null|string $spotifyPlaylistUri
      * @return Game
      */
-    public function setSpotifyPlaylistUri($spotifyPlaylistUri)
+    public function setSpotifyPlaylistUri($spotifyPlaylistUri): Game
     {
         $this->spotifyPlaylistUri = $spotifyPlaylistUri;
         return $this;
+    }
+
+    public function getSpotifyPlaylistUrl(): ?string
+    {
+        if ($this->getSpotifyPlaylistUri() === null) {
+            return null;
+        }
+        $uriParts = explode(':', $this->getSpotifyPlaylistUri());
+
+        return sprintf(
+            'https://open.spotify.com/user/%s/playlist/%s',
+            $uriParts[2],
+            $uriParts[4]
+        );
     }
 
     /**

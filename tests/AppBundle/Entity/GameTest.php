@@ -3,23 +3,22 @@
 
 namespace Tests\AppBundle\Entity;
 
+use AppBundle\Entity\Game;
 use PHPUnit\Framework\TestCase;
 
 class GameTest extends TestCase
 {
-
-    public function testPushAndPop()
+    public function testGetSpotifyUrl(): void
     {
-        $stack = [];
-        $this->assertEquals(0, count($stack));
+        $game = new Game();
 
-        array_push($stack, 'foo');
-        $this->assertEquals('foo', $stack[count($stack)-1]);
-        $this->assertEquals(1, count($stack));
+        $this->assertNull($game->getSpotifyPlaylistUrl());
 
-        $this->assertEquals('foo', array_pop($stack));
-        $this->assertEquals(0, count($stack));
+        $game->setSpotifyPlaylistUri('spotify:user:thefinchmeister:playlist:729ibhOjmszqH6EAJJM7N2');
+
+        $this->assertSame(
+            'https://open.spotify.com/user/thefinchmeister/playlist/729ibhOjmszqH6EAJJM7N2',
+            $game->getSpotifyPlaylistUrl()
+        );
     }
-
-    // Test pot
 }
