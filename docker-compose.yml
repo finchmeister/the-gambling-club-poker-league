@@ -16,7 +16,7 @@ services:
             dockerfile: ./docker/php/Dockerfile
             context: ./
         volumes:
-            - .:/var/www/html
+            - .:/var/www/html:cached
     redis:
         image: redis
         depends_on:

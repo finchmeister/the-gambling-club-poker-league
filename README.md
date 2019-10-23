@@ -2,6 +2,19 @@
 
 [![Build Status](https://travis-ci.org/finchmeister/the-gambling-club-poker-league.svg?branch=master)](https://travis-ci.org/finchmeister/the-gambling-club-poker-league)
 
+## Dev
+
+Start
+```
+make up
+```
+
+Copy local db to docker
+```
+docker cp [PATH_TO_DB] the-gambling-club-poker-league_php_1:/var/www/html/var/data/poker.sqlite
+```
+
+http://localhost:8081/app_dev.php
 
 ## Docker Machine
 

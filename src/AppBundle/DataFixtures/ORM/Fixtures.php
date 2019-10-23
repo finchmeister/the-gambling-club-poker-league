@@ -109,7 +109,7 @@ class Fixtures extends Fixture
                 'host' => 1,
                 'buyIn' => 10,
                 'isLeague' => true,
-                'spotifyPlaylist' => 'spotify:user:jaybeattie92:playlist:0yi5B3TPFokw02DdXrIJLW',
+                'spotifyPlaylist' => '',
                 'results' => [
                     1 => [
                         'player' => 1,
