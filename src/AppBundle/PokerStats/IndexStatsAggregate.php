@@ -68,7 +68,6 @@ class IndexStatsAggregate
 
         /** @var League[] $leagues */
         $leagues = $this->leagueRepository->findBy([], ['startDate' => 'DESC']);
-
         $leaguesData = [];
         foreach ($leagues as $league) {
             $leaguesData[] = [

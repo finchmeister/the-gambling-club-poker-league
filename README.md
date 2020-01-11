@@ -2,6 +2,19 @@
 
 [![Build Status](https://travis-ci.org/finchmeister/the-gambling-club-poker-league.svg?branch=master)](https://travis-ci.org/finchmeister/the-gambling-club-poker-league)
 
+## Commands
+
+#### Start Dev
+```
+make up
+```
+and then go to: http://localhost:8081/app_dev.php/
+
+#### Deploy
+
+```
+make deploy
+```
 
 ## Docker Machine
 

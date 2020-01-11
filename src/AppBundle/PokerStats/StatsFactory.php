@@ -86,10 +86,10 @@ class StatsFactory
         );
         self::sortResultsByLeaguePoints($results);
         $reducedResults = new ArrayCollection();
-        if ($noOfResults > count($results)) {
-            throw new \RuntimeException('Attempting to get too many top results');
-        }
         foreach (range(0, $noOfResults - 1) as $i) {
+            if (isset($results[$i]) === false) {
+                continue;
+            }
             $reducedResults->add($results[$i]);
         }
         $playerStats = $this->initialisePlayerStats($player);
@@ -145,11 +145,11 @@ class StatsFactory
     {
         $leaguePlayersTopStats = [];
         $players = $league->getPlayers();
-        $noOfGamesAllPlayed = $this->getNoOfGamesAllPlayed($league);
+        $noOfResults = $this->getNoOfGamesAllPlayed($league);
         foreach ($players as $player) {
             $leaguePlayersTopStats[] = $this->getLeaguePlayerTopStats(
                 $player,
-                $noOfGamesAllPlayed,
+                $noOfResults,
                 $league
             );
         }
@@ -163,7 +163,9 @@ class StatsFactory
      */
     public function getNoOfGamesAllPlayed(League $league): int
     {
-        return $this->playerRepository->getNoOfGamesAllPlayed($league);
+        return $league->getId() === 2
+            ? 7
+            : $this->playerRepository->getNoOfGamesAllPlayed($league);
     }
 
     /**
