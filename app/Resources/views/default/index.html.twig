@@ -13,25 +13,55 @@
 
 {% block main %}
 
-    <ul class="nav nav-tabs nav-justified mb-4" id="myTab" role="tablist">
-        {% for leagueData in leaguesData %}
-            <li class="nav-item">
-                <a class="h5 mb-0 nav-link {{ loop.index == '1' ? 'active' }}" id="leagueStats-tab-{{ leagueData.league.id }}" data-toggle="tab" href="#leagueStats{{ leagueData.league.id }}" role="tab" aria-controls="leagueStats{{ leagueData.league.id }}" aria-selected="true">
-                    League {{ leagueData.league.name }}
-                </a>
-            </li>
-        {% endfor %}
+    <ul class="nav nav-pills nav-justified mb-4" id="myTab" role="tablist">
+
         <li class="nav-item">
-            <a class="h5 mb-0 nav-link" id="allStats-tab" data-toggle="tab" href="#allStats" role="tab" aria-controls="allStats" aria-selected="false">
+            <a class="h5 mb-0 nav-link active" id="allStats-tab" data-toggle="tab" href="#allStats" role="tab" aria-controls="allStats" aria-selected="false">
                 All
             </a>
         </li>
+
+        <li class="nav-item">
+            <a class="h5 mb-0 nav-link" id="allStats-tab" data-toggle="tab" href="#allStats" role="tab" aria-controls="allStats" aria-selected="false">
+                Online
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a class="h5 mb-0 nav-link" id="leagueStats-tab-{{ leaguesData[0].league.id }}" data-toggle="tab" href="#leagueStats{{ leaguesData[0].league.id }}" role="tab" aria-controls="leagueStats{{ leaguesData[0].league.id }}" aria-selected="true">
+                League {{ leaguesData[0].league.name }}
+            </a>
+        </li>
+
+        <li class="h5 nav-item dropdown">
+            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Past Leagues</a>
+            <div class="dropdown-menu w-100">
+                {% for leagueData in leaguesData %}
+                    {% if not loop.first %}
+                        <a class="dropdown-item mb-0" id="leagueStats-tab-{{ leagueData.league.id }}" data-toggle="tab" href="#leagueStats{{ leagueData.league.id }}" role="tab" aria-controls="leagueStats{{ leagueData.league.id }}" aria-selected="true">
+                            League {{ leagueData.league.name }}
+                        </a>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </li>
+
+{#        {% for leagueData in leaguesData %}#}
+{#            <li class="nav-item">#}
+{#                <a class="h5 mb-0 nav-link {{ loop.index == '1' ? 'active' }}" id="leagueStats-tab-{{ leagueData.league.id }}" data-toggle="tab" href="#leagueStats{{ leagueData.league.id }}" role="tab" aria-controls="leagueStats{{ leagueData.league.id }}" aria-selected="true">#}
+{#                    League {{ leagueData.league.name }}#}
+{#                </a>#}
+{#            </li>#}
+{#        {% endfor %}#}
     </ul>
+
+    <hr>
+
     <div class="tab-content" id="myTabContent">
 
         {% for leagueData in leaguesData %}
 
-            <div class="tab-pane fade show {{ loop.index == '1' ? 'active' }}" id="leagueStats{{ leagueData.league.id }}" role="tabpanel" aria-labelledby="leagueStats-tab-{{ leagueData.league.id }}">
+            <div class="tab-pane fade show" id="leagueStats{{ leagueData.league.id }}" role="tabpanel" aria-labelledby="leagueStats-tab-{{ leagueData.league.id }}">
                 {% if leagueData.leaguePlayersStats is not empty and leagueData.leaguePlayersTopStats is not empty %}
 
                     {% if leagueData.league.firstPlace %}
@@ -39,6 +69,7 @@
                             <p class="h4 font-italic">Winner: {{ leagueData.league.firstPlace }} - {{ leagueData.league.firstPrize | price }}</p>
                             <p class="font-italic">Runner up: {{ leagueData.league.secondPlace }} - {{ leagueData.league.secondPrize | price }}</p>
                         </div>
+                        <hr>
                     {% endif %}
 
                     <div class="tab-content">
@@ -77,7 +108,7 @@
 
         {% endfor %}
 
-        <div class="tab-pane fade" id="allStats" role="tabpanel" aria-labelledby="allStats-tab">
+        <div class="tab-pane fade show active" id="allStats" role="tabpanel" aria-labelledby="allStats-tab">
             {% include 'partial/_all_stats_table.html.twig' with {'playerStats' : allPlayersStats}  %}
 
             <div class="row">
