@@ -24,6 +24,12 @@ class GameRepository extends EntityRepository
         return new ArrayCollection($allGames);
     }
 
+    public function getAllOnlineGames(): ArrayCollection
+    {
+        $allGames = $this->findBy(['isOnline' => true], ['date' => 'DESC']);
+        return new ArrayCollection($allGames);
+    }
+
     public function getLeagueGames(League $league): ArrayCollection
     {
         $qb = $this->createQueryBuilder('g')

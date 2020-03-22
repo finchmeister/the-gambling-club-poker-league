@@ -79,15 +79,23 @@ class IndexStatsAggregate
             ];
         }
 
+        $onlineGames = $this->gameRepository->getAllOnlineGames();
+
         $overallStats = $this->computeStats->getOverallStats($allGames);
+        $onlineOverallStats = $this->computeStats->getOverallStats($onlineGames);
+
         $allPlayersStats = $this->playerStatsFactory->getAllPlayersStats();
+        $onlinePlayersStats = $this->playerStatsFactory->getOnlinePlayersStats();
 
         return [
             'allGames' => $allGames,
+            'onlineGames' => $onlineGames,
             'leaguesData' => $leaguesData,
             'allPlayersStats' => $allPlayersStats,
+            'onlinePlayersStats' => $onlinePlayersStats,
             'lastUpdated' => $this->leagueTableService->getLastUpdated(),
             'overallStats' => $overallStats,
+            'onlineOverallStats' => $onlineOverallStats,
         ];
     }
 }

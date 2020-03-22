@@ -18,6 +18,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Player
 {
+    public const POKERSTARS_ID = 18;
     /**
      * @var int
      *

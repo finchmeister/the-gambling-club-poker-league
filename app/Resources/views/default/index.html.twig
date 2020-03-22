@@ -22,7 +22,7 @@
         </li>
 
         <li class="nav-item">
-            <a class="h5 mb-0 nav-link" id="allStats-tab" data-toggle="tab" href="#allStats" role="tab" aria-controls="allStats" aria-selected="false">
+            <a class="h5 mb-0 nav-link" id="onlineStats-tab" data-toggle="tab" href="#onlineStats" role="tab" aria-controls="onlineStats" aria-selected="false">
                 Online
             </a>
         </li>
@@ -128,6 +128,28 @@
             <h2>Games</h2>
 
             {% include 'partial/_game.html.twig' with {'games' : allGames} %}
+        </div>
+
+        <div class="tab-pane fade show" id="onlineStats" role="tabpanel" aria-labelledby="onlineStats-tab">
+            {% include 'partial/_all_stats_table.html.twig' with {'playerStats' : onlinePlayersStats}  %}
+
+            <div class="row">
+                <div class="col-3">
+                    <div class="text-muted">Games Played</div>
+                    <span class="h4">{{ onlineOverallStats.noOfGamesPlayed }}</span>
+                </div>
+                <div class="col-3">
+                    <div class="text-muted">Cash won</div>
+                    <span class="h4">{{ onlineOverallStats.cashWon|price }}</span>
+                </div>
+
+            </div>
+
+            <hr class="my-4">
+
+            <h2>Games</h2>
+
+            {% include 'partial/_game.html.twig' with {'games' : onlineGames} %}
         </div>
     </div>
 

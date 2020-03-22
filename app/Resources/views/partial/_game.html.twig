@@ -5,7 +5,7 @@
 
     {% for game in games %}
 
-        <h3 class="py-2">{{ game.date|date("D jS, M Y") }}</h3>
+        <h3 class="py-2">{{ game.date|date("D jS, M Y") }}{% if game.startTime %}, {{ game.startTime|date("g:i a") }}{% endif %}</h3>
         <h4><a href="{{ path('host_show', { 'id': game.host.id }) }}">{{ game.host }}</a> <small class="text-muted">{{ game.host.location }}</small></h4>
 
         <div class="row py-3">
@@ -69,7 +69,14 @@
             <div class="row">
                 <div class="col">
                     {% include ':partial:_results_table.html.twig' %}
+
+                    {% if game.commission > 0 %}
+                        <div class="text-muted font-italic">
+                            Commission: {{ game.commission | price }}
+                        </div>
+                    {% endif %}
                 </div>
+
             </div>
 
         {% endif %}

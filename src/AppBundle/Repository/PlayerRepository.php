@@ -20,6 +20,25 @@ class PlayerRepository extends EntityRepository
             ->leftJoin('player', 'result');
     }
 
+    public function getAllOnlinePlayers()
+    {
+        $qb = $this->createQueryBuilder('p');
+        $qb
+            ->leftJoin('p.results', 'r')
+            ->leftJoin('r.game', 'g')
+            ->where($qb->expr()->eq('g.isOnline', true));
+
+        return $qb->getQuery()->getResult();
+    }
+
+    public function getAllWhoHavePlayed()
+    {
+        $qb = $this->createQueryBuilder('p')
+            ->innerJoin('p.results', 'r');
+
+        return $qb->getQuery()->getResult();
+    }
+
     /**
      * @param League $league
      * @return int
@@ -47,6 +66,6 @@ class PlayerRepository extends EntityRepository
             ->setMaxResults(1);
         $result = $qb->getQuery()->getResult();
 
-        return $result[0]['games_played'];
+        return $result[0]['games_played'] ?? 0;
     }
 }

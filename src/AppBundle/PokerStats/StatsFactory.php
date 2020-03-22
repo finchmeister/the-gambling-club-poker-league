@@ -63,6 +63,13 @@ class StatsFactory
         return $playerStats->setResults($results);
     }
 
+    public function getOnlinePlayerStats(Player $player): PlayerStatsInterface
+    {
+        $results = $this->resultDocRepository->getPlayersOnlineResults($player);
+        $playerStats = $this->initialisePlayerStats($player);
+        return $playerStats->setResults(new ArrayCollection($results));
+    }
+
     public function getLeaguePlayerStats(Player $player, League $league): PlayerStatsInterface
     {
         $results = $this->resultDocRepository->getPlayersLeagueResults(
@@ -114,12 +121,26 @@ class StatsFactory
     public function getAllPlayersStats(): array
     {
         $allPlayersStats = [];
-        $players = $this->playerRepository->findAll();
+        $players = $this->playerRepository->getAllWhoHavePlayed();
         foreach ($players as $player) {
             $allPlayersStats[] = $this->getAllPlayerStats($player);
         }
         self::sortPlayerStatsByGeneralPoints($allPlayersStats);
         return $allPlayersStats;
+    }
+
+    /**
+     * @return PlayerStatsInterface[]
+     */
+    public function getOnlinePlayersStats(): array
+    {
+        $onlinePlayersStats = [];
+        $players = $this->playerRepository->getAllOnlinePlayers();
+        foreach ($players as $player) {
+            $onlinePlayersStats[] = $this->getOnlinePlayerStats($player);
+        }
+        self::sortPlayerStatsByGeneralPoints($onlinePlayersStats);
+        return $onlinePlayersStats;
     }
 
     /**

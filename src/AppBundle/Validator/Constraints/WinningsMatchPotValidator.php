@@ -21,7 +21,10 @@ class WinningsMatchPotValidator extends ConstraintValidator
                 foreach ($game->getResults() as $result) {
                     $winnings += $result->getWinnings();
                 }
-                if ($winnings !== $pot) {
+
+                $winnings += $game->getCommission();
+
+                if ((int)($winnings) !== $pot) {
                     $this->context->buildViolation($constraint->message)
                         ->setParameter('{{ winnings }}', $winnings)
                         ->setParameter('{{ pot }}', $pot)

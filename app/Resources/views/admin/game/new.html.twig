@@ -7,6 +7,13 @@
     {{ form_start(form) }}
     {{ form_errors(form) }}
     {{ form_row(form.date) }}
+    {{ form_row(form.isOnline) }}
+    <div class="d-none" id="online-options">
+        {{ form_row(form.commission) }}
+        {{ form_row(form.startTime) }}
+    </div>
+    {{ form_row(form.host) }}
+    {{ form_row(form.location) }}
     {{ form_row(form.host) }}
     {{ form_row(form.buyIn) }}
     {{ form_row(form.spotifyPlaylistUri) }}
@@ -25,4 +32,21 @@
 
     <a class="my-2 btn btn-primary btn-lg btn-block"  href="{{ path('admin_game_index') }}">Back to the list</a>
 
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script>
+        jQuery(document).ready(function() {
+            $("#game_isOnline").change(function() {
+                if($(this).is(":checked")) {
+                    $('#online-options').removeClass('d-none');
+                    $('#game_host').val({{ constant('AppBundle\\Entity\\Player::POKERSTARS_ID') }});
+                } else {
+                    $('#online-options').addClass('d-none');
+                }
+            }).change();
+        });
+    </script>
 {% endblock %}

@@ -16,16 +16,30 @@ class ResultRepository extends EntityRepository
 {
     public function getPlayersLeagueResults(Player $player, League $league): array
     {
-        $qb =  $this->createQueryBuilder('r')
+        $qb =  $this->createQueryBuilder('r');
+        $qb
             ->leftJoin('r.game', 'g')
             ->innerJoin('r.player', 'p', Expr\Join::WITH, 'p = :player')
             ->setParameter('player', $player)
             ->andWhere('g.date > :startDate')
+            ->andWhere($qb->expr()->eq('g.isLeague', true))
             ->setParameter('startDate', $league->getStartDate()->sub(new \DateInterval('P1D')));
         if ($league->getEndDate() !== null) {
             $qb->andWhere('g.date <= :endDate')
                 ->setParameter('endDate', $league->getEndDate());
         }
+        return $qb->getQuery()->getResult();
+    }
+
+    public function getPlayersOnlineResults(Player $player): array
+    {
+        $qb =  $this->createQueryBuilder('r');
+        $qb
+            ->leftJoin('r.game', 'g')
+            ->innerJoin('r.player', 'p', Expr\Join::WITH, 'p = :player')
+            ->setParameter('player', $player)
+            ->where($qb->expr()->eq('g.isOnline', true));
+
         return $qb->getQuery()->getResult();
     }
 

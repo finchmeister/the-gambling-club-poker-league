@@ -45,6 +45,19 @@ class Game
     private $host;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $location;
+
+    /**
+     * @var \DateTimeInterface
+     * @ORM\Column(type="time", nullable=true)
+     */
+    private $startTime;
+
+    /**
      * @var float
      *
      * @ORM\Column(name="buy_in", type="float")
@@ -69,7 +82,13 @@ class Game
      * @var bool
      * @ORM\Column(name="is_league", type="boolean")
      */
-    private $isLeague = true;
+    private $isLeague = false;
+
+    /**
+     * @var bool
+     * @ORM\Column(name="is_online", type="boolean", options={"default" : false})
+     */
+    private $isOnline = false;
 
     /**
      * @var string|null
@@ -104,6 +123,12 @@ class Game
      * @ORM\Column(type="datetime")
      */
     private $updatedAt;
+
+    /**
+     * @var float
+     * @ORM\Column(type="float", options={"default":0})
+     */
+    private $commission = 0.0;
 
     public function __construct()
     {
@@ -364,5 +389,76 @@ class Game
         })->count() > 0;
     }
 
+    /**
+     * @return string
+     */
+    public function getLocation(): ?string
+    {
+        return $this->location;
+    }
+
+    /**
+     * @param string $location
+     * @return Game
+     */
+    public function setLocation(string $location): Game
+    {
+        $this->location = $location;
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isOnline(): bool
+    {
+        return $this->isOnline;
+    }
+
+    /**
+     * @param bool $isOnline
+     * @return Game
+     */
+    public function setIsOnline(bool $isOnline): Game
+    {
+        $this->isOnline = $isOnline;
+        return $this;
+    }
+
+    /**
+     * @return \DateTimeInterface
+     */
+    public function getStartTime(): ?\DateTimeInterface
+    {
+        return $this->startTime;
+    }
+
+    /**
+     * @param \DateTimeInterface $startTime
+     * @return Game
+     */
+    public function setStartTime(?\DateTimeInterface $startTime): Game
+    {
+        $this->startTime = $startTime;
+        return $this;
+    }
+
+    /**
+     * @return float
+     */
+    public function getCommission(): float
+    {
+        return $this->commission;
+    }
+
+    /**
+     * @param float $commission
+     * @return Game
+     */
+    public function setCommission(float $commission): Game
+    {
+        $this->commission = $commission;
+        return $this;
+    }
 }
 
