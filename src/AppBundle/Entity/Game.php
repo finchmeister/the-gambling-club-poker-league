@@ -130,6 +130,12 @@ class Game
      */
     private $commission = 0.0;
 
+    /**
+     * @var float
+     * @ORM\Column(type="float", options={"default":0})
+     */
+    private $fudgeFactor = 0.0;
+
     public function __construct()
     {
         $this->results = new ArrayCollection();
@@ -458,6 +464,24 @@ class Game
     public function setCommission(float $commission): Game
     {
         $this->commission = $commission;
+        return $this;
+    }
+
+    /**
+     * @return float
+     */
+    public function getFudgeFactor(): float
+    {
+        return $this->fudgeFactor;
+    }
+
+    /**
+     * @param float $fudgeFactor
+     * @return Game
+     */
+    public function setFudgeFactor(float $fudgeFactor): Game
+    {
+        $this->fudgeFactor = $fudgeFactor;
         return $this;
     }
 }

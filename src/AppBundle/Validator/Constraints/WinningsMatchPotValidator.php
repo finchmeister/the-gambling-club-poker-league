@@ -23,6 +23,7 @@ class WinningsMatchPotValidator extends ConstraintValidator
                 }
 
                 $winnings += $game->getCommission();
+                $winnings += $game->getFudgeFactor();
 
                 if ((int)($winnings) !== $pot) {
                     $this->context->buildViolation($constraint->message)

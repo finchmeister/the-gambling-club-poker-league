@@ -24,8 +24,10 @@
                     </div>
 
                     <div class="col">
-                        <div class="text-muted h5">League</div>
-                        <span class="px-3 oi oi-{{ game.isLeague ? 'check' : 'x' }}"></span>
+                        {% if game.isLeague %}
+                            <div class="text-muted h5">League</div>
+                            <span class="px-3 oi oi-check"></span>
+                        {% endif %}
 
                         {#{% if game.snacksProvider %}
                             <span class="text-muted">Snacks</span>
@@ -70,9 +72,15 @@
                 <div class="col">
                     {% include ':partial:_results_table.html.twig' %}
 
-                    {% if game.commission > 0 %}
+                    {% if game.commission > 0 or game.fudgeFactor != 0 %}
                         <div class="text-muted font-italic">
+                        {% if game.commission > 0 %}
                             Commission: {{ game.commission | price }}
+                        {% endif %}
+                        {% if game.fudgeFactor != 0 %}
+                            <br>
+                            Missing Rebuys: {{ game.fudgeFactor | abs | price }}
+                        {% endif %}
                         </div>
                     {% endif %}
                 </div>

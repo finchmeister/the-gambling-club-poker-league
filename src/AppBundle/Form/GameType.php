@@ -25,6 +25,7 @@ class GameType extends AbstractType
             ->add('host')
             ->add('isOnline')
             ->add('commission')
+            ->add('fudgeFactor')
             ->add('startTime')
             ->add('location')
             ->add('spotifyPlaylistUri')

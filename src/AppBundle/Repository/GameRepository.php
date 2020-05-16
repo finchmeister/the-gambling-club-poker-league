@@ -18,28 +18,34 @@ use Doctrine\ORM\QueryBuilder;
  */
 class GameRepository extends EntityRepository
 {
+    private const ORDER_BY = ['date' => 'DESC', 'startTime' => 'DESC'];
+
     public function getAllGames(): ArrayCollection
     {
-        $allGames = $this->findBy([], ['date' => 'DESC']);
+        $allGames = $this->findBy([], self::ORDER_BY);
         return new ArrayCollection($allGames);
     }
 
     public function getAllOnlineGames(): ArrayCollection
     {
-        $allGames = $this->findBy(['isOnline' => true], ['date' => 'DESC']);
+        $allGames = $this->findBy(['isOnline' => true], self::ORDER_BY);
         return new ArrayCollection($allGames);
     }
 
     public function getLeagueGames(League $league): ArrayCollection
     {
-        $qb = $this->createQueryBuilder('g')
+        $qb = $this->createQueryBuilder('g');
+        $qb
             ->where('g.date > :startDate')
-            ->setParameter('startDate', $league->getStartDate()->sub(new \DateInterval('P1D')));
+            ->setParameter('startDate', $league->getStartDate()->sub(new \DateInterval('P1D')))
+            ->andWhere($qb->expr()->eq('g.isLeague', true))
+        ;
         if ($league->getEndDate() !== null) {
             $qb->andWhere('g.date <= :endDate')
                 ->setParameter('endDate', $league->getEndDate());
         }
         $qb->addOrderBy('g.date', 'DESC');
+        $qb->addOrderBy('g.startTime', 'DESC');
         $leagueGames = $qb->getQuery()->getResult();
 
         return new ArrayCollection($leagueGames);
@@ -60,7 +66,7 @@ class GameRepository extends EntityRepository
      */
     public function getAllPlayersGames(Player $player): ArrayCollection
     {
-        $allGames = $this->findBy([], ['date' => 'DESC']);
+        $allGames = $this->findBy([], self::ORDER_BY);
         $allGames = new ArrayCollection($allGames);
         $playersGames = new ArrayCollection();
         /** @var Game $game */
