@@ -10,11 +10,12 @@
      {{ form_row(edit_form.name) }}
      {{ form_row(edit_form.location) }}
      {{ form_row(edit_form.bio) }}
+     {{ form_row(edit_form.hidePlayer) }}
      {{ form_row(edit_form.profilePicture) }}
 
      <img class="img-fluid" src="{{ asset(player.profilePicturePublicUrl) }}">
 
-     <input class="btn btn-success btn-lg btn-block" type="submit" value="Save" />
+     <input class="btn btn-success btn-lg btn-block mt-3" type="submit" value="Save" />
      {{ form_end(edit_form) }}
 
  {% endblock %}

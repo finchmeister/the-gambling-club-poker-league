@@ -31,7 +31,7 @@ class PlayerController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $players = $em->getRepository(Player::class)->findAll();
+        $players = $em->getRepository(Player::class)->getDisplayedPlayers();
 
         foreach ($players as $player) {
             $player->setPlayerStats(

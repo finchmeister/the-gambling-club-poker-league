@@ -89,6 +89,11 @@ class Player
      */
     private $playerStats;
 
+    /**
+     * @var bool
+     * @ORM\Column(type="boolean", options={"default":0})
+     */
+    private $hidePlayer = false;
 
     public function __construct()
     {
@@ -305,6 +310,24 @@ class Player
     public function removeLeague(League $league): void
     {
         $this->leagues->removeElement($league);
+    }
+
+    /**
+     * @return bool
+     */
+    public function isHidePlayer(): bool
+    {
+        return $this->hidePlayer;
+    }
+
+    /**
+     * @param bool $hidePlayer
+     * @return Player
+     */
+    public function setHidePlayer(bool $hidePlayer): Player
+    {
+        $this->hidePlayer = $hidePlayer;
+        return $this;
     }
 }
 
