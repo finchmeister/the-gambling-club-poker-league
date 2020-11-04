@@ -5,7 +5,7 @@ namespace AppBundle\PokerStats;
 use AppBundle\Cache\CacheManager;
 use AppBundle\Entity\League;
 use AppBundle\League\LeagueTableService;
-use AppBundle\PlayerStats\ComputeStats;
+use AppBundle\PlayerStats\OverallStatsFactory;
 use AppBundle\Repository\GameRepository;
 use AppBundle\Repository\LeagueRepository;
 
@@ -18,9 +18,9 @@ class IndexStatsAggregate
      */
     private $leagueTableService;
     /**
-     * @var ComputeStats
+     * @var OverallStatsFactory
      */
-    private $computeStats;
+    private $overallStatsFactory;
     /**
      * @var StatsFactory
      */
@@ -41,14 +41,14 @@ class IndexStatsAggregate
 
     public function __construct(
         LeagueTableService $leagueTableService,
-        ComputeStats $computeStats,
+        OverallStatsFactory $overallStatsFactory,
         StatsFactory $playerStatsFactory,
         GameRepository $gameRepository,
         LeagueRepository $leagueRepository,
         CacheManager $cacheManager
     ) {
         $this->leagueTableService = $leagueTableService;
-        $this->computeStats = $computeStats;
+        $this->overallStatsFactory = $overallStatsFactory;
         $this->playerStatsFactory = $playerStatsFactory;
         $this->gameRepository = $gameRepository;
         $this->leagueRepository = $leagueRepository;
@@ -81,8 +81,8 @@ class IndexStatsAggregate
 
         $onlineGames = $this->gameRepository->getAllOnlineGames();
 
-        $overallStats = $this->computeStats->getOverallStats($allGames);
-        $onlineOverallStats = $this->computeStats->getOverallStats($onlineGames);
+        $overallStats = $this->overallStatsFactory->getOverallStats($allGames);
+        $onlineOverallStats = $this->overallStatsFactory->getOverallStats($onlineGames);
 
         $allPlayersStats = $this->playerStatsFactory->getAllPlayersStats();
         $onlinePlayersStats = $this->playerStatsFactory->getOnlinePlayersStats();

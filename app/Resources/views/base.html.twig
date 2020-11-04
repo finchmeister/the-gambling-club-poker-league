@@ -63,16 +63,17 @@
 
                         {% endif %}
 
+                        <li class="nav-item">
+                            <a class="nav-link" target="_blank" href="https://running.thegamblingclub.co.uk">Running Stats</a>
+                        </li>
                     </ul>
                     <span class="">
 
                         {% if app.user %}
 
-
                             <a class="btn btn-outline-danger" role="button" href="{{ path('logout') }}">Logout</a>
                         {% else %}
                             <a class="btn btn-outline-success" role="button" href="{{ path('admin') }}">Login</a>
-
 
                         {% endif %}
                     </span>

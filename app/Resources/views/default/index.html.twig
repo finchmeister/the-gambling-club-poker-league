@@ -13,22 +13,16 @@
 
 {% block main %}
 
-    <a href="https://running.thegamblingclub.co.uk">
-    <div class="alert alert-warning mb-5 text-center" role="alert">
-        <b>New!</b> Covid running stats from Strava
-    </div>
-    </a>
-
     <ul class="nav nav-pills nav-justified mb-4" id="myTab" role="tablist">
 
         <li class="nav-item">
-            <a class="h5 mb-0 nav-link" id="allStats-tab" data-toggle="tab" href="#allStats" role="tab" aria-controls="allStats" aria-selected="false">
+            <a class="h5 mb-0 nav-link active" id="allStats-tab" data-toggle="tab" href="#allStats" role="tab" aria-controls="allStats" aria-selected="false">
                 All
             </a>
         </li>
 
         <li class="nav-item">
-            <a class="h5 mb-0 nav-link active" id="onlineStats-tab" data-toggle="tab" href="#onlineStats" role="tab" aria-controls="onlineStats" aria-selected="false">
+            <a class="h5 mb-0 nav-link" id="onlineStats-tab" data-toggle="tab" href="#onlineStats" role="tab" aria-controls="onlineStats" aria-selected="false">
                 Online
             </a>
         </li>
@@ -107,7 +101,7 @@
 
         {% endfor %}
 
-        <div class="tab-pane fade show" id="allStats" role="tabpanel" aria-labelledby="allStats-tab">
+        <div class="tab-pane fade show active" id="allStats" role="tabpanel" aria-labelledby="allStats-tab">
             {% include 'partial/_all_stats_table.html.twig' with {'playerStats' : allPlayersStats}  %}
 
             <div class="row">
@@ -129,7 +123,7 @@
             {% include 'partial/_game.html.twig' with {'games' : allGames} %}
         </div>
 
-        <div class="tab-pane fade show active" id="onlineStats" role="tabpanel" aria-labelledby="onlineStats-tab">
+        <div class="tab-pane fade show" id="onlineStats" role="tabpanel" aria-labelledby="onlineStats-tab">
             {% include 'partial/_all_stats_table.html.twig' with {'playerStats' : onlinePlayersStats}  %}
 
             <div class="row">
