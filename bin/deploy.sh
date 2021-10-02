@@ -1,20 +1,27 @@
 #! /bin/bash
 set -e
+CONTEXT=tgcpl
+DOCKER_CMD="docker -c $CONTEXT"
 
-eval $(docker-machine env vm02)
+echo "Seeing what is running"
+$DOCKER_CMD ps
+
 echo "Backing up DB"
-docker inspect the-gambling-club-poker-league_php_1 && docker cp the-gambling-club-poker-league_php_1:/var/www/html/var/data/poker.sqlite db-backups/poker.$(date +%Y-%m-%d_%H%M).sqlite
+$DOCKER_CMD inspect the-gambling-club-poker-league_php_1 && $DOCKER_CMD cp the-gambling-club-poker-league_php_1:/var/www/html/var/data/poker.sqlite db-backups/poker.$(date +%Y-%m-%d_%H%M).sqlite
+
+echo "Building the assets locally"
+docker compose run --rm encore sh -c "yarn install && yarn encore production"
 
 echo "Building and deploying image"
-docker-compose -f docker-compose-prod.yml up -d --build
+$DOCKER_CMD compose -f docker-compose-prod.yml up -d --build
 
-echo "Updating schema"
-docker-compose exec php bin/console doctrine:schema:update --force
+echo "Waiting 30s for composer install"
+sleep 30
 
 echo "Flushing the cloudflare cache"
-docker-compose exec php bin/console app:flush-cloudflare
+$DOCKER_CMD compose exec php bin/console app:flush-cloudflare
 
 echo "Removing old images"
-docker system prune -f
+$DOCKER_CMD system prune -f
 
 echo "Deployed"

@@ -2,82 +2,30 @@
 
 [![Build Status](https://travis-ci.org/finchmeister/the-gambling-club-poker-league.svg?branch=master)](https://travis-ci.org/finchmeister/the-gambling-club-poker-league)
 
-## Commands
+Home to The Gambling Club's poker results - https://thegamblingclub.co.uk/
 
-#### Start Dev
-```
-make up
-```
-and then go to: http://localhost:8081/app_dev.php/
+## Setup
 
-#### Deploy
+1. Grab the secret files and cloudflare config from the secret location. Add `google-cloud-auth.json` file and update the cloudflare params.
+
+2. Start the project with `make up`
+3. Copy a sqlite DB into the project with `make upload-db`
+4. Go to: http://localhost:8081/app_dev.php
+
+## Deploy
 
 ```
 make deploy
 ```
 
-## Docker Machine
-
-```
-export GOOGLE_APPLICATION_CREDENTIALS=google-cloud-auth.json 
-docker-machine env vm02
-eval $(docker-machine env vm02)
-
-# Disconnect
-docker-machine env -u
-eval $(docker-machine env -u)
-```
-
-## Docker
-```
-docker-compose -f docker-compose-prod.yml up -d
-docker exec -it CONTAINER_ID /bin/sh
-```
-
-Get DB from prod:
-
-Export from admin
-
-```
-eval $(docker-machine env vm02)
-docker cp thegamblingclubpokerleague_php_1:/var/www/html/var/data/poker.sqlite var/data/poker.sqlite
-```
-
-## Docker Machine Import
-
-# Travis Secrets:
-<https://docs.travis-ci.com/user/encrypting-files/#Encrypting-multiple-files>
-```
-tar cvf secrets.tar foo bar
-travis encrypt-file secrets.tar
-```
-
 ## Changing instance
-1\. Create instance: 
-```
-docker-machine create --driver google   --google-project the-gambling-club-poker-league   --google-zone us-east1-b   --google-machine-type f1-micro   vm02
-```
-2\. Export machine
-```
-machine-export vm02
-```
-3\. Update secrets and encrypt:
-```
-tar cvf secrets.tar  google-cloud-auth.json vm02.zip
-travis encrypt-file secrets.tar
-```
-4\. Update vm name in .travis.yml
-
-5\. Update gitignore and dockerignore
-
-6\. Start application via docker-compose
-```
-docker-machine env vm02
-eval $(docker-machine env -u)
-docker-compose -f docker-compose-prod.yml up -d
-```
-7\. Restore db in app (note permissions of the db)
-```
-docker-compose exec php bin/console app:database-restore
-```
-8\. Update DNS to point to new server
+1. Export a copy of the database.
+2. Create instance wherever, provide ssh access and install the docker engine on it.
+3. Create the docker context `tgcpl` on the machine to be deployed from, e.g:
+   ```
+   docker context create tgcpl --docker "host=ssh://jonathan.finch@104.198.144.70"
+   ```
+4. Run `make deploy`
+5. Upload a db to the server:
+   ```docker -c tgcpl cp -a db-backups/poker.sqlite the-gambling-club-poker-league_php_1:/var/www/html/var/data/poker.sqlite```
+5. Update DNS to point to new server

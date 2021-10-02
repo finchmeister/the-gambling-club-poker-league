@@ -1,5 +1,5 @@
 
-.PHONY: up schema-update cc tests exec deploy local-db-backup local-db-restore
+.PHONY: up schema-update cc tests exec deploy upload-db remote-logs
 
 up:
 	docker-compose up -d
@@ -15,13 +15,13 @@ tests:
 	docker-compose exec php ./vendor/phpunit/phpunit/phpunit
 
 exec:
-	docker-compose exec php /bin/sh
+	docker-compose exec php bash
 
 deploy:
 	./bin/deploy.sh
 
-local-db-backup:
-	cp var/data/poker.sqlite var/data/poker.sqlite.bak
+upload-db:
+	docker cp -a db-backups/poker.sqlite the-gambling-club-poker-league_php_1:/var/www/html/var/data/poker.sqlite
 
-local-db-restore:
-	cp var/data/poker.sqlite.bak var/data/poker.sqlite
+remote-logs:
+	docker -c tgcpl compose logs -f

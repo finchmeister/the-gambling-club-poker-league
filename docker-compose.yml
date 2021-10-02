@@ -1,23 +1,21 @@
 version: '2'
 
 services:
-    nginx:
-        build:
-            dockerfile: ./docker/nginx/Dockerfile
-            context: ./
-        ports:
-            - "8081:80"
-        volumes:
-            - .:/var/www/html
-        depends_on:
-            - php
     php:
         build:
-            dockerfile: ./docker/php/Dockerfile
+            dockerfile: ./docker/apache/Dockerfile
             context: ./
         volumes:
             - .:/var/www/html:cached
-    redis:
-        image: redis
-        depends_on:
-            - php
+        ports:
+            - "8081:80"
+#    redis:
+#        image: redis
+#        depends_on:
+#            - php
+    encore:
+        image: node:10-alpine
+        volumes:
+            - .:/app
+        working_dir: /app
+        command: sh -c "yarn install && yarn encore dev"
