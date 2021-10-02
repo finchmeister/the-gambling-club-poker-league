@@ -1,25 +1,19 @@
 version: '2'
 
 services:
-    nginx:
+    php:
         build:
-            dockerfile: ./docker/nginx/Dockerfile
+            dockerfile: ./docker/apache/Dockerfile
             context: ./
         ports:
             - "80:80"
-        #volumes:
-        #    - .:/var/www/html
-        depends_on:
-            - php
-    php:
-        build:
-            dockerfile: ./docker/php/Dockerfile
-            context: ./
         volumes:
-            - app_data:/var/www/html/var/data
-    redis:
-        image: redis
-        depends_on:
-            - php
+            - db-data:/var/www/html/var/data
+        environment:
+            HIDE_APP_DEV: 1
+#    redis:
+#        image: redis
+#        depends_on:
+#            - php
 volumes:
-    app_data: {}
+    db-data:
