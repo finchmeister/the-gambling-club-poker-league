@@ -8,12 +8,10 @@ jobs:
         uses: actions/checkout@v2
       - name: Create a temporary auth file
         run: echo '[]' > google-cloud-auth.json
-      - name: Start the project
-        run: make up
-      - name: checking logs
-        run: docker-compose logs
-      - name: Sleep for 1 minute
-        run: sleep 60s
+      - name: Building the assets locally
+        run: docker-compose run --rm encore sh -c "yarn install && yarn encore production"
+      - name: Build and start image
+        run: docker-compose -f docker-compose-prod.yml up -d --build
       - name: checking logs
         run: docker-compose logs      
       - name: Sleep for 1 minute
