@@ -34,7 +34,7 @@ COPY phpunit.xml.dist ./
 RUN mkdir -p var/data
 
 RUN chmod +x /entrypoint.sh
-RUN chown -R www-data:www-data .
+RUN chown -R www-data:www-data /var/www
 
 CMD ["apache2-foreground"]
 USER www-data
