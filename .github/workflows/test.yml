@@ -10,5 +10,7 @@ jobs:
         run: echo '[]' > google-cloud-auth.json
       - name: Start the project
         run: make up
+      - name: Sleep for 30 seconds
+        run: sleep 30s
       - name: Run the tests
         run: make tests
