@@ -12,7 +12,7 @@ cc:
 	docker-compose exec php bin/console c:c
 
 tests:
-	docker-compose exec php ./vendor/phpunit/phpunit/phpunit
+	docker compose exec php ./vendor/phpunit/phpunit/phpunit
 
 exec:
 	docker-compose exec php bash
