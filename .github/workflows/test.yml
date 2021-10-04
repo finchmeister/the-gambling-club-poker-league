@@ -6,6 +6,8 @@ jobs:
     steps:
       - name: Check out repository code
         uses: actions/checkout@v2
+      - name: Create a temporary auth file
+        run: echo '[]' > google-cloud-auth.json
       - name: Start the project
         run: make up
       - name: Run the tests
