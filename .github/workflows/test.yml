@@ -1,0 +1,22 @@
+name: Run Tests
+on: [push]
+jobs:
+  Explore-GitHub-Actions:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v2
+      - name: Create a temporary auth file
+        run: echo '[]' > google-cloud-auth.json
+      - name: Building the assets locally
+        run: docker-compose run --rm encore sh -c "yarn install && yarn encore production"
+      - name: Build and start image
+        run: docker-compose -f docker-compose-prod.yml up -d --build
+      - name: checking logs
+        run: docker-compose logs      
+      - name: Sleep for 1 minute
+        run: sleep 60s
+      - name: checking logs
+        run: docker-compose logs
+      - name: Run the tests
+        run: make tests
