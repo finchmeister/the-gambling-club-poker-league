@@ -1,7 +1,5 @@
 # the-gambling-club-poker-league
 
-[![Build Status](https://travis-ci.org/finchmeister/the-gambling-club-poker-league.svg?branch=master)](https://travis-ci.org/finchmeister/the-gambling-club-poker-league)
-
 Home to The Gambling Club's poker results - https://thegamblingclub.co.uk/
 
 ## Setup
@@ -28,4 +26,4 @@ make deploy
 4. Run `make deploy`
 5. Upload a db to the server:
    ```docker -c tgcpl cp -a db-backups/poker.sqlite the-gambling-club-poker-league_php_1:/var/www/html/var/data/poker.sqlite```
-5. Update DNS to point to new server
+5. Update cloudflare DNS to point to new server
