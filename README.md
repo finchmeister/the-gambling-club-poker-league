@@ -1,5 +1,22 @@
 # the-gambling-club-poker-league
 
+## ☠️ Update 2024 ☠️
+
+This repo is no longer active.
+
+The app has been immortalised as a static site in `/docs` and published to GH Pages:
+
+https://finchmeister.github.io/the-gambling-club-poker-league/thegamblingclub.co.uk/index.html
+
+Site was downloaded with [HTTrack](https://www.httrack.com/) and the following command: 
+```
+httrack https://thegamblingclub.co.uk/ +\*.jpg
+```
+
+***RIP*** 🪦
+
+---
+
 Home to The Gambling Club's poker results - https://thegamblingclub.co.uk/
 
 ## Setup
